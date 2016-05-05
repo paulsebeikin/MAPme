@@ -1,0 +1,105 @@
+\documentclass[12pt,a4paper,oneside]{article}
+
+% Formatting stuff:
+\setlength{\textheight}{22cm}
+\setlength{\textwidth}{16cm}
+\setlength{\oddsidemargin}{0cm}
+\setlength{\evensidemargin}{0cm}
+\setlength{\topmargin}{0cm}
+\setlength{\parindent}{0cm}
+\setlength{\parskip}{0.8ex}
+
+% Packages required
+\usepackage{listings}
+\usepackage{natbib}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[normalem]{ulem}
+\usepackage{setspace}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{titlesec}
+\useunder{\uline}{\ul}{}
+\def\code#1{\texttt{#1}}
+\setcounter{secnumdepth}{4}
+\renewcommand\thesection{\arabic{section}}
+
+% Start
+\begin{document}
+
+% Title page
+\title{System Specifications Requirements Document\newline Department of Computer Science}
+\author{Authors: P.S. Sebeikin, D.G. Smith}
+\date {9 May 2016}
+\maketitle
+\pagebreak % Doc body starts on page 2
+
+% Body
+% discusses the problem area that we are dealing with
+\section{Problem Statement}
+  \begin{spacing}{1.4}
+    The current system that is in place is a web-based application that runs within a desktop environment and lacks mobile phone support. It has proved to be rather inefficient and lacks user-friendliness. This is due to the fact that a lot of the information has to be entered manually; such as GPS coordinates.
+
+    This application aims to improve on this system and to develop a mobile smartphone application that will improve user-friendliness, efficiency and provide a convenient method in which to upload submissions to the digital library, thereby supporting the various projects that have requested this app. It will provide various features that simplify the existing process. This app will be deployed alongside the web application, meaning that the existing system will remain functional.
+
+    The application will be developed for the Android operating system and will not support other OSes available. This is because the development tools for Android have been provided. In addition, Samsung Android-based devices are the most popular mobile smartphones in South Africa \footnote{http://www.fin24.com/Tech/Gadgets/samsung-dominates-sa-smartphone-tablet-sales-20160329}.
+  \end{spacing}
+
+% Describes the user base of the app
+\section{Target Market}
+  \begin{spacing}{1.4}
+    The mobile application is aimed at an elderly user group; mostly retirees. Therefore, design must be user-friendly and must be intuitive and simplistic as possible. The GUI design will be minimalisitc in nature and avoid complex design flows. Various Human Computer Interaction (HCI) concepts will be considered in the prototyping, and ultimatelt the final design choice to ensure that it complies with the target market of the app.
+  \end{spacing}
+
+% Details the user requirements
+\section{User Requirements}
+\subsection{Mandatory}
+  \begin{spacing}{1.4}
+    \begin{itemize}
+      \item Registration screen must require the user's email, password and ADU number
+      \item The app must interface with the phone camera
+      \item A photo module that ensures photo quality and consistency (e.g. focus, precision, distance, calibration)
+      \item Use of Global Positioning System (GPS) coordinates:
+        \begin{itemize}
+          \item Interfaced with phone GPS location service
+          \item Entered manually by user
+          \item Google Maps widget
+        \end{itemize}
+      \item Photographs should be uploaded immediately or later
+      \item Sound files should be recorded and uploaded (app should interface with the device's voice recorder)
+      \item User should be able to entered a locality description (text-box)
+      \item Must record the date of the submission using the device's set date and time
+      \item The user should optionally be able to specify the species
+      \item The user should optionally be able to enter any other relevant observations
+      \item The user must be able to submit to a particular project (e.g. OrchidMAP, FrogMAP, MammalMAP etc.)
+    \end{itemize}
+  \end{spacing}
+\subsection{Secondary}
+  \begin{spacing}{1.4}
+    \begin{itemize}
+      \item The user can voice record notes on the submission, e.g. detailing the surroundings of plant or specimen
+      \item Option to specify is flowers or fruits on the plant are visible (this will depend on what project it belongs to)
+    \end{itemize}
+  \end{spacing}
+\section{Challenges}
+  \begin{spacing}{1.4}
+    The obvious challenge is cross-platform compatibility. This means that the app's development is limited to the Android OS.
+
+    Another challenge is the ability to ensure that the photograph submitted by the user is of sufficient quality. This will require a sophisticated development technique that could prove to be a challenge.
+
+    Ensuring the accuracy of GPS locations will also require some thought. The location must be possible and not a contrived location.
+
+    Hardware challenges could be siginificant. Since Android runs on a wide variety of hardware devices, system resources would vary. This needs to be taken into account during the development process to ensure that the app runs smoothly and is stable on all devices.
+
+    A significant testing framework will need to be developed.
+  \end{spacing}
+\section{Assumptions}
+\section{Possible Future Enhancement}
+  \begin{spacing}{1.4}
+    A major enhancement would be to develop the app for other OSes and not just Android devices. This would greatly expand the app's user base.
+
+    In terms of ensuring image quality, some form of image processing technique can be used to automatically detect plant attributes. This can also be used to ensure image quality.
+  \end{spacing}
+\end{document}
