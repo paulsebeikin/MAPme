@@ -30,10 +30,12 @@
 \begin{document}
 
 % Title page
-\title{System Specifications Requirements Document\newline Department of Computer Science}
+\title{Needs Assessment Document\newline Department of Computer Science}
 \author{Authors: P.S. Sebeikin, D.G. Smith}
 \date {9 May 2016}
 \maketitle
+\pagebreak
+\tableofcontents
 \pagebreak % Doc body starts on page 2
 
 % Body
@@ -47,6 +49,22 @@
     The application will be developed for the Android operating system and will not support other OSes available. This is because the development tools for Android have been provided. In addition, Samsung Android-based devices are the most popular mobile smartphones in South Africa \footnote{http://www.fin24.com/Tech/Gadgets/samsung-dominates-sa-smartphone-tablet-sales-20160329}.
   \end{spacing}
 
+% Describes the existing system that is in place
+\section{Existing Implementation}
+  \begin{spacing}{1.4}
+    The existing web application is on the Animal Demography Unit Virtual (ADU) Museaum website\footnote{http://vmus.adu.org.za/}.
+    From here the user can select which project they wish to submit to. It includes projects such as FishMAP, OrchidMAP and so forth.
+    An ADU account can be created by clicking on `Registration". The user's email address has to be entered to check if an account exists
+    already. If not, a screen pops up allowing the creation of an account. Required information includes a email address, surname, first name and
+    password. Additional information can be entered including telephone numbers and a postal address.
+
+    A new submission can be created by selecting the `Data Upload' on the left hand column of the page. The page has various text fields that the user can fill out with mandatory
+    fields marked by a *. GPS coordinates are entered manually or by means of navigating a Google Maps widget. The page appears to be clunky in its design, with text being small and
+    difficult to read, which does not complement the primary user base. Once the user entered the required information, the page allows the user to submit up to three records
+    then asks which project it belongs to. The page design is not ideal because there are a lot of repeated fields and the text is very small. As such, it makes it difficult for the
+    user to select the correct project and a mistake can easily be made. This is particularly apparent if the site is visited on a mobile device.
+  \end{spacing}
+
 % Describes the user base of the app
 \section{Target Market}
   \begin{spacing}{1.4}
@@ -56,9 +74,9 @@
 % Details the user requirements
 \section{User Requirements}
 \subsection{Mandatory}
-  \begin{spacing}{1.4}
     \begin{itemize}
-      \item Registration screen must require the user's email, password and ADU number
+      \item A smooth, simple and intuitive graphical user interface (GUI)
+      \item A registration screen that must require the user's email, password and ADU number
       \item The app must interface with the phone camera
       \item A photo module that ensures photo quality and consistency (e.g. focus, precision, distance, calibration)
       \item Use of Global Positioning System (GPS) coordinates:
@@ -74,15 +92,13 @@
       \item The user should optionally be able to specify the species
       \item The user should optionally be able to enter any other relevant observations
       \item The user must be able to submit to a particular project (e.g. OrchidMAP, FrogMAP, MammalMAP etc.)
+      \item Include some form of submission log to allow users to view previous submissions. This will be saved locally on the device
     \end{itemize}
-  \end{spacing}
 \subsection{Secondary}
-  \begin{spacing}{1.4}
     \begin{itemize}
       \item The user can voice record notes on the submission, e.g. detailing the surroundings of plant or specimen
       \item Option to specify is flowers or fruits on the plant are visible (this will depend on what project it belongs to)
     \end{itemize}
-  \end{spacing}
 \section{Challenges}
   \begin{spacing}{1.4}
     The obvious challenge is cross-platform compatibility. This means that the app's development is limited to the Android OS.
@@ -102,4 +118,5 @@
 
     In terms of ensuring image quality, some form of image processing technique can be used to automatically detect plant attributes. This can also be used to ensure image quality.
   \end{spacing}
+\section{Summary}
 \end{document}
