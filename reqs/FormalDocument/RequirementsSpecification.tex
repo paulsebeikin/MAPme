@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper,oneside]{article}
+\documentclass[12pt,a4paper,oneside]{report}
 
 % Formatting stuff:
 \setlength{\textheight}{22cm}
@@ -30,14 +30,18 @@
 \begin{document}
 
 % Title page
-\title{Needs Assessment Document\newline Department of Computer Science}
-\author{Authors: P.S. Sebeikin, D.G. Smith}
-\date {9 May 2016}
-\maketitle
-\pagebreak
+\begin{titlepage}
+	\centering
+	{\scshape\LARGE Needs Assessment Document \par}
+	\vspace{1cm}
+	{\scshape\Large MAPme Android Application\par}
+	\vspace{1.5cm}
+	{\LARGE Authors: D.G. Smith, P.S. Sebeikin\par}
+	\vspace{2cm}
+	{\large \today\par}
+\end{titlepage}
 \tableofcontents
-\pagebreak % Doc body starts on page 2
-
+\pagebreak
 % Body
 % discusses the problem area that we are dealing with
 \section{Problem Statement}
@@ -54,21 +58,29 @@
   \begin{spacing}{1.4}
     The existing web application is on the Animal Demography Unit Virtual (ADU) Museaum website\footnote{http://vmus.adu.org.za/}.
     From here the user can select which project they wish to submit to. It includes projects such as FishMAP, OrchidMAP and so forth.
-    An ADU account can be created by clicking on `Registration". The user's email address has to be entered to check if an account exists
+    An ADU account can be created by clicking on ``Registration". The user's email address has to be entered to check if an account exists
     already. If not, a screen pops up allowing the creation of an account. Required information includes a email address, surname, first name and
     password. Additional information can be entered including telephone numbers and a postal address.
 
     A new submission can be created by selecting the `Data Upload' on the left hand column of the page. The page has various text fields that the user can fill out with mandatory
     fields marked by a *. GPS coordinates are entered manually or by means of navigating a Google Maps widget. The page appears to be clunky in its design, with text being small and
     difficult to read, which does not complement the primary user base. Once the user entered the required information, the page allows the user to submit up to three records
-    then asks which project it belongs to. The page design is not ideal because there are a lot of repeated fields and the text is very small. As such, it makes it difficult for the
-    user to select the correct project and a mistake can easily be made. This is particularly apparent if the site is visited on a mobile device.
+    then asks which project it belongs to. The page design is not ideal because there are many repeated fields and the text is very small. As such, it makes it difficult for the
+    user to select the correct project and a mistake can easily be made. This is particularly apparent if the site is visited on a mobile device. Ultimatelt the site does not make use
+    good human computer interaction (HCI) principles. The following image shows the original implementation:
+    \begin{figure}[H]
+      \includegraphics[width=12cm]{existing}
+      \caption{Existing web application}
+    \end{figure}
   \end{spacing}
 
+  The development of a mobile application will aim to correct the issues of the current implementation. It will provide
+  convenience and ease of use when submitting images to the repository. The new design will conform to HCI principles to provide this.
+  Additional features will be added to provide a more rich user experience. Ultimately the design will be user-focused.
 % Describes the user base of the app
 \section{Target Market}
   \begin{spacing}{1.4}
-    The mobile application is aimed at an elderly user group; mostly retirees. Therefore, design must be user-friendly and must be intuitive and simplistic as possible. The GUI design will be minimalisitc in nature and avoid complex design flows. Various Human Computer Interaction (HCI) concepts will be considered in the prototyping, and ultimatelt the final design choice to ensure that it complies with the target market of the app.
+    The mobile application is aimed at an elderly user group; mostly retirees. Therefore, design must be user-friendly and must be intuitive and simplistic as possible. The GUI design will be minimalisitc in nature and avoid complex design flows. Various HCI concepts will be considered in the prototyping, and ultimately the final design choice to ensure that it complies with the target market of the app.
   \end{spacing}
 
 % Details the user requirements
@@ -109,14 +121,16 @@
 
     Hardware challenges could be siginificant. Since Android runs on a wide variety of hardware devices, system resources would vary. This needs to be taken into account during the development process to ensure that the app runs smoothly and is stable on all devices.
 
-    A significant testing framework will need to be developed.
+    A significant testing framework will need to be developed, such as unit testing (junit in Java) to ensure functionality works as expected. This will
+    also provide a form of quality assurance.
   \end{spacing}
-\section{Assumptions}
-\section{Possible Future Enhancement}
+\section{Possible Future Enhancements}
   \begin{spacing}{1.4}
     A major enhancement would be to develop the app for other OSes and not just Android devices. This would greatly expand the app's user base.
 
     In terms of ensuring image quality, some form of image processing technique can be used to automatically detect plant attributes. This can also be used to ensure image quality.
   \end{spacing}
 \section{Summary}
+  The goal is to develop an easy-to-use, smooth and well-performing app that is effective and efficient to aid the Virtual Museam Project.
+  It will correct the problems that reside in the existing implementation and introduce ease and convenience. 
 \end{document}
