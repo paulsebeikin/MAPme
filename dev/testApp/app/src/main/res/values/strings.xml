@@ -1,12 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">MAPme</string>
+
+    <!-- Strings related to Home -->
     <string name="button_send">Send SMS</string>
     <string name="edit_message">Type phone number here</string>
     <string name="msg_body">Type message here</string>
-    <string name="title_activity_login">Login</string>
     <string name="title_myactivity">Home</string>
+    <string name="photo">Photo</string>
+    <string name="add_record">New Record</string>
+    <string name="history">History</string>
+    <string name="about">About</string>
 
     <!-- Strings related to login -->
+    <string name="title_activity_login">Login</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Login</string>
@@ -15,9 +22,7 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
-    <string name="register_link"><a href="http://www.adu.org.za/register.php"></a>Register Online</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
+    <string name="register_link">&lt;a href="http://www.adu.org.za/register.php">Register&lt;/a></string>
     <string name="adu_prompt">ADU Number</string>
 </resources>
