@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:weightSum="1"
+    tools:context="psyblaze.mapme.AboutActivity">
+
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/mapme_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/AppTheme"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="10pt">
+
+        <TextView
+            style="@style/labelsAbout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/producedBy"/>
+        <TextView
+            style="@style/labelsAbout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/producedByDate"/>
+        <TextView
+            style="@style/labelsAbout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/producedByAuthD"/>
+        <TextView
+            style="@style/labelsAbout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/producedByAuthP"/>
+
+        <ImageView
+            android:layout_width="189dp"
+            android:layout_height="206dp"
+            android:src="@drawable/mapme"
+            android:layout_gravity="center"
+            android:paddingTop="5pt"/>
+        <ImageView
+            android:layout_width="168dp"
+            android:layout_height="131dp"
+            android:src="@drawable/psyblaze"
+            android:layout_gravity="center"
+            android:paddingTop="5pt"
+            android:layout_weight="0.49" />
+    </LinearLayout>
+
+</LinearLayout>
