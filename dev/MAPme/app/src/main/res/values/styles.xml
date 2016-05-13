@@ -15,6 +15,15 @@
         <item name="android:fontFamily">sans-serif</item>
     </style>
 
+    <style name="buttonPadding">
+        <item name="android:paddingTop">20pt</item>
+        <item name="android:layout_width">354dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingRight">10pt</item>
+        <item name="android:paddingLeft">10pt</item>
+    </style>
+
 
     <style name="largeButtons">
         <item name="android:textColor">@color/colorPrimaryDark</item>

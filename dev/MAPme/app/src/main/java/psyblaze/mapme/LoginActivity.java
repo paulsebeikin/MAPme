@@ -97,7 +97,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+                //attemptLogin();
+                goHome();
             }
         });
 
@@ -108,6 +109,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         ((TextView) findViewById(R.id.forgot_link)).setMovementMethod(LinkMovementMethod.getInstance());
         ((TextView) findViewById(R.id.forgot_link)).setText(Html.fromHtml(getResources().getString(R.string.forgot_link)));
+    }
+
+    public void goHome(){
+        Intent navigateHome = new Intent(this, HomeScreenActivity.class);
+        startActivity(navigateHome);
     }
 
     @Override
@@ -122,7 +128,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_logout:
-                Toast.makeText(this,"Logging out...", 10).show();
+                Toast.makeText(this,"Logging out...", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.action_about:
                 Intent aboutAct = new Intent(this, AboutActivity.class);
