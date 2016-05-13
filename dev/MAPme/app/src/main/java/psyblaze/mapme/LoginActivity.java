@@ -3,6 +3,7 @@ package psyblaze.mapme;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -18,8 +19,13 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
@@ -28,6 +34,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,6 +89,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
+        Toolbar action_bar = (Toolbar) findViewById(R.id.mapme_toolbar);
+        setSupportActionBar(action_bar);
+
+
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -90,8 +101,35 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        ((TextView) findViewById(R.id.register_link)).setMovementMethod(LinkMovementMethod.getInstance());
+        ((TextView) findViewById(R.id.register_link)).setText(Html.fromHtml(getResources().getString(R.string.register_link)));
+
+        ((TextView) findViewById(R.id.forgot_link)).setMovementMethod(LinkMovementMethod.getInstance());
+        ((TextView) findViewById(R.id.forgot_link)).setText(Html.fromHtml(getResources().getString(R.string.forgot_link)));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.actionbar, menu);
+        //return true;
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_logout:
+                Toast.makeText(this,"Logging out...", 10).show();
+                return true;
+            case R.id.action_about:
+                Intent aboutAct = new Intent(this, AboutActivity.class);
+                startActivity(aboutAct);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void populateAutoComplete() {
