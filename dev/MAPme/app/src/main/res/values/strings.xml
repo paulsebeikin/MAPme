@@ -26,4 +26,7 @@
     <string name="about_title">About</string>
     <string name="logout_title">Logout</string>
 
+    <!-- Strings for Add Image(s) -->
+    <string name="browseImage">Browse</string>
+
 </resources>

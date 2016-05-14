@@ -18,11 +18,7 @@
             android:name=".LoginActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustPan">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".HomeScreenActivity"
@@ -30,7 +26,15 @@
         <activity
             android:name=".AboutActivity"
             android:label="@string/about_title" />
-        <activity android:name=".AddImage"></activity>
+
+        <activity android:name=".AddImage">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
