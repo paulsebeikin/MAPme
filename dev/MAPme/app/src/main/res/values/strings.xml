@@ -17,13 +17,21 @@
     <string name="adu_prompt">ADU Number</string>
 
     <!-- Strings related to about -->
-    <string name="producedBy">Produced by PsyBlaze Technologies</string>
+    <string name="producedBy">PsyBlaze Technologies</string>
     <string name="producedByDate">May 2015</string>
     <string name="producedByAuthD">D. G. Smith</string>
     <string name="producedByAuthP">P. S. Sebeikin</string>
 
-    <!-- String related to action toolbar -->
+    <!-- Strings related to action toolbar -->
     <string name="about_title">About</string>
     <string name="logout_title">Logout</string>
+    <string name="help_title">Help</string>
+    <string name="home_title">Home</string>
+    <string name="new_record_title">New Record</string>
+    <string name="profile_title">Profile</string>
+    <string name="history_title">History</string>
+
+    <!-- Strings related to New Record -->
+    <string name="sel_img">Add Image(s)</string>
 
 </resources>

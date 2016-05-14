@@ -8,12 +8,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-public class AboutActivity extends AppCompatActivity {
+public class NewRecordActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about);
+        setContentView(R.layout.activity_new_record);
 
         Toolbar action_bar = (Toolbar) findViewById(R.id.mapme_toolbar);
         setSupportActionBar(action_bar);
@@ -37,12 +37,11 @@ public class AboutActivity extends AppCompatActivity {
             case R.id.action_logout:
                 Toast.makeText(this,"Logging out...", Toast.LENGTH_LONG).show();
                 return true;
-            case R.id.action_new_record:
-                Intent newRecInt = new Intent(this, NewRecordActivity.class);
-                startActivity(newRecInt);
+            case R.id.action_about:
+                Intent aboutInt = new Intent(this, AboutActivity.class);
+                startActivity(aboutInt);
                 return true;
-            default:
-                return super.onOptionsItemSelected(item);
         }
+        return super.onOptionsItemSelected(item);
     }
 }
