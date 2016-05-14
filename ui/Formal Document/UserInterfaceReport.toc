@@ -3,6 +3,7 @@
 \contentsline {section}{\numberline {2}Project Context}{2}
 \contentsline {section}{\numberline {3}Functional Requirements}{2}
 \contentsline {subsection}{\numberline {3.1}Mandatory}{2}
-\contentsline {subsection}{\numberline {3.2}Secondary}{2}
-\contentsline {section}{\numberline {4}Client Feedback}{2}
-\contentsline {section}{\numberline {5}Changes}{3}
+\contentsline {subsection}{\numberline {3.2}Secondary}{3}
+\contentsline {section}{\numberline {4}Client Feedback}{3}
+\contentsline {section}{\numberline {5}Changes}{4}
+\contentsline {section}{\numberline {6}Workflows}{5}
