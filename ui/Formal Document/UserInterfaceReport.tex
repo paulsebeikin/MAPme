@@ -46,18 +46,31 @@
 % discusses the problem area that we are dealing with
 
 \section{Target Audience}
-The target audience remains the elderly bracket of people; predominantly retirees.  The target audience is assumed to have a basic knowledge of mobile apps and how they function.
+The target audience remains the elderly bracket of people; predominantly retirees.  The target audience is assumed to have a basic knowledge of mobile apps and how they function.  The target audience is also assumed to have a basic knowledge of how to operate a smart phone photo camera.
 
 \section{Project Context}
+The assumption is that users of the application are pre-registered on the Animal Demography Unit (ADU) website, however they can be redirected to the website via a link in the MAPme app.  The app will be used predominantly in the field, possibly in areas where wireless connectivity is limited or non-existent.  Therefore, it is imperative that the MAPme app is able to locally store records and images until such a time as wireless connectivity becomes available.
 
 \section{Functional Requirements}
 \subsection{Mandatory}
 \subsection{Secondary}
 
 \section{Client Feedback}
-After meeting with Dr. Craig Peter, hence forth known as the client, the following feedback was received:
-- Regardless of whether the data of the image is saved along with the image, the date must
+On 13 May 2016, Dylan Smith and Paul Sebeikin, hence forth known as the developers, conducted a meeting with Dr. Craig Peter, hence forth known as the client.  The following feedback was received:
+
+\begin{itemize}
+\item Regardless of whether the data of the image is saved along with the image, the date must appear on the ``New Record" screen to give the user piece of mind that the date has been captured correctly.
+\item The date should be automatically collected from the image metadata and presented to the user and the user should have the ability to change this, though the client has stipulated that in all but 5\% of cases, a change of date is unlikely.
+\item The client indicated that in addition to the mandatory ``New Record" fields that the developers, the ``country", ``province" and ``nearest town" fields were also mandatory.
+\item The client suggested incorporating the data field into the initial ``New Record" screen and moving the ``locality description" field to the second screen along with the newly mandatory ``country", ``province" and ``nearest town" fields.
+\item A discussion was had about geo-tags in images.  The developers communicated to the client that geo-tagging of photos is turned off by default on most smart phones.  It was deduced that it would be difficult to enforce that geo-tagging on images if this feature is turned off and the user wishes to quickly take a photograph without interfacing with the MAPme app directly.  A suggestion was put forward for the app to incorporate a minimal Google Maps widget which can be used to pinpoint a geographic location in the event that an image is taken without a geo-tag, outside of the MAPme app.  The client approved of this suggestion.
+\item The client noted the importance of a template system for new record insertion.  Users would prefer to enter as little data as possible in the shortest amount of time therefore, if various default values are inserted into various fields of the ``New Record" screens or if previously submitted record data is preserved for consequent use, the process would be far quicker to execute.
+\end{itemize}
 
 \section{Changes}
-
+Based on feedback acquired from the client, the developers will execute the following changes to the user interface mockup from the initial prototype demonstration:
+\begin{itemize}
+	\item A profile screen will be created for the MAPme app in which default settings can be tracked and changed by the user.  These settings will be used to supply default values to new record submissions in an effort to reduce the record submission times and improve general application efficiency.
+	\item Upon the submission of a new record, the user will have the option to save the data they have submitted to a single template.  When an attempt is made to insert a further record, the user will have the option to make use of the previously saved template or create a new record submission with default values.
+\end{itemize}
 \end{document}
