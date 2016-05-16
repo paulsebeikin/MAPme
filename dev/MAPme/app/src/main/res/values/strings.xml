@@ -28,5 +28,7 @@
 
     <!-- Strings for Add Image(s) -->
     <string name="browseImage">Browse</string>
+    <string name="saveImages">Done</string>
+
 
 </resources>

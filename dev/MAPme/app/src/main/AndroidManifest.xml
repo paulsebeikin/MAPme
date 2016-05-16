@@ -27,7 +27,9 @@
             android:name=".AboutActivity"
             android:label="@string/about_title" />
 
-        <activity android:name=".AddImage">
+        <activity
+            android:name=".AddImage"
+            android:label="Add Images(s)"        >
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
