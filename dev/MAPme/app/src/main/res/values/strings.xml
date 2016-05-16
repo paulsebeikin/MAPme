@@ -32,6 +32,12 @@
     <string name="history_title">History</string>
 
     <!-- Strings related to New Record -->
-    <string name="sel_img">Add Image(s)</string>
+    <string name="sel_img">Add Image(s)*</string>
+    <string name="gps">GPS*</string>
+    <string name="gps_lat">Lat</string>
+    <string name="gps_long">Long</string>
+    <string name="gps_alt">Alt</string>
+    <string name="project">Project*</string>
+    <string name="date">Date*</string>
 
 </resources>

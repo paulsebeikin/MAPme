@@ -1,15 +1,28 @@
 package psyblaze.mapme;
 
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ExpandableListAdapter;
+import android.widget.ListView;
+import android.widget.SimpleExpandableListAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class NewRecordActivity extends AppCompatActivity {
 
+    ListView listView;
+    Spinner proj_spinner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,6 +30,8 @@ public class NewRecordActivity extends AppCompatActivity {
 
         Toolbar action_bar = (Toolbar) findViewById(R.id.mapme_toolbar);
         setSupportActionBar(action_bar);
+
+        proj_spinner = (Spinner)findViewById(R.id.project_spinner);
     }
 
     @Override

@@ -30,7 +30,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/sel_img"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="0.7"/>
@@ -50,15 +50,87 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="@string/sel_img"
-                android:id="@+id/textView"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="0.7"/>
+                android:text="@string/gps"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+        </LinearLayout>
+        <LinearLayout
+            style="@style/linLayoutForLabels"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                style="@style/labelsNewRecord"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/gps_lat"/>
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.3"/>
+                android:layout_weight="0.3"
+                android:id="@+id/gps_lat"
+                android:singleLine="true" />
+        </LinearLayout>
+        <LinearLayout
+            style="@style/linLayoutForLabels"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                style="@style/labelsNewRecord"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/gps_long"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:id="@+id/gps_long"
+                android:singleLine="true" />
+        </LinearLayout>
+        <LinearLayout
+            style="@style/linLayoutForLabels"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                style="@style/labelsNewRecord"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/gps_alt"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:id="@+id/gps_alt"
+                android:singleLine="true" />
+        </LinearLayout>
+        <LinearLayout
+            style="@style/linLayoutForLabels"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                style="@style/labelsNewRecord"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/project"/>
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:id="@+id/project_spinner"></Spinner>
+
+        </LinearLayout>
+        <LinearLayout
+            style="@style/linLayoutForLabels"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                style="@style/labelsNewRecord"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/date"/>
         </LinearLayout>
 
     </LinearLayout>
