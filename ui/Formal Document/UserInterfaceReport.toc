@@ -6,4 +6,4 @@
 \contentsline {subsection}{\numberline {3.2}Secondary}{3}
 \contentsline {section}{\numberline {4}Client Feedback}{3}
 \contentsline {section}{\numberline {5}Changes}{4}
-\contentsline {section}{\numberline {6}Workflows}{5}
+\contentsline {section}{\numberline {6}Use Case Diagram and Workflows}{5}
