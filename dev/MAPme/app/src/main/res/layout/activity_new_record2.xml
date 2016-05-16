@@ -28,109 +28,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:id="@+id/sel_img_layout">
+            android:id="@+id/country_layout">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/sel_img"
+                android:text="@string/country"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="0.7"/>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="5"
-                android:src="@drawable/ic_add_img"/>
-
-        </LinearLayout>
-        <LinearLayout
-            style="@style/linLayoutForLabels"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_below="@id/sel_img_layout"
-            android:id="@+id/gps_layout">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/gps"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
-        </LinearLayout>
-        <LinearLayout
-            style="@style/linLayoutForLabels"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_below="@+id/gps_layout"
-            android:id="@+id/gps_lat_layout">
-            <TextView
-                style="@style/labelsNewRecord"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/gps_lat"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.3"
-                android:id="@+id/gps_lat"
-                android:singleLine="true" />
-        </LinearLayout>
-        <LinearLayout
-            style="@style/linLayoutForLabels"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_below="@id/gps_lat_layout"
-            android:id="@+id/gps_long_layout">
-            <TextView
-                style="@style/labelsNewRecord"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/gps_long"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.3"
-                android:id="@+id/gps_long"
-                android:singleLine="true" />
-        </LinearLayout>
-        <LinearLayout
-            style="@style/linLayoutForLabels"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_below="@+id/gps_long_layout"
-            android:id="@+id/alt_layout">
-            <TextView
-                style="@style/labelsNewRecord"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/gps_alt"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.3"
-                android:id="@+id/gps_alt"
-                android:singleLine="true" />
-        </LinearLayout>
-        <LinearLayout
-            style="@style/linLayoutForLabels"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_below="@+id/alt_layout"
-            android:id="@+id/proj_layout">
-            <TextView
-                style="@style/labelsNewRecord"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/project"/>
+                android:layout_weight="0.7"
+                style="@style/labelsNewRecord"/>
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
-                android:id="@+id/project_spinner"
+                android:id="@+id/country_spinner"
                 android:layout_gravity="end"
                 android:textAlignment="viewEnd"></Spinner>
 
@@ -140,30 +51,84 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_below="@+id/proj_layout"
-            android:id="@+id/date">
+            android:layout_below="@id/country_layout"
+            android:id="@+id/province_layout">
             <TextView
                 style="@style/labelsNewRecord"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/date"/>
-            <TextView
+                android:text="@string/province"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+            <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="date"
                 android:layout_weight="0.4"
-                android:id="@+id/date_picker"
+                android:id="@+id/province_spinner"
                 android:layout_gravity="end"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textAlignment="viewEnd"
-                android:onClick="showDatePickerDialog"/>
+                android:textAlignment="viewEnd"></Spinner>
         </LinearLayout>
-        <Button
+        <LinearLayout
+            style="@style/linLayoutForLabels"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/next"
-            android:layout_gravity="bottom"
+            android:orientation="horizontal"
+            android:layout_below="@+id/province_layout"
+            android:id="@+id/town_layout">
+            <TextView
+                style="@style/labelsNewRecord"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/town"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:id="@+id/town"
+                android:singleLine="true" />
+        </LinearLayout>
+        <LinearLayout
+            style="@style/linLayoutForLabels"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@id/town_layout"
+            android:id="@+id/desc_layout">
+            <TextView
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/desc"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:ems="10"
+                android:id="@+id/editText" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:onClick="navigateNext"/>
+            android:orientation="horizontal"
+            style="@style/linLayoutForLabels">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/submit"
+                android:layout_weight="0.5"
+                />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/next"
+                android:layout_weight="0.5"
+                android:id="@+id/submit_btn"
+                android:onClick="navigateNext"/>
+
+        </LinearLayout>
+
+
+
     </RelativeLayout>
 </LinearLayout>

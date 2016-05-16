@@ -5,4 +5,7 @@
     <item>FrogMAP</item>
     <item>MammalMAP</item>
 </string-array>
+    <string-array name="countries"></string-array>
+    <string-array name="provinces"></string-array>
+
 </resources>

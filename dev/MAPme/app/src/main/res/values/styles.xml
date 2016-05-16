@@ -42,6 +42,6 @@
     <style name="linLayoutForLabels">
         <item name="android:paddingLeft">10pt</item>
         <item name="android:paddingRight">10pt</item>
-        <item name="android:paddingTop">5pt</item>
+        <item name="android:paddingTop">10pt</item>
     </style>
 </resources>
