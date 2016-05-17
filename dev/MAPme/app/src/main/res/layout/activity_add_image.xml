@@ -132,7 +132,8 @@
             android:layout_width="62dp"
             android:layout_height="97dp"
             android:src="@drawable/ic_open_cam"
-            android:layout_weight="0.16"/>
+            android:layout_weight="0.16"
+            android:onClick="openCamera"/>
 
     </LinearLayout>
     <LinearLayout
