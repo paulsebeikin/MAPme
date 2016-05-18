@@ -7,5 +7,44 @@
 </string-array>
     <string-array name="countries"></string-array>
     <string-array name="provinces"></string-array>
+    <string-array name="NumberObserved">
 
+    </string-array>
+    <string-array name="GrowthForm">
+
+    </string-array>
+    <string-array name="NaturalCultivated">
+
+    </string-array>
+    <string-array name="Environments">
+        <item>Afrotemperate forest</item>
+        <item>Albany Thicket</item>
+        <item>Alpine</item>
+        <item>Aquatic</item>
+        <item>Coastal dunes</item>
+        <item>Cropland</item>
+        <item>Desert</item>
+        <item>Dwellings</item>
+        <item>Eastern Coastal Belt Forest</item>
+        <item>Estuaries</item>
+        <item>Fynbos</item>
+        <item>Gardens</item>
+        <item>Grassland</item>
+        <item>Littoral</item>
+        <item>Mangrove</item>
+        <item>Marsh/swamp</item>
+        <item>Montane</item>
+        <item>Nama Karroo</item>
+        <item>Plantation</item>
+        <item>Renosterveld</item>
+        <item>Savanna (arid)</item>
+        <item>Savanna (moist)</item>
+        <item>Strandveld</item>
+        <item>Subantarctic tundra</item>
+        <item>Succulent Karroo</item>
+        <item>Tropical rain forest</item>
+        <item>Urban parkland</item>
+        <item>Urban wasteland</item>
+        <item>Wetland</item>
+    </string-array>
 </resources>

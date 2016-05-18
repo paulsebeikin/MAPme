@@ -6,9 +6,14 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 public class NewRecordActivity2 extends AppCompatActivity {
+
+    TextView country;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +24,9 @@ public class NewRecordActivity2 extends AppCompatActivity {
         setSupportActionBar(action_bar);
 
 
+        country = (TextView) findViewById(R.id.country);
+        String locale = this.getResources().getConfiguration().locale.getDisplayCountry();
+        country.setText(locale);
     }
 
     @Override

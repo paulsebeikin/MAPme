@@ -45,8 +45,12 @@
     <string name="province">Province*</string>
     <string name="town">Nearest Town*</string>
     <string name="desc">Description (locality, sound, scent)*</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="environment">Environment</string>
+    <string name="species">Species</string>
+    <string name="flower">Flower</string>
+    <string name="fruit">Fruit</string>
+    <string name="number">Number Observed</string>
+    <string name="nat.cul">Natural / Cultivated</string>
+    <string name="growth">Growth Form</string>
 
 </resources>

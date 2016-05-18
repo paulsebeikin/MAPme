@@ -33,8 +33,10 @@
         <activity
             android:name=".NewRecordActivity"
             android:label="@string/new_record_title" />
-        <activity android:name=".NewRecordActivity2"
-            android:label="@string/new_record_title"></activity>
+        <activity
+            android:name=".NewRecordActivity2"
+            android:label="@string/new_record_title" />
+        <activity android:name=".NewRecordActivity3"></activity>
     </application>
 
 </manifest>

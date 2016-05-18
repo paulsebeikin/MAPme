@@ -28,11 +28,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:id="@+id/country_layout">
+            android:id="@+id/environment_layout">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/country"
+                android:text="@string/environment"
                 android:layout_gravity="center_vertical"
                 style="@style/labelsNewRecord"/>
 
@@ -40,70 +40,105 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
-                android:id="@+id/country_spinner"
+                android:id="@+id/environment_spinner"
                 android:layout_gravity="end"
                 android:textAlignment="viewEnd"></Spinner>
-
-
         </LinearLayout>
         <LinearLayout
             style="@style/linLayoutForLabels"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_below="@id/country_layout"
-            android:id="@+id/province_layout">
+            android:layout_below="@id/environment_layout"
+            android:id="@+id/species_layout">
             <TextView
                 style="@style/labelsNewRecord"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/province"
+                android:text="@string/species"
                 android:textAppearance="?android:attr/textAppearanceMedium"/>
-            <Spinner
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.4"
-                android:id="@+id/province_spinner"
-                android:layout_gravity="end"
-                android:textAlignment="viewEnd"></Spinner>
-        </LinearLayout>
-        <LinearLayout
-            style="@style/linLayoutForLabels"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_below="@+id/province_layout"
-            android:id="@+id/town_layout">
-            <TextView
-                style="@style/labelsNewRecord"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/town"/>
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:id="@+id/town"
+                android:id="@+id/species"
                 android:singleLine="true" />
+
         </LinearLayout>
         <LinearLayout
             style="@style/linLayoutForLabels"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_below="@id/town_layout"
-            android:id="@+id/desc_layout">
+            android:orientation="horizontal"
+            android:layout_below="@+id/species_layout"
+            android:id="@+id/checkbox_layout">
+        </LinearLayout>
+        <LinearLayout
+            style="@style/linLayoutForLabels"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/numObserved_layout"
+            android:layout_below="@id/species_layout">
             <TextView
-                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/desc"/>
-            <EditText
+                android:text="@string/number"
+                android:layout_gravity="center_vertical"
+                style="@style/labelsNewRecord"/>
+
+            <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textMultiLine"
-                android:ems="10"
-                android:id="@+id/editText" />
+                android:layout_weight="0.4"
+                android:id="@+id/numObserved_spinner"
+                android:layout_gravity="end"
+                android:textAlignment="viewEnd"></Spinner>
+        </LinearLayout>
+        <LinearLayout
+            style="@style/linLayoutForLabels"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/natCul_layout"
+            android:layout_below="@id/numObserved_layout">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/nat.cul"
+                android:layout_gravity="center_vertical"
+                style="@style/labelsNewRecord"/>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:id="@+id/nat.cul_spinner"
+                android:layout_gravity="end"
+                android:textAlignment="viewEnd"></Spinner>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/linLayoutForLabels"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/growth_layout"
+            android:layout_below="@id/natCul_layout">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/growth"
+                android:layout_gravity="center_vertical"
+                style="@style/labelsNewRecord"/>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:id="@+id/growth_spinner"
+                android:layout_gravity="end"
+                android:textAlignment="viewEnd"></Spinner>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -118,14 +153,6 @@
                 android:text="@string/submit"
                 android:layout_weight="0.5"
                 />
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/next"
-                android:layout_weight="0.5"
-                android:id="@+id/submit_btn"
-                android:onClick="navigateNext"/>
-
         </LinearLayout>
 
 
