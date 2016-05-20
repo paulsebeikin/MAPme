@@ -1,20 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 <string-array name="Projects">
-    <item>OrchidMAP</item>
-    <item>FrogMAP</item>
-    <item>MammalMAP</item>
+    <item>OrchidMAP (Orchids)</item>
+    <item>FrogMAP (Frogs)</item>
+    <item>MammalMAP (Mammals)</item>
+    <item>BirdPIX (Bird Pictures)</item>
+    <item>BOP (Birds with Odd Plumages)</item>
+    <item>DungBeetleMAP (Dung Beetles)</item>
+    <item>EchinoMAP (Echinoderma)</item>
+    <item>FishMAP (Freshwater Fish)</item>
+    <item>LacewingMAP (Neuroptera: Lacewings)</item>
+    <item>LepiMAP (Butterflies and Moths)</item>
+    <item>MushroomMAP (Mushrooms)</item>
+    <item>OdonataMAP (Dragonflies and Damselflies)</item>
+    <item>PHOWN (Weaver nests)</item>
+    <item>ReptileMAP (Reptiles)</item>
+    <item>ScorpionMAP (Scorpions)</item>
+    <item>SpiderMAP (Spiders)</item>
+    <item>TreeMAP (Tree Atlas)</item>
 </string-array>
     <string-array name="countries"></string-array>
     <string-array name="provinces"></string-array>
     <string-array name="NumberObserved">
-
+        <item>1</item>
+        <item>2-10</item>
+        <item>11-100</item>
+        <item>101-1000</item>
+        <item>1000+</item>
     </string-array>
     <string-array name="GrowthForm">
-
+        <item>Trees(Phanerophytes)</item>
+        <item>Dwarf Shrub</item>
+        <item>Liana</item>
+        <item>Creeper</item>
+        <item>Epiphyte (growing on other plants)</item>
+        <item>Lithophyte (growing on rocks)</item>
+        <item>Chremnophyte (growing on cliff faces)</item>
+        <item>Geophyte (growing point below ground)</item>
+        <item>Helophyte (marsh growing)</item>
+        <item>Hydrophyte (mostly submerged)</item>
+        <item>Annual (Therophyte)</item>
+        <item>Herbaceous</item>
+        <item>Graminoid</item>
     </string-array>
     <string-array name="NaturalCultivated">
-
+        <item>Naturally Occurring</item>
+        <item>Cultivated (street, park, garden)</item>
+        <item>Invasive</item>
+        <item>Reintroduced</item>
     </string-array>
     <string-array name="Environments">
         <item>Afrotemperate forest</item>

@@ -36,15 +36,12 @@
                 android:layout_gravity="center_vertical"
                 style="@style/labelsNewRecord"/>
 
-            <Spinner
+            <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.4"
-                android:id="@+id/country_spinner"
-                android:layout_gravity="end"
-                android:textAlignment="viewEnd"></Spinner>
-
-
+                android:layout_weight="0.5"
+                android:id="@+id/country"
+                android:singleLine="true" />
         </LinearLayout>
         <LinearLayout
             style="@style/linLayoutForLabels"
@@ -59,13 +56,12 @@
                 android:layout_height="wrap_content"
                 android:text="@string/province"
                 android:textAppearance="?android:attr/textAppearanceMedium"/>
-            <Spinner
+            <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.4"
-                android:id="@+id/province_spinner"
-                android:layout_gravity="end"
-                android:textAlignment="viewEnd"></Spinner>
+                android:layout_weight="0.5"
+                android:id="@+id/province"
+                android:singleLine="true" />
         </LinearLayout>
         <LinearLayout
             style="@style/linLayoutForLabels"

@@ -1,19 +1,29 @@
 package psyblaze.mapme;
 
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 public class NewRecordActivity2 extends AppCompatActivity {
 
-    TextView country;
+    private String api_key = "AIzaSyAAOj2-rMW7agCLakPjq0pPxxMPlilq7hw";
+    String url_str = "https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=" + api_key;
+    Geocoder geocoder;
+
+    EditText country, province, town;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,10 +33,36 @@ public class NewRecordActivity2 extends AppCompatActivity {
         Toolbar action_bar = (Toolbar) findViewById(R.id.mapme_toolbar);
         setSupportActionBar(action_bar);
 
+        country = (EditText) findViewById(R.id.country);
+        province = (EditText) findViewById(R.id.province);
+        town = (EditText) findViewById(R.id.town);
 
-        country = (TextView) findViewById(R.id.country);
-        String locale = this.getResources().getConfiguration().locale.getDisplayCountry();
-        country.setText(locale);
+        geocoder = new Geocoder(this, Locale.getDefault());
+        Bundle bundle = getIntent().getExtras();
+        Double[] location = (Double[]) bundle.get("location");
+        new GeoCodeAsyncTask().execute(location);
+    }
+
+    private class GeoCodeAsyncTask extends AsyncTask<Double, Void, Address> {
+        @Override
+        protected Address doInBackground(Double... location) {
+            try {
+                List<Address> addresses = geocoder.getFromLocation(location[0], location[1], 1);
+                return addresses.get(0);
+            }
+            catch (IOException ex) {
+                return null;
+            }
+
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(Address result) {
+            country.setText(result.getCountryName());
+            province.setText(result.getAdminArea());
+            town.setText(result.getLocality());
+
+        }
     }
 
     @Override
@@ -53,5 +89,12 @@ public class NewRecordActivity2 extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+
+    public void navigateNext(View view){
+        Intent nextInt = new Intent(this, NewRecordActivity3.class);
+        startActivity(nextInt);
     }
 }
