@@ -77,7 +77,8 @@
                     android:layout_alignParentRight="true"
                     android:layout_gravity="right"
                     android:layout_column="9"
-                    android:padding="5pt"/>
+                    android:padding="5pt"
+                    android:onClick="removeImage_1"/>
             </TableRow>
             <TableRow
                 android:layout_width="match_parent"
@@ -96,7 +97,8 @@
                     android:layout_alignParentRight="true"
                     android:layout_gravity="right"
                     android:layout_column="9"
-                    android:padding="5pt"/>
+                    android:padding="5pt"
+                    android:onClick="removeImage_2"/>
             </TableRow>
             <TableRow
                 android:layout_width="match_parent"
@@ -115,7 +117,8 @@
                     android:layout_alignParentRight="true"
                     android:layout_gravity="right"
                     android:layout_column="9"
-                    android:padding="5pt"/>
+                    android:padding="5pt"
+                    android:onClick="removeImage_3"/>
             </TableRow>
         </TableLayout>
     </LinearLayout>

@@ -1,23 +1,16 @@
 package psyblaze.mapme;
 
-import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.io.*;
-import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -26,17 +19,12 @@ public class AddImage extends AppCompatActivity {
     private static final int REQUEST_IMAGE_CAPTURE = 2;
     private static final int SELECT_PICTURE = 1;
 
-    String mCurrentPhotoPath;
-
-    private Uri fileUri;
-
+    private String mCurrentPhotoPath;
     private String selectedImagePath;
 
     private TextView image1;
     private TextView image2;
     private TextView image3;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,26 +66,23 @@ public class AddImage extends AppCompatActivity {
                 }
             }
             if (requestCode == REQUEST_IMAGE_CAPTURE) {
-                Uri selectedImage = fileUri;
-                getContentResolver().notifyChange(selectedImage, null);
-              //  ImageView imageView = (ImageView) findViewById(R.id.ImageView);
-                ContentResolver cr = getContentResolver();
-                Bitmap bitmap;
-                try {
-                    bitmap = android.provider.MediaStore.Images.Media
-                            .getBitmap(cr, selectedImage);
+                String fileName = mCurrentPhotoPath;
 
-                  //  imageView.setImageBitmap(bitmap);
-                   Toast.makeText(this, selectedImage.toString(),
-                           Toast.LENGTH_LONG).show();
-
-
-                } catch (Exception e) {
-                    Toast.makeText(this, "Failed to load", Toast.LENGTH_SHORT)
-                            .show();
-                    Log.e("Camera", e.toString());
+                if (image1.getText().toString().equals("IMAGE 1")) {
+                    setImageText(image1, fileName);
                 }
 
+                else if (image2.getText().toString().equals("IMAGE 2")) {
+                    setImageText(image2, fileName);
+                }
+
+                else if (image3.getText().toString().equals("IMAGE 3"))  {
+                    setImageText(image3, fileName);
+                }
+                else {
+                    Toast.makeText(AddImage.this, "You've already selected 3 images", Toast.LENGTH_LONG)
+                            .show();
+                }
             }
         }
     }
@@ -123,8 +108,6 @@ public class AddImage extends AppCompatActivity {
     }
 
     public void setImageText(TextView view, String path) {
-        Toast.makeText(AddImage.this, extractFileName(selectedImagePath) + " selected",
-                Toast.LENGTH_LONG).show();
         view.setText(extractFileName(path));
     }
 
@@ -146,36 +129,39 @@ public class AddImage extends AppCompatActivity {
     }
 
     public void openCamera(View view) {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        File photo = new File(Environment.getExternalStorageDirectory(),  "Pic.jpg");
-        intent.putExtra(MediaStore.EXTRA_OUTPUT,
-                Uri.fromFile(photo));
-        fileUri = Uri.fromFile(photo);
-        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (cameraIntent.resolveActivity(getPackageManager()) != null) {
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            if (photoFile != null) {
+                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+                startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE);
+            }
+        }
     }
 
-
-    /**
-     * Here we store the file url as it will be null after returning from camera
-     * app
-     */
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        // save file url in bundle as it will be null on scren orientation
-        // changes
-        outState.putParcelable("file_uri", fileUri);
+    private File createImageFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "MAPme_" + timeStamp + "_";
+        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
+        mCurrentPhotoPath = image.getAbsolutePath();
+        return image;
     }
 
-    /*
-     * Here we restore the fileUri again
-     */
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
+    public void removeImage_1(View view) {
+        image1.setText("IMAGE 1");
+    }
 
-        // get the file url
-        fileUri = savedInstanceState.getParcelable("file_uri");
+    public void removeImage_2 (View view) {
+        image2.setText("IMAGE 2");
+    }
+
+    public void removeImage_3 (View view) {
+        image3.setText("IMAGE 3");
     }
 } // class
