@@ -2,6 +2,8 @@ package psyblaze.mapme;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.PointF;
 import android.location.LocationManager;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +23,7 @@ import java.util.Date;
 
 public class NewRecordActivity extends AppCompatActivity {
 
+    public static final String PREFS_NAME = "MyPrefsFile";
     Spinner proj_spinner;
     TextView datePicker;
     SelectDateFragment datePickerFragment;
@@ -125,7 +128,7 @@ public class NewRecordActivity extends AppCompatActivity {
         Double lng = Double.parseDouble(gps_long.getText().toString());
         Double lat = Double.parseDouble(gps_lat.getText().toString());
         Intent nextInt = new Intent(this, NewRecordActivity2.class);
-        nextInt.putExtra("location", new Double[] {lng, lat});
+        nextInt.putExtra("location", new Double[]{lng, lat});
         startActivity(nextInt);
     }
 

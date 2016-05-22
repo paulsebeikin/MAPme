@@ -39,7 +39,7 @@ public class NewRecordActivity2 extends AppCompatActivity {
 
         geocoder = new Geocoder(this, Locale.getDefault());
         Bundle bundle = getIntent().getExtras();
-        Double[] location = (Double[]) bundle.get("location");
+        Double [] location = (Double[]) bundle.get("location");
         new GeoCodeAsyncTask().execute(location);
     }
 

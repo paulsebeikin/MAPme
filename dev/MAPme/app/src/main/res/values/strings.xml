@@ -31,7 +31,7 @@
     <string name="profile_title">Profile</string>
     <string name="history_title">History</string>
 
-    <!-- Strings related to New Record -->
+    <!-- Strings related to New Template -->
     <string name="sel_img">Add Image(s)*</string>
     <string name="gps">GPS*</string>
     <string name="gps_lat">Lat</string>
@@ -47,10 +47,9 @@
     <string name="desc">Description (locality, sound, scent)*</string>
     <string name="environment">Environment</string>
     <string name="species">Species</string>
-    <string name="flower">Flower</string>
-    <string name="fruit">Fruit</string>
+    <string name="flower">Flower?</string>
+    <string name="fruit">Fruit?</string>
     <string name="number">Number Observed</string>
     <string name="nat.cul">Natural / Cultivated</string>
     <string name="growth">Growth Form</string>
-
 </resources>
