@@ -33,7 +33,8 @@
 
     <!-- Strings for Add Image(s) -->
     <string name="browseImage">Browse</string>
-    <string name="saveImages">Done</string>
+    <string name="saveImages">Save</string>
+    <string name="add_image_title">Add Image(s)</string>
 
 
     <!-- Strings related to New Template -->

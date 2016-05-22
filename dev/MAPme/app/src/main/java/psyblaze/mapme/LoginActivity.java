@@ -3,7 +3,10 @@ package psyblaze.mapme;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -63,20 +66,31 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     private UserLoginTask mAuthTask = null;
 
+    public static final String PREFS_NAME = "MyPrefsFile";
+    public static final String Email = "nameKey";
+    public static final String ADU = "aduKey";
+
+
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
+    private EditText mADUView;
     private View mProgressView;
     private View mLoginFormView;
+    private View mLoginView;
+    private SharedPreferences settings;
+    private Editor editor;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
-
+        mADUView = (EditText) findViewById(R.id.adu);
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -98,6 +112,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public void onClick(View view) {
                 //attemptLogin();
+                savePreferences();
                 goHome();
             }
         });
@@ -109,6 +124,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         ((TextView) findViewById(R.id.forgot_link)).setMovementMethod(LinkMovementMethod.getInstance());
         ((TextView) findViewById(R.id.forgot_link)).setText(Html.fromHtml(getResources().getString(R.string.forgot_link)));
+
+        settings = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        mEmailView.setText(settings.getString("email",""));
+        mADUView.setText(settings.getString("adu",""));
+    }
+
+    public void savePreferences(){
+        editor = settings.edit();
+        editor.putString("email", mEmailView.getText().toString());
+        editor.putString("adu", mADUView.getText().toString());
+        editor.putString("pwd", mPasswordView.getText().toString());
+        editor.commit();
     }
 
     public void goHome(){

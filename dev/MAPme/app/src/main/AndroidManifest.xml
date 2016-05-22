@@ -35,9 +35,7 @@
 
         <activity
             android:name=".AddImage"
-            android:label="Add Images(s)"        >
-
-        </activity>
+            android:label="@string/add_image_title"/>
         <activity
             android:name=".HomeScreenActivity"
             android:label="@string/home_title" />
