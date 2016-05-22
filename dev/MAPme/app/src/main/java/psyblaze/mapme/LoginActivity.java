@@ -119,7 +119,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.actionbar, menu);
+        getMenuInflater().inflate(R.menu.actionbar_login, menu);
         //return true;
         return super.onCreateOptionsMenu(menu);
     }

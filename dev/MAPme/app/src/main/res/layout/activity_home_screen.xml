@@ -37,6 +37,7 @@
                 android:text="New Record"
                 android:id="@+id/button"
                 android:textAlignment="center"
+                android:onClick="NewRecord"
                 />
         </LinearLayout>
         <LinearLayout

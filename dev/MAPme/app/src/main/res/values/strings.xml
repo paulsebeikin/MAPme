@@ -17,18 +17,44 @@
     <string name="adu_prompt">ADU Number</string>
 
     <!-- Strings related to about -->
-    <string name="producedBy">Produced by PsyBlaze Technologies</string>
+    <string name="producedBy">PsyBlaze Technologies</string>
     <string name="producedByDate">May 2015</string>
     <string name="producedByAuthD">D. G. Smith</string>
     <string name="producedByAuthP">P. S. Sebeikin</string>
 
-    <!-- String related to action toolbar -->
+    <!-- Strings related to action toolbar -->
     <string name="about_title">About</string>
     <string name="logout_title">Logout</string>
+    <string name="help_title">Help</string>
+    <string name="home_title">Home</string>
+    <string name="new_record_title">New Record</string>
+    <string name="profile_title">Profile</string>
+    <string name="history_title">History</string>
 
     <!-- Strings for Add Image(s) -->
     <string name="browseImage">Browse</string>
     <string name="saveImages">Done</string>
 
 
+    <!-- Strings related to New Template -->
+    <string name="sel_img">Add Image(s)*</string>
+    <string name="gps">GPS*</string>
+    <string name="gps_lat">Lat</string>
+    <string name="gps_long">Long</string>
+    <string name="gps_alt">Alt</string>
+    <string name="project">Project*</string>
+    <string name="date">Date*</string>
+    <string name="next">Next >></string>
+    <string name="submit">Submit</string>
+    <string name="country">Country*</string>
+    <string name="province">Province*</string>
+    <string name="town">Nearest Town*</string>
+    <string name="desc">Description (locality, sound, scent)*</string>
+    <string name="environment">Environment</string>
+    <string name="species">Species</string>
+    <string name="flower">Flower?</string>
+    <string name="fruit">Fruit?</string>
+    <string name="number">Number Observed</string>
+    <string name="nat.cul">Natural / Cultivated</string>
+    <string name="growth">Growth Form</string>
 </resources>

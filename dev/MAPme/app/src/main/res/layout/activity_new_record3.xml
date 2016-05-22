@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="psyblaze.mapme.NewRecordActivity"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/mapme_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/AppTheme"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/page_layout">
+
+        <LinearLayout
+            style="@style/linLayoutForLabels"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/environment_layout">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/environment"
+                android:layout_gravity="center_vertical"
+                style="@style/labelsNewRecord"/>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:id="@+id/environment_spinner"
+                android:layout_gravity="end"
+                android:textAlignment="viewEnd"></Spinner>
+        </LinearLayout>
+        <LinearLayout
+            style="@style/linLayoutForLabels"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/environment_layout"
+            android:id="@+id/species_layout">
+            <TextView
+                style="@style/labelsNewRecord"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/species"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:id="@+id/species"
+                android:singleLine="true" />
+
+        </LinearLayout>
+        <LinearLayout
+            style="@style/linLayoutForLabels"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/species_layout"
+            android:id="@+id/checkbox_layout">
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:text="@string/flower"/>
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:text="@string/fruit"/>
+        </LinearLayout>
+        <LinearLayout
+            style="@style/linLayoutForLabels"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/numObserved_layout"
+            android:layout_below="@id/checkbox_layout">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/number"
+                android:layout_gravity="center_vertical"
+                style="@style/labelsNewRecord"/>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:id="@+id/numObserved_spinner"
+                android:layout_gravity="end"
+                android:textAlignment="viewEnd"></Spinner>
+        </LinearLayout>
+        <LinearLayout
+            style="@style/linLayoutForLabels"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/natCul_layout"
+            android:layout_below="@id/numObserved_layout">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/nat.cul"
+                android:layout_gravity="center_vertical"
+                style="@style/labelsNewRecord"/>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:id="@+id/nat.cul_spinner"
+                android:layout_gravity="end"
+                android:textAlignment="viewEnd"></Spinner>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/linLayoutForLabels"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/growth_layout"
+            android:layout_below="@id/natCul_layout">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/growth"
+                android:layout_gravity="center_vertical"
+                style="@style/labelsNewRecord"/>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:id="@+id/growth_spinner"
+                android:layout_gravity="end"
+                android:textAlignment="viewEnd"></Spinner>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            style="@style/linLayoutForLabels">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/submit"
+                android:layout_weight="0.5"
+                />
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+</LinearLayout>

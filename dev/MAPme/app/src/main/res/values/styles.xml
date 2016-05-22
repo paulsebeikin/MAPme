@@ -15,6 +15,13 @@
         <item name="android:fontFamily">sans-serif</item>
     </style>
 
+    <style name="labelsNewRecord">
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:textAlignment">textEnd</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_weight">0.7</item>
+    </style>
+
     <style name="buttonPadding">
         <item name="android:paddingTop">20pt</item>
         <item name="android:layout_width">354dp</item>
@@ -24,11 +31,16 @@
         <item name="android:paddingLeft">10pt</item>
     </style>
 
-
     <style name="largeButtons">
         <item name="android:textColor">@color/colorPrimaryDark</item>
         <item name="android:typeface">normal</item>
         <item name="android:textSize">25dp</item>
         <item name="android:padding">5dp</item>
+    </style>
+
+    <style name="linLayoutForLabels">
+        <item name="android:paddingLeft">10pt</item>
+        <item name="android:paddingRight">10pt</item>
+        <item name="android:paddingTop">5pt</item>
     </style>
 </resources>
