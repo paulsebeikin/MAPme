@@ -132,4 +132,8 @@ public class NewRecordActivity extends AppCompatActivity {
         startActivity(nextInt);
     }
 
+    public void addImage(View view) {
+        Intent nextInt = new Intent(this, AddImage.class);
+        startActivity(nextInt);
+    }
 }

@@ -41,7 +41,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
-                android:src="@drawable/ic_add_img"/>
+                android:src="@drawable/ic_add_img"
+                android:onClick="addImage"/>
 
         </LinearLayout>
         <LinearLayout

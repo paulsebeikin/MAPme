@@ -19,8 +19,8 @@ public class AddImage extends AppCompatActivity {
     private static final int REQUEST_IMAGE_CAPTURE = 2;
     private static final int SELECT_PICTURE = 1;
 
-    private String mCurrentPhotoPath;
-    private String selectedImagePath;
+    private static String mCurrentPhotoPath;
+    private static String selectedImagePath;
 
     private TextView image1;
     private TextView image2;
