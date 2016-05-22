@@ -17,24 +17,20 @@
         android:theme="@style/AppTheme"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center_vertical">
 
-
         <LinearLayout
             style="@style/buttonPadding">
-
             <ImageView
                 android:layout_width="47dp"
                 android:layout_height="51dp"
                 android:src="@drawable/ic_new_submission"
                 android:layout_alignParentLeft="true"
                 android:layout_gravity="top"/>
-
             <Button style="@style/largeButtons"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -45,7 +41,6 @@
         </LinearLayout>
         <LinearLayout
             style="@style/buttonPadding">
-
             <ImageView
                 android:layout_width="47dp"
                 android:layout_height="51dp"
@@ -53,16 +48,32 @@
                 android:layout_alignParentLeft="true"
                 android:layout_gravity="top"/>
             />
-
             <Button style="@style/largeButtons"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="History"
                 android:textAlignment="center"/>
         </LinearLayout>
+
         <LinearLayout
             style="@style/buttonPadding">
 
+            <ImageView
+                android:layout_width="47dp"
+                android:layout_height="51dp"
+                android:src="@drawable/ic_profile"
+                android:layout_alignParentLeft="true"
+                android:layout_gravity="top"/>
+
+            <Button style="@style/largeButtons"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Profile"
+                android:textAlignment="center"/>
+
+        </LinearLayout>
+        <LinearLayout
+            style="@style/buttonPadding">
             <ImageView
                 android:layout_width="47dp"
                 android:layout_height="51dp"
@@ -75,26 +86,6 @@
                 android:layout_height="match_parent"
                 android:text="Help"
                 android:textAlignment="center"/>
-
         </LinearLayout>
-        <LinearLayout
-            style="@style/buttonPadding">
-
-            <ImageView
-                android:layout_width="47dp"
-                android:layout_height="51dp"
-                android:src="@drawable/ic_about"
-                android:layout_alignParentLeft="true"
-                android:layout_gravity="top"/>
-
-            <Button style="@style/largeButtons"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="About"
-                android:textAlignment="center"/>
-
-        </LinearLayout>
-
     </LinearLayout>
-
 </LinearLayout>
