@@ -18,6 +18,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 
 import java.text.ParseException;
@@ -25,9 +28,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import Classes.Template;
+import Fragments.SelectDateFragment;
 
 public class NewRecordActivity extends AppCompatActivity {
-
 
     // UI Views
     Spinner proj_spinner;
@@ -40,6 +43,7 @@ public class NewRecordActivity extends AppCompatActivity {
     SharedPreferences settings;
     Editor editor;
     Template template;
+    //MapFragment gmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +99,11 @@ public class NewRecordActivity extends AppCompatActivity {
             Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
             startActivity(intent);
         }*/
+    }
+
+    public void getMap(View view){
+        Intent mapInt = new Intent(this, MapActivity.class);
+        startActivity(mapInt);
     }
 
     @Override

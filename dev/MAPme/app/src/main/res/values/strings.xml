@@ -58,4 +58,9 @@
     <string name="number">Number Observed</string>
     <string name="nat.cul">Natural / Cultivated</string>
     <string name="growth">Growth Form</string>
+    <string name="map">View Map</string>
+
+    <!-- String related to Map Widget -->
+    <string name="back">Back</string>
+
 </resources>

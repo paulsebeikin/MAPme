@@ -56,7 +56,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/gps"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_weight="0.5"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.9"
+                android:text="@string/map"
+                android:onClick="getMap"/>
         </LinearLayout>
         <LinearLayout
             style="@style/linLayoutForLabels"
@@ -116,11 +123,19 @@
                 android:singleLine="true" />
         </LinearLayout>
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/linLayoutForLabels"
+            android:layout_below="@+id/alt_layout"
+            android:id="@+id/map_layout">
+
+        </LinearLayout>
+        <LinearLayout
             style="@style/linLayoutForLabels"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_below="@+id/alt_layout"
+            android:layout_below="@+id/map_layout"
             android:id="@+id/proj_layout">
             <TextView
                 style="@style/labelsNewRecord"
