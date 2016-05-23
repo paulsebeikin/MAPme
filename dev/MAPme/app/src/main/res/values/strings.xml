@@ -69,4 +69,10 @@
     <string name="profileNearestTown">Nearest Town</string>
     <string name="profileProject">Project</string>
     <string name="profileSaveBtn">Save</string>
+
+    <!-- Strings for Help activity and related -->
+    <string name="newRec">- Creating a New Record</string>
+    <string name="logReg">- Registering and Logging In</string>
+    <string name="profSettings">- Profile Settings</string>
+    <string name="historySettings">- Checking Submission History</string>
 </resources>

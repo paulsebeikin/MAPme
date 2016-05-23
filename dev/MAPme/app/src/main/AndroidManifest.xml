@@ -52,8 +52,10 @@
             android:label="@string/new_record_title" />
         <activity
             android:name=".ProfileActivity"
-            android:label="@string/profileTitle">
-        </activity>
+            android:label="@string/profileTitle"/>
+        <activity
+            android:name=".HelpActivity"
+            android:label="Help"/>
     </application>
 
 </manifest>

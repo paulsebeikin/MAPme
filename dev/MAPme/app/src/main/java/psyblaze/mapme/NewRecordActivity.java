@@ -46,8 +46,10 @@ public class NewRecordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_record);
 
-        // get UI elements
         Toolbar action_bar = (Toolbar) findViewById(R.id.mapme_toolbar);
+
+
+        // get UI elements
         datePicker = (TextView) findViewById(R.id.date_picker);
         proj_spinner = (Spinner)findViewById(R.id.project_spinner);
         gps_lat = (EditText) findViewById(R.id.gps_lat);
