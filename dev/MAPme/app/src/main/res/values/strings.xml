@@ -58,4 +58,15 @@
     <string name="number">Number Observed</string>
     <string name="nat.cul">Natural / Cultivated</string>
     <string name="growth">Growth Form</string>
+
+    <!-- Strings for Profile activity -->
+    <string name="profileTitle">Profile</string>
+    <string name="profileName">Name</string>
+    <string name="profileEmail">Email</string>
+    <string name="profileADU"> ADU</string>
+    <string name="profileCountry">Country</string>
+    <string name="profileProvince">Province</string>
+    <string name="profileNearestTown">Nearest Town</string>
+    <string name="profileProject">Project</string>
+    <string name="profileSaveBtn">Save</string>
 </resources>

@@ -70,7 +70,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Profile"
-                android:textAlignment="center"/>
+                android:textAlignment="center"
+                android:onClick="openProfile"/>
 
         </LinearLayout>
         <LinearLayout
