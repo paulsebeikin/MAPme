@@ -28,30 +28,4 @@ public class AboutActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.actionbar_home, menu);
-        //return true;
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_home:
-                Intent homeInt = new Intent(this, HomeScreenActivity.class);
-                startActivity(homeInt);
-                return true;
-            case R.id.action_logout:
-                Toast.makeText(this,"Logging out...", Toast.LENGTH_LONG).show();
-                return true;
-            case R.id.action_new_record:
-                Intent newRecInt = new Intent(this, NewRecordActivity.class);
-                startActivity(newRecInt);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 }
