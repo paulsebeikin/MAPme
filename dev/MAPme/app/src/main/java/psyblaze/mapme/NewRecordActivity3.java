@@ -1,22 +1,38 @@
 package psyblaze.mapme;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+
+import Classes.Template;
 
 public class NewRecordActivity3 extends AppCompatActivity {
 
+    // UI Views
     Spinner environment_spin;
     Spinner number_spin;
     Spinner nat_cul_spin;
     Spinner growth_spin;
+    CheckBox fruit, flower;
+    EditText species;
 
+    //Objects
+    Gson gson;
+    SharedPreferences settings;
+    SharedPreferences.Editor editor;
+    Template template;
     ArrayAdapter spinnerAdapter;
 
     @Override
@@ -26,6 +42,11 @@ public class NewRecordActivity3 extends AppCompatActivity {
 
         Toolbar action_bar = (Toolbar) findViewById(R.id.mapme_toolbar);
         setSupportActionBar(action_bar);
+
+        // get views
+        fruit = (CheckBox) findViewById(R.id.fruit);
+        flower = (CheckBox) findViewById(R.id.flower);
+        species = (EditText) findViewById(R.id.species);
 
         // get values from arrays
         String[] env_values = getResources().getStringArray(R.array.Environments);
@@ -57,6 +78,29 @@ public class NewRecordActivity3 extends AppCompatActivity {
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         growth_spin.setAdapter(spinnerAdapter);
 
+    }
+
+    public void onDestroy(){
+        super.onDestroy();
+        saveTemplate();
+    }
+
+    private void saveTemplate(){
+        // get editor ready
+        editor = settings.edit();
+
+        // update the template
+        template.environment = environment_spin.getSelectedItem().toString();
+        template.natCul = nat_cul_spin.getSelectedItem().toString();
+        template.growth = growth_spin.getSelectedItem().toString();
+        template.numObserved = number_spin.getSelectedItem().toString();
+        template.species = species.getText().toString();
+        template.fruit = fruit.isChecked();
+        template.flower = flower.isChecked();
+
+        String json = gson.toJson(template);
+        editor.putString("template", json);
+        editor.commit();
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

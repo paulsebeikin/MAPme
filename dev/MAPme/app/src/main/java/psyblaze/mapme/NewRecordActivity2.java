@@ -52,7 +52,7 @@ public class NewRecordActivity2 extends AppCompatActivity {
         country = (EditText) findViewById(R.id.country);
         province = (EditText) findViewById(R.id.province);
         town = (EditText) findViewById(R.id.town);
-        //desc = (EditText) findViewById(R.id.desc);
+        desc = (EditText) findViewById(R.id.desc_text);
 
         // Shared Preference restore
         settings = getSharedPreferences(LoginActivity.PREFS_NAME, Context.MODE_PRIVATE);
@@ -75,8 +75,22 @@ public class NewRecordActivity2 extends AppCompatActivity {
 
     protected void onDestroy(){
         super.onDestroy();
+        saveTemplate();
+    }
+
+    private void saveTemplate(){
+        // get editor ready
         editor = settings.edit();
 
+        // update the template
+        template.country = country.getText().toString();
+        template.province = province.getText().toString();
+        template.town = province.getText().toString();
+        template.desc = desc.getText().toString();
+
+        String json = gson.toJson(template);
+        editor.putString("template", json);
+        editor.commit();
     }
 
     private class GeoCodeAsyncTask extends AsyncTask<Double, Void, Address> {

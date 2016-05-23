@@ -29,6 +29,10 @@ public class Template {
     }
 
     public Template() {
+        location = new Double[]{0.0,0.0};
+        altitude = 0.0;
+        flower = false;
+        fruit = false;
         dt = new Date();
         images = new String[3];
     }

@@ -32,6 +32,10 @@ import Fragments.SelectDateFragment;
 
 public class NewRecordActivity extends AppCompatActivity {
 
+    // Class Level Variables
+    private static final int GET_COORDS = 1;
+    private static boolean RECORD_UPDATED = false;
+
     // UI Views
     Spinner proj_spinner;
     TextView datePicker;
@@ -43,7 +47,6 @@ public class NewRecordActivity extends AppCompatActivity {
     SharedPreferences settings;
     Editor editor;
     Template template;
-    //MapFragment gmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,9 +77,9 @@ public class NewRecordActivity extends AppCompatActivity {
         String json = settings.getString("template", null);
         if (json != null){
             template = gson.fromJson(json, Template.class);
-            gps_long.setText(template.location[0].toString());
-            gps_lat.setText(template.location[1].toString());
-            gps_alt.setText(template.altitude.toString());
+            if (template.location[0] != 0.0) gps_long.setText(template.location[0].toString());
+            if (template.location[1] != 0.0) gps_lat.setText(template.location[1].toString());
+            if (template.altitude != 0.0) gps_alt.setText(template.altitude.toString());
             datePicker.setText(sdf.format(template.dt));
             for (int i = 0; i < spinnerAdapter.getCount(); i++){
                 if (proj_spinner.getItemAtPosition(i) == template.project) proj_spinner.setSelection(i);
@@ -101,15 +104,26 @@ public class NewRecordActivity extends AppCompatActivity {
         }*/
     }
 
-    public void getMap(View view){
-        Intent mapInt = new Intent(this, MapActivity.class);
-        startActivity(mapInt);
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         saveTemplate();
+    }
+
+    public void getMap(View view){
+        Intent mapInt = new Intent(this, MapActivity.class);
+        mapInt.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(mapInt, GET_COORDS);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == GET_COORDS) {
+                double[] tmpArr = data.getDoubleArrayExtra("location");
+                gps_long.setText(String.valueOf(tmpArr[0]));
+                gps_lat.setText(String.valueOf(tmpArr[1]));
+            }
+        }
     }
 
     @Override
@@ -161,11 +175,25 @@ public class NewRecordActivity extends AppCompatActivity {
     }
 
     public void navigateNext(View view){
-        Double lng = Double.parseDouble(gps_long.getText().toString());
-        Double lat = Double.parseDouble(gps_lat.getText().toString());
-        Intent nextInt = new Intent(this, NewRecordActivity2.class);
-        nextInt.putExtra("location", new Double[]{lng, lat});
-        startActivity(nextInt);
+        if (!validate()){
+            Toast.makeText(this, "Required fields are empty.", Toast.LENGTH_LONG).show();
+        }
+        else {
+            Double lng = Double.parseDouble(gps_long.getText().toString());
+            Double lat = Double.parseDouble(gps_lat.getText().toString());
+            Intent nextInt = new Intent(this, NewRecordActivity2.class);
+            nextInt.putExtra("location", new Double[]{lng, lat});
+            startActivity(nextInt);
+        }
+    }
+
+    private boolean validate(){
+        if (gps_long.getText().toString().isEmpty()) return false;
+        if (gps_lat.getText().toString().isEmpty()) return false;
+        if (gps_alt.getText().toString().isEmpty()) return false;
+        if (datePicker.getText().toString().isEmpty()) return false;
+        if (proj_spinner.getSelectedItem().toString().isEmpty()) return false;
+        return true;
     }
 
     public void addImage(View view) {
@@ -181,8 +209,8 @@ public class NewRecordActivity extends AppCompatActivity {
         String long_tmp = gps_long.getText().toString();
         String lat_tmp = gps_lat.getText().toString();
         String alt_tmp = gps_alt.getText().toString();
-        template.location = new Double[]{Double.parseDouble(long_tmp), Double.parseDouble(lat_tmp)};
-        template.altitude = Double.parseDouble(alt_tmp);
+        if (!long_tmp.isEmpty() && !lat_tmp.isEmpty()) template.location = new Double[]{Double.parseDouble(long_tmp), Double.parseDouble(lat_tmp)};
+        if (!alt_tmp.isEmpty()) template.altitude = Double.parseDouble(alt_tmp);
         template.project = proj_spinner.getSelectedItem().toString();
 
         String json = gson.toJson(template);
