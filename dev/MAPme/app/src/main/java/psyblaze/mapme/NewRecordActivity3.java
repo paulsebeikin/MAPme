@@ -1,5 +1,6 @@
 package psyblaze.mapme;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -77,6 +78,21 @@ public class NewRecordActivity3 extends AppCompatActivity {
         spinnerAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, growth_values);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         growth_spin.setAdapter(spinnerAdapter);
+
+        // Shared Preference restore
+        settings = getSharedPreferences(LoginActivity.PREFS_NAME, Context.MODE_PRIVATE);
+        gson = new Gson();
+        String json = settings.getString("template", null);
+        if (json != null){
+            template = gson.fromJson(json, Template.class);
+            species.setText(template.species);
+            fruit.setChecked(template.fruit);
+            flower.setChecked(template.flower);
+        }
+        else {
+            template = new Template();
+
+        }
 
     }
 

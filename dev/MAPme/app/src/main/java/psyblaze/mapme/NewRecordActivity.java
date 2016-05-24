@@ -111,7 +111,19 @@ public class NewRecordActivity extends AppCompatActivity {
     }
 
     public void getMap(View view){
+        // set up an initial marker for the map, to pass to the MapActivity
+        LatLng startMarker;
+        if (!gps_long.getText().toString().isEmpty() && !gps_lat.getText().toString().isEmpty()) {
+            double lng = Double.parseDouble(gps_long.getText().toString());
+            double lat = Double.parseDouble(gps_lat.getText().toString());
+            startMarker = new LatLng(lat, lng);
+        }
+        // no GPS coordinates have previously been filled in so just put the startMarker at default pos.
+        else startMarker = new LatLng(0.0,0.0);
+
+        // start MapActivity and pass the startMarker
         Intent mapInt = new Intent(this, MapActivity.class);
+        mapInt.putExtra("startMarker",startMarker);
         mapInt.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(mapInt, GET_COORDS);
     }
@@ -119,9 +131,10 @@ public class NewRecordActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             if (requestCode == GET_COORDS) {
-                double[] tmpArr = data.getDoubleArrayExtra("location");
-                gps_long.setText(String.valueOf(tmpArr[0]));
-                gps_lat.setText(String.valueOf(tmpArr[1]));
+                // get the selected location coordinate and update the views
+                LatLng location = data.getParcelableExtra("location");
+                gps_long.setText(String.valueOf(location.longitude));
+                gps_lat.setText(String.valueOf(location.latitude));
             }
         }
     }
@@ -182,7 +195,7 @@ public class NewRecordActivity extends AppCompatActivity {
             Double lng = Double.parseDouble(gps_long.getText().toString());
             Double lat = Double.parseDouble(gps_lat.getText().toString());
             Intent nextInt = new Intent(this, NewRecordActivity2.class);
-            nextInt.putExtra("location", new Double[]{lng, lat});
+            nextInt.putExtra("location", new Double[]{lat,lng});
             startActivity(nextInt);
         }
     }

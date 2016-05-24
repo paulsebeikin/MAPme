@@ -3,13 +3,13 @@ package psyblaze.mapme;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,7 +19,6 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -37,7 +36,7 @@ public class NewRecordActivity2 extends AppCompatActivity {
     //Objects
     Gson gson;
     SharedPreferences settings;
-    SharedPreferences.Editor editor;
+    Editor editor;
     Template template;
     Geocoder geocoder;
 
@@ -60,7 +59,10 @@ public class NewRecordActivity2 extends AppCompatActivity {
         String json = settings.getString("template", null);
         if (json != null){
             template = gson.fromJson(json, Template.class);
-
+            desc.setText(template.desc);
+            country.setText(template.country);
+            province.setText(template.province);
+            town.setText(template.town);
         }
         else {
             template = new Template();

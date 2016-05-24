@@ -55,15 +55,18 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/gps"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_weight="0.5"/>
-            <Button
+                android:text="@string/gps"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.7"/>
+
+            <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.9"
-                android:text="@string/map"
+                android:layout_weight="5"
+                android:src="@drawable/ic_map"
                 android:onClick="getMap"/>
+
         </LinearLayout>
         <LinearLayout
             style="@style/linLayoutForLabels"
