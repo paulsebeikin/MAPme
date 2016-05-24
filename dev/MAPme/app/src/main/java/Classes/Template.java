@@ -16,7 +16,7 @@ import java.util.Objects;
  */
 public class Template {
 
-    public String project, country, province, town, desc, environment, species, numObserved, natCul, growth;
+    public String project, country, province, town, desc, environment, species, numObserved, natCul, growth, source;
     public Date dt;
     public Double[] location;
     public Double altitude;

@@ -114,6 +114,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/submit"
                 android:layout_weight="0.5"
+                android:onClick="onSubmit"
                 />
             <Button
                 android:layout_width="match_parent"

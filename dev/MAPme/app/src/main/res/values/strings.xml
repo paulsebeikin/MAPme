@@ -59,6 +59,7 @@
     <string name="nat.cul">Natural / Cultivated</string>
     <string name="growth">Growth Form</string>
     <string name="map">View Map</string>
+    <string name="source">Source</string>
 
     <!-- String related to Map Widget -->
     <string name="back">Back</string>

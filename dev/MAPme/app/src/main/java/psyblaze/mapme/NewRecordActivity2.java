@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,14 +18,19 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.j256.ormlite.android.apptools.OrmLiteBaseActivity;
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.RuntimeExceptionDao;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import Classes.Record;
+import Classes.RecordHelper;
 import Classes.Template;
 
-public class NewRecordActivity2 extends AppCompatActivity {
+public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> {
 
     // Class Variables
     private String api_key = "AIzaSyAAOj2-rMW7agCLakPjq0pPxxMPlilq7hw";
@@ -46,7 +52,7 @@ public class NewRecordActivity2 extends AppCompatActivity {
         setContentView(R.layout.activity_new_record2);
 
         Toolbar action_bar = (Toolbar) findViewById(R.id.mapme_toolbar);
-        setSupportActionBar(action_bar);
+        //setActionBar(action_bar);
 
         country = (EditText) findViewById(R.id.country);
         province = (EditText) findViewById(R.id.province);
@@ -66,7 +72,6 @@ public class NewRecordActivity2 extends AppCompatActivity {
         }
         else {
             template = new Template();
-
         }
 
         geocoder = new Geocoder(this, Locale.getDefault());
@@ -75,8 +80,8 @@ public class NewRecordActivity2 extends AppCompatActivity {
         new GeoCodeAsyncTask().execute(location);
     }
 
-    protected void onDestroy(){
-        super.onDestroy();
+    protected void onStop(){
+        super.onStop();
         saveTemplate();
     }
 
@@ -93,6 +98,28 @@ public class NewRecordActivity2 extends AppCompatActivity {
         String json = gson.toJson(template);
         editor.putString("template", json);
         editor.commit();
+    }
+
+    public void onSubmit(View view){
+        saveTemplate();
+
+        RecordHelper helper = new RecordHelper(this);
+        helper.getWritableDatabase();
+        RuntimeExceptionDao<Record,Integer> recordDao = getHelper().getRecordDao();
+
+        Record toInsert = new Record(template);
+        toInsert.setEmail(settings.getString("email",""));
+        toInsert.setAdu(Integer.getInteger(settings.getString("adu","")));
+
+        recordDao.create(toInsert);
+
+        List<Record> allRecords = recordDao.queryForAll();
+        for (Record r : allRecords) Log.i("record", r.toString());
+
+        // go back to home page
+        Intent goHome = new Intent(this, HomeScreenActivity.class);
+        startActivity(goHome);
+        finish();
     }
 
     private class GeoCodeAsyncTask extends AsyncTask<Double, Void, Address> {

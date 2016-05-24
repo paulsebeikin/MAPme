@@ -8,6 +8,7 @@ import android.content.SharedPreferences.Editor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,7 +38,7 @@ public class NewRecordActivity extends AppCompatActivity {
     private static boolean RECORD_UPDATED = false;
 
     // UI Views
-    Spinner proj_spinner;
+    Spinner proj_spinner, source_spinner;
     TextView datePicker;
     EditText gps_lat, gps_long, gps_alt;
 
@@ -57,6 +58,7 @@ public class NewRecordActivity extends AppCompatActivity {
         Toolbar action_bar = (Toolbar) findViewById(R.id.mapme_toolbar);
         datePicker = (TextView) findViewById(R.id.date_picker);
         proj_spinner = (Spinner)findViewById(R.id.project_spinner);
+        source_spinner = (Spinner)findViewById(R.id.source_spinner);
         gps_lat = (EditText) findViewById(R.id.gps_lat);
         gps_long = (EditText) findViewById(R.id.gps_long);
         gps_alt = (EditText) findViewById(R.id.gps_alt);
@@ -68,6 +70,14 @@ public class NewRecordActivity extends AppCompatActivity {
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         // attaching data adapter to spinner
         proj_spinner.setAdapter(spinnerAdapter);
+
+        values = getResources().getStringArray(R.array.source);
+        // create adapter for spinner
+        ArrayAdapter sourceAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, values);
+        // configure drop-down layout style
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        // attaching data adapter to spinner
+        source_spinner.setAdapter(sourceAdapter);
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -105,8 +115,8 @@ public class NewRecordActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onStop() {
+        super.onStop();
         saveTemplate();
     }
 
@@ -197,6 +207,7 @@ public class NewRecordActivity extends AppCompatActivity {
             Intent nextInt = new Intent(this, NewRecordActivity2.class);
             nextInt.putExtra("location", new Double[]{lat,lng});
             startActivity(nextInt);
+            finish();
         }
     }
 
@@ -222,9 +233,14 @@ public class NewRecordActivity extends AppCompatActivity {
         String long_tmp = gps_long.getText().toString();
         String lat_tmp = gps_lat.getText().toString();
         String alt_tmp = gps_alt.getText().toString();
-        if (!long_tmp.isEmpty() && !lat_tmp.isEmpty()) template.location = new Double[]{Double.parseDouble(long_tmp), Double.parseDouble(lat_tmp)};
-        if (!alt_tmp.isEmpty()) template.altitude = Double.parseDouble(alt_tmp);
+        if (!long_tmp.isEmpty() && !lat_tmp.isEmpty()) {
+            template.location = new Double[]{Double.parseDouble(long_tmp), Double.parseDouble(lat_tmp)};
+        }
+        if (!alt_tmp.isEmpty()) {
+            template.altitude = Double.parseDouble(alt_tmp);
+        }
         template.project = proj_spinner.getSelectedItem().toString();
+        template.source = source_spinner.getSelectedItem().toString();
 
         String json = gson.toJson(template);
         editor.putString("template", json);
