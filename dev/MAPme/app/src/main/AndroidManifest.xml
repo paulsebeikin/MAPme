@@ -52,10 +52,10 @@
             android:label="@string/new_record_title" />
         <activity
             android:name=".ProfileActivity"
-            android:label="@string/profileTitle"/>
-        <activity
-            android:name=".HelpActivity"
-            android:label="Help"/>
+            android:label="@string/profileTitle" />
+        <activity android:name=".HistoryActivity" />
+        <activity android:name=".HelpActivity" />
+        <activity android:name=".HelpDetailsActivity"></activity>
     </application>
 
 </manifest>
