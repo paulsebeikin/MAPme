@@ -5,16 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import psyblaze.mapme.R;
-
-/**
- * Created by g13s0714 on 2016/05/24.
- */
 
 public class HelpArrayAdapter extends ArrayAdapter {
 
@@ -32,7 +27,7 @@ public class HelpArrayAdapter extends ArrayAdapter {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.help_rowlayout, parent, false);
         TextView nameLabel = (TextView) rowView.findViewById(R.id.nameLabel);
-        nameLabel.setText(values.get(position).helpText);
+        nameLabel.setText(values.get(position).menuString);
 
         return rowView;
     }
@@ -42,9 +37,11 @@ public class HelpArrayAdapter extends ArrayAdapter {
         return null;
     }
 
-    public void updateContact (Help toUpdate) {
+    public void updateHelp (Help toUpdate) {
         int pos = Integer.parseInt(toUpdate.helpText);
         if (pos < values.size()) values.set(pos, toUpdate);
         notifyDataSetChanged();
     }
 }
+
+

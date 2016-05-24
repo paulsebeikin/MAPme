@@ -53,9 +53,15 @@
         <activity
             android:name=".ProfileActivity"
             android:label="@string/profileTitle" />
-        <activity android:name=".HistoryActivity" />
-        <activity android:name=".HelpActivity" />
-        <activity android:name=".HelpDetailsActivity"></activity>
+        <activity
+            android:name=".HistoryActivity"
+            android:label="History"/>
+        <activity
+            android:name=".HelpActivity"
+            android:label="Help"/>
+        <activity
+            android:name=".HelpDetailsActivity"
+            android:label="Help"/>
     </application>
 
 </manifest>
