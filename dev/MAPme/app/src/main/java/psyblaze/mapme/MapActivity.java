@@ -71,11 +71,6 @@ public class MapActivity extends AppCompatActivity {
         });
     }
 
-    public void onDestroy(){
-        super.onDestroy();
-        template.source = "Google Map";
-    }
-
     public void onSave(View view){
         Intent resultInt = new Intent(this, NewRecordActivity.class);
         resultInt.putExtra("location", location);

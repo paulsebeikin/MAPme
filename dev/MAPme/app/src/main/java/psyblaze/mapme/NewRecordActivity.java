@@ -207,7 +207,10 @@ public class NewRecordActivity extends AppCompatActivity {
             Double lng = Double.parseDouble(gps_long.getText().toString());
             Double lat = Double.parseDouble(gps_lat.getText().toString());
             Intent nextInt = new Intent(this, NewRecordActivity2.class);
-            nextInt.putExtra("location", new Double[]{lat,lng});
+            Bundle b = new Bundle();
+            b.putDoubleArray("location", new double[]{lat,lng});
+            nextInt.putExtras(b);
+            //nextInt.putExtra("location", new Double[]{lat,lng});
             startActivity(nextInt);
             finish();
         }
