@@ -3,6 +3,7 @@ package psyblaze.mapme;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
@@ -17,15 +18,19 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.j256.ormlite.android.apptools.OrmLiteBaseActivity;
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.RuntimeExceptionDao;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import Classes.Record;
+import Classes.RecordHelper;
 import Classes.Template;
 
-public class NewRecordActivity2 extends AppCompatActivity {
+public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> {
 
     // Class Variables
     private String api_key = "AIzaSyAAOj2-rMW7agCLakPjq0pPxxMPlilq7hw";
@@ -37,7 +42,7 @@ public class NewRecordActivity2 extends AppCompatActivity {
     //Objects
     Gson gson;
     SharedPreferences settings;
-    SharedPreferences.Editor editor;
+    Editor editor;
     Template template;
     Geocoder geocoder;
 
@@ -47,12 +52,12 @@ public class NewRecordActivity2 extends AppCompatActivity {
         setContentView(R.layout.activity_new_record2);
 
         Toolbar action_bar = (Toolbar) findViewById(R.id.mapme_toolbar);
-        setSupportActionBar(action_bar);
+        //setActionBar(action_bar);
 
         country = (EditText) findViewById(R.id.country);
         province = (EditText) findViewById(R.id.province);
         town = (EditText) findViewById(R.id.town);
-        //desc = (EditText) findViewById(R.id.desc);
+        desc = (EditText) findViewById(R.id.desc_text);
 
         // Shared Preference restore
         settings = getSharedPreferences(LoginActivity.PREFS_NAME, Context.MODE_PRIVATE);
@@ -60,11 +65,13 @@ public class NewRecordActivity2 extends AppCompatActivity {
         String json = settings.getString("template", null);
         if (json != null){
             template = gson.fromJson(json, Template.class);
-
+            desc.setText(template.desc);
+            country.setText(template.country);
+            province.setText(template.province);
+            town.setText(template.town);
         }
         else {
             template = new Template();
-
         }
 
         geocoder = new Geocoder(this, Locale.getDefault());
@@ -73,10 +80,47 @@ public class NewRecordActivity2 extends AppCompatActivity {
         new GeoCodeAsyncTask().execute(location);
     }
 
-    protected void onDestroy(){
-        super.onDestroy();
+    protected void onStop(){
+        super.onStop();
+        saveTemplate();
+    }
+
+    private void saveTemplate(){
+        // get editor ready
         editor = settings.edit();
 
+        // update the template
+        template.country = country.getText().toString();
+        template.province = province.getText().toString();
+        template.town = province.getText().toString();
+        template.desc = desc.getText().toString();
+
+        String json = gson.toJson(template);
+        editor.putString("template", json);
+        editor.commit();
+    }
+
+    public void onSubmit(View view){
+        saveTemplate();
+
+        RecordHelper helper = new RecordHelper(this);
+        helper.getWritableDatabase();
+        RuntimeExceptionDao<Record,Integer> recordDao = getHelper().getRecordDao();
+
+        Record toInsert = new Record(template);
+        toInsert.setEmail(settings.getString("email",""));
+        String aduStr = settings.getString("adu","");
+        toInsert.setAdu(Integer.parseInt(aduStr));
+
+        recordDao.create(toInsert);
+
+        List<Record> allRecords = recordDao.queryForAll();
+        for (Record r : allRecords) Log.i("record", r.toString());
+
+        // go back to home page
+        Intent goHome = new Intent(this, HomeScreenActivity.class);
+        startActivity(goHome);
+        finish();
     }
 
     private class GeoCodeAsyncTask extends AsyncTask<Double, Void, Address> {

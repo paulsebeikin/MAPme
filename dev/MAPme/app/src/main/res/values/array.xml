@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+<string-array name="source">
+    <item>GPS</item>
+    <item>Google Earth</item>
+    <item>Google Map</item>
+    <item>GIS</item>
+    <item>1:50 000 Map</item>
+    <item>1:250 000 Map</item>
+</string-array>
+
 <string-array name="Projects">
     <item>OrchidMAP (Orchids)</item>
     <item>FrogMAP (Frogs)</item>

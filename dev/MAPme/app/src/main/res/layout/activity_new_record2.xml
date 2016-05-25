@@ -93,14 +93,14 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/desc"
+                android:id="@+id/desc_label"
                 android:text="@string/desc"/>
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine"
                 android:ems="10"
-                android:id="@+id/editText" />
+                android:id="@+id/desc_text" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -114,6 +114,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/submit"
                 android:layout_weight="0.5"
+                android:onClick="onSubmit"
                 />
             <Button
                 android:layout_width="match_parent"

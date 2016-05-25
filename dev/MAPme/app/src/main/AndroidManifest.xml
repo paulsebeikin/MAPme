@@ -22,6 +22,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAAOj2-rMW7agCLakPjq0pPxxMPlilq7hw" />
+
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name"
@@ -47,9 +51,9 @@
         <activity
             android:name=".NewRecordActivity2"
             android:label="@string/new_record_title" />
-        <activity
-            android:name=".NewRecordActivity3"
-            android:label="@string/new_record_title" />
+        <activity android:name=".MapActivity"
+            android:label="@string/map"
+            android:theme="@style/Theme.AppCompat.Dialog"></activity>
         <activity
             android:name=".ProfileActivity"
             android:label="@string/profileTitle" />
@@ -60,8 +64,8 @@
             android:name=".HelpActivity"
             android:label="Help"/>
         <activity
-            android:name=".HelpDetailsActivity"
             android:label="Help"/>
+            android:name=".HelpDetailsActivity"
     </application>
 
 </manifest>

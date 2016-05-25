@@ -8,6 +8,7 @@ import android.content.SharedPreferences.Editor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 
 import java.text.ParseException;
@@ -25,12 +29,16 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import Classes.Template;
+import Fragments.SelectDateFragment;
 
 public class NewRecordActivity extends AppCompatActivity {
 
+    // Class Level Variables
+    private static final int GET_COORDS = 1;
+    private static boolean RECORD_UPDATED = false;
 
     // UI Views
-    Spinner proj_spinner;
+    Spinner proj_spinner, source_spinner;
     TextView datePicker;
     EditText gps_lat, gps_long, gps_alt;
 
@@ -52,6 +60,7 @@ public class NewRecordActivity extends AppCompatActivity {
         // get UI elements
         datePicker = (TextView) findViewById(R.id.date_picker);
         proj_spinner = (Spinner)findViewById(R.id.project_spinner);
+        source_spinner = (Spinner)findViewById(R.id.source_spinner);
         gps_lat = (EditText) findViewById(R.id.gps_lat);
         gps_long = (EditText) findViewById(R.id.gps_long);
         gps_alt = (EditText) findViewById(R.id.gps_alt);
@@ -64,6 +73,14 @@ public class NewRecordActivity extends AppCompatActivity {
         // attaching data adapter to spinner
         proj_spinner.setAdapter(spinnerAdapter);
 
+        values = getResources().getStringArray(R.array.source);
+        // create adapter for spinner
+        ArrayAdapter sourceAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, values);
+        // configure drop-down layout style
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        // attaching data adapter to spinner
+        source_spinner.setAdapter(sourceAdapter);
+
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
         // Shared Preference restore
@@ -72,9 +89,9 @@ public class NewRecordActivity extends AppCompatActivity {
         String json = settings.getString("template", null);
         if (json != null){
             template = gson.fromJson(json, Template.class);
-            gps_long.setText(template.location[0].toString());
-            gps_lat.setText(template.location[1].toString());
-            gps_alt.setText(template.altitude.toString());
+            if (template.location[0] != 0.0) gps_long.setText(template.location[0].toString());
+            if (template.location[1] != 0.0) gps_lat.setText(template.location[1].toString());
+            if (template.altitude != 0.0) gps_alt.setText(template.altitude.toString());
             datePicker.setText(sdf.format(template.dt));
             for (int i = 0; i < spinnerAdapter.getCount(); i++){
                 if (proj_spinner.getItemAtPosition(i) == template.project) proj_spinner.setSelection(i);
@@ -100,9 +117,38 @@ public class NewRecordActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onStop() {
+        super.onStop();
         saveTemplate();
+    }
+
+    public void getMap(View view){
+        // set up an initial marker for the map, to pass to the MapActivity
+        LatLng startMarker;
+        if (!gps_long.getText().toString().isEmpty() && !gps_lat.getText().toString().isEmpty()) {
+            double lng = Double.parseDouble(gps_long.getText().toString());
+            double lat = Double.parseDouble(gps_lat.getText().toString());
+            startMarker = new LatLng(lat, lng);
+        }
+        // no GPS coordinates have previously been filled in so just put the startMarker at default pos.
+        else startMarker = new LatLng(0.0,0.0);
+
+        // start MapActivity and pass the startMarker
+        Intent mapInt = new Intent(this, MapActivity.class);
+        mapInt.putExtra("startMarker",startMarker);
+        mapInt.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(mapInt, GET_COORDS);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == GET_COORDS) {
+                // get the selected location coordinate and update the views
+                LatLng location = data.getParcelableExtra("location");
+                gps_long.setText(String.valueOf(location.longitude));
+                gps_lat.setText(String.valueOf(location.latitude));
+            }
+        }
     }
 
     @Override
@@ -154,11 +200,26 @@ public class NewRecordActivity extends AppCompatActivity {
     }
 
     public void navigateNext(View view){
-        Double lng = Double.parseDouble(gps_long.getText().toString());
-        Double lat = Double.parseDouble(gps_lat.getText().toString());
-        Intent nextInt = new Intent(this, NewRecordActivity2.class);
-        nextInt.putExtra("location", new Double[]{lng, lat});
-        startActivity(nextInt);
+        if (!validate()){
+            Toast.makeText(this, "Required fields are empty.", Toast.LENGTH_LONG).show();
+        }
+        else {
+            Double lng = Double.parseDouble(gps_long.getText().toString());
+            Double lat = Double.parseDouble(gps_lat.getText().toString());
+            Intent nextInt = new Intent(this, NewRecordActivity2.class);
+            nextInt.putExtra("location", new Double[]{lat,lng});
+            startActivity(nextInt);
+            finish();
+        }
+    }
+
+    private boolean validate(){
+        if (gps_long.getText().toString().isEmpty()) return false;
+        if (gps_lat.getText().toString().isEmpty()) return false;
+        if (gps_alt.getText().toString().isEmpty()) return false;
+        if (datePicker.getText().toString().isEmpty()) return false;
+        if (proj_spinner.getSelectedItem().toString().isEmpty()) return false;
+        return true;
     }
 
     public void addImage(View view) {
@@ -174,9 +235,14 @@ public class NewRecordActivity extends AppCompatActivity {
         String long_tmp = gps_long.getText().toString();
         String lat_tmp = gps_lat.getText().toString();
         String alt_tmp = gps_alt.getText().toString();
-        template.location = new Double[]{Double.parseDouble(long_tmp), Double.parseDouble(lat_tmp)};
-        template.altitude = Double.parseDouble(alt_tmp);
+        if (!long_tmp.isEmpty() && !lat_tmp.isEmpty()) {
+            template.location = new Double[]{Double.parseDouble(long_tmp), Double.parseDouble(lat_tmp)};
+        }
+        if (!alt_tmp.isEmpty()) {
+            template.altitude = Double.parseDouble(alt_tmp);
+        }
         template.project = proj_spinner.getSelectedItem().toString();
+        template.source = source_spinner.getSelectedItem().toString();
 
         String json = gson.toJson(template);
         editor.putString("template", json);

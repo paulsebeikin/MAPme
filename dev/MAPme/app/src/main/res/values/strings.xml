@@ -75,4 +75,10 @@
     <string name="logReg">- Registering and Logging In</string>
     <string name="profSettings">- Profile Settings</string>
     <string name="historySettings">- Checking Submission History</string>
+    <string name="map">View Map</string>
+    <string name="source">Source</string>
+
+    <!-- String related to Map Widget -->
+    <string name="back">Back</string>
+
 </resources>

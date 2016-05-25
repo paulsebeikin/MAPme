@@ -16,7 +16,7 @@ import java.util.Objects;
  */
 public class Template {
 
-    public String project, country, province, town, desc, environment, species, numObserved, natCul, growth;
+    public String project, country, province, town, desc, environment, species, numObserved, natCul, growth, source;
     public Date dt;
     public Double[] location;
     public Double altitude;
@@ -29,6 +29,10 @@ public class Template {
     }
 
     public Template() {
+        location = new Double[]{0.0,0.0};
+        altitude = 0.0;
+        flower = false;
+        fruit = false;
         dt = new Date();
         images = new String[3];
     }
