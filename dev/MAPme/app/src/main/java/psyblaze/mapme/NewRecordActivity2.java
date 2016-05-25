@@ -109,7 +109,8 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> {
 
         Record toInsert = new Record(template);
         toInsert.setEmail(settings.getString("email",""));
-        toInsert.setAdu(Integer.getInteger(settings.getString("adu","")));
+        String aduStr = settings.getString("adu","");
+        toInsert.setAdu(Integer.parseInt(aduStr));
 
         recordDao.create(toInsert);
 
