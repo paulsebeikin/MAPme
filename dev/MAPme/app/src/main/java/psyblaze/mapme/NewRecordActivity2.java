@@ -76,7 +76,7 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> {
 
         geocoder = new Geocoder(this, Locale.getDefault());
         Bundle bundle = getIntent().getExtras();
-        Double [] location = (Double[]) bundle.get("location");
+        Double [] location = (Double[]) bundle.get("location"); // BUG: THIS CAST DOESN'T WORK ON KITKAT
         new GeoCodeAsyncTask().execute(location);
     }
 
