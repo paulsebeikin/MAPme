@@ -51,6 +51,9 @@
         <activity
             android:name=".NewRecordActivity2"
             android:label="@string/new_record_title" />
+        <activity
+            android:name=".NewRecordActivity3"
+            android:label="@string/new_record_title" />
         <activity android:name=".MapActivity"
             android:label="@string/map"
             android:theme="@style/Theme.AppCompat.Dialog"/>

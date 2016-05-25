@@ -3,46 +3,69 @@ package psyblaze.mapme;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
+import android.content.SharedPreferences.Editor;
+import android.support.annotation.Nullable;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatCallback;
+import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.j256.ormlite.android.apptools.OrmLiteBaseActivity;
+import com.j256.ormlite.dao.RuntimeExceptionDao;
 
+import java.util.List;
+
+import Classes.Record;
+import Classes.RecordHelper;
 import Classes.Template;
 
-public class NewRecordActivity3 extends AppCompatActivity {
+public class NewRecordActivity3 extends OrmLiteBaseActivity<RecordHelper> implements AppCompatCallback {
 
-    // UI Views
-    Spinner environment_spin;
-    Spinner number_spin;
-    Spinner nat_cul_spin;
-    Spinner growth_spin;
+    //region UI Views
+    Spinner environment_spin, number_spin, nat_cul_spin, growth_spin;
     CheckBox fruit, flower;
     EditText species;
+    //endregion
 
-    //Objects
+    //region Objects
     Gson gson;
     SharedPreferences settings;
-    SharedPreferences.Editor editor;
+    Editor editor;
     Template template;
-    ArrayAdapter spinnerAdapter;
+    ArrayAdapter env_adapter, num_adapter, natcul_adapter, growth_adapter;
+    AppCompatDelegate delegate;
+    //endregion
 
+    //region Lifecycle Methods
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_record3);
 
-        Toolbar action_bar = (Toolbar) findViewById(R.id.mapme_toolbar);
-        setSupportActionBar(action_bar);
+        delegate = AppCompatDelegate.create(this,this);
+        delegate.onCreate(savedInstanceState);
+        delegate.setContentView(R.layout.activity_new_record3);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.mapme_toolbar);
+        delegate.setSupportActionBar(toolbar);
+        delegate.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        delegate.getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         // get views
         fruit = (CheckBox) findViewById(R.id.fruit);
@@ -56,49 +79,66 @@ public class NewRecordActivity3 extends AppCompatActivity {
         String[] growth_values = getResources().getStringArray(R.array.GrowthForm);
 
         // setup environment spinner
-        environment_spin = (Spinner)findViewById(R.id.environment_spinner);
-        spinnerAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, env_values);
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        environment_spin.setAdapter(spinnerAdapter);
+        environment_spin = (Spinner) findViewById(R.id.environment_spinner);
+        env_adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, env_values);
+        env_adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        environment_spin.setAdapter(env_adapter);
 
         // setup number spinner
         number_spin = (Spinner)findViewById(R.id.numObserved_spinner);
-        spinnerAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, num_values);
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        number_spin.setAdapter(spinnerAdapter);
+        num_adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, num_values);
+        num_adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        number_spin.setAdapter(num_adapter);
 
         // setup nat_cul spinner
         nat_cul_spin = (Spinner)findViewById(R.id.nat_cul_spinner);
-        spinnerAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, nat_cul_values);
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        nat_cul_spin.setAdapter(spinnerAdapter);
+        natcul_adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, nat_cul_values);
+        natcul_adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        nat_cul_spin.setAdapter(natcul_adapter);
 
         // setup growth spinner
         growth_spin = (Spinner)findViewById(R.id.growth_spinner);
-        spinnerAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, growth_values);
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        growth_spin.setAdapter(spinnerAdapter);
+        growth_adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, growth_values);
+        growth_adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        growth_spin.setAdapter(growth_adapter);
 
         // Shared Preference restore
         settings = getSharedPreferences(LoginActivity.PREFS_NAME, Context.MODE_PRIVATE);
         gson = new Gson();
+        SharedPrefsRestore();
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        saveTemplate();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        SharedPrefsRestore();
+    }
+
+    //endregion
+
+    //region Activity Methods
+
+    private void SharedPrefsRestore(){
         String json = settings.getString("template", null);
         if (json != null){
             template = gson.fromJson(json, Template.class);
+            environment_spin.setSelection(env_adapter.getPosition(template.environment));
+            number_spin.setSelection(num_adapter.getPosition(template.numObserved));
+            nat_cul_spin.setSelection(natcul_adapter.getPosition(template.natCul));
+            growth_spin.setSelection(growth_adapter.getPosition(template.growth));
             species.setText(template.species);
             fruit.setChecked(template.fruit);
             flower.setChecked(template.flower);
         }
         else {
             template = new Template();
-
         }
-
-    }
-
-    public void onDestroy(){
-        super.onDestroy();
-        saveTemplate();
     }
 
     private void saveTemplate(){
@@ -119,6 +159,33 @@ public class NewRecordActivity3 extends AppCompatActivity {
         editor.commit();
     }
 
+    public void onSubmit(View view){
+        saveTemplate();
+        RecordHelper helper = new RecordHelper(this);
+        helper.getWritableDatabase();
+        RuntimeExceptionDao<Record,Integer> recordDao = getHelper().getRecordDao();
+
+        Record toInsert = new Record(template);
+        toInsert.setEmail(settings.getString("email",""));
+        toInsert.setAdu(Integer.parseInt(settings.getString("adu","")));
+
+        recordDao.create(toInsert);
+
+        List<Record> allRecords = recordDao.queryForAll();
+        for (Record r : allRecords) Log.i("record", r.toString());
+
+        //clear images from current template
+        template.images = new String[3];
+
+        // go back to home page
+        Intent goHome = new Intent(this, HomeScreenActivity.class);
+        startActivity(goHome);
+        finish();
+    }
+
+    //endregion
+
+    //region Toolbar Stuff
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.actionbar_home, menu);
@@ -143,4 +210,23 @@ public class NewRecordActivity3 extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onSupportActionModeStarted(ActionMode mode) {
+
+    }
+
+    @Override
+    public void onSupportActionModeFinished(ActionMode mode) {
+
+    }
+
+    @Nullable
+    @Override
+    public ActionMode onWindowStartingSupportActionMode(ActionMode.Callback callback) {
+        return null;
+    }
+
+
+    //endregion
 }

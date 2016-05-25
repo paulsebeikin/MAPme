@@ -48,6 +48,7 @@ public class NewRecordActivity extends AppCompatActivity {
     SharedPreferences settings;
     Editor editor;
     Template template;
+    ArrayAdapter projAdapter, sourceAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +56,7 @@ public class NewRecordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_record);
 
         Toolbar action_bar = (Toolbar) findViewById(R.id.mapme_toolbar);
-
+        setSupportActionBar(action_bar);
 
         // get UI elements
         datePicker = (TextView) findViewById(R.id.date_picker);
@@ -65,44 +66,24 @@ public class NewRecordActivity extends AppCompatActivity {
         gps_long = (EditText) findViewById(R.id.gps_long);
         gps_alt = (EditText) findViewById(R.id.gps_alt);
 
+        // get array values
         String[] values = getResources().getStringArray(R.array.Projects);
         // create adapter for spinner
-        ArrayAdapter spinnerAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, values);
+        projAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, values);
         // configure drop-down layout style
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        //projAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         // attaching data adapter to spinner
-        proj_spinner.setAdapter(spinnerAdapter);
+        proj_spinner.setAdapter(projAdapter);
+
 
         values = getResources().getStringArray(R.array.source);
-        // create adapter for spinner
-        ArrayAdapter sourceAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, values);
-        // configure drop-down layout style
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        // attaching data adapter to spinner
+        sourceAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, values);
+        //sourceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         source_spinner.setAdapter(sourceAdapter);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
-        // Shared Preference restore
         settings = getSharedPreferences(LoginActivity.PREFS_NAME, Context.MODE_PRIVATE);
         gson = new Gson();
-        String json = settings.getString("template", null);
-        if (json != null){
-            template = gson.fromJson(json, Template.class);
-            if (template.location[0] != 0.0) gps_long.setText(template.location[0].toString());
-            if (template.location[1] != 0.0) gps_lat.setText(template.location[1].toString());
-            if (template.altitude != 0.0) gps_alt.setText(template.altitude.toString());
-            datePicker.setText(sdf.format(template.dt));
-            for (int i = 0; i < spinnerAdapter.getCount(); i++){
-                if (proj_spinner.getItemAtPosition(i) == template.project) proj_spinner.setSelection(i);
-            }
-        }
-        else {
-            template = new Template();
-            datePicker.setText(sdf.format(new Date()));
-        }
-
-        setSupportActionBar(action_bar);
+        SharedPrefsRestore();
 
         // Permission to turn on location service
 
@@ -117,9 +98,33 @@ public class NewRecordActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onResume(){
+        super.onResume();
+        SharedPrefsRestore();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
         saveTemplate();
+    }
+
+    private void SharedPrefsRestore(){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String json = settings.getString("template", null);
+        if (json != null) {
+            template = gson.fromJson(json, Template.class);
+            if (template.location[0] != 0.0) gps_long.setText(template.location[0].toString());
+            if (template.location[1] != 0.0) gps_lat.setText(template.location[1].toString());
+            if (template.altitude != 0.0) gps_alt.setText(template.altitude.toString());
+            datePicker.setText(sdf.format(template.dt));
+            proj_spinner.setSelection(projAdapter.getPosition(template.project));
+            source_spinner.setSelection(sourceAdapter.getPosition(template.source));
+        }
+        else {
+            template = new Template();
+            datePicker.setText(sdf.format(new Date()));
+        }
     }
 
     public void getMap(View view){
@@ -209,7 +214,6 @@ public class NewRecordActivity extends AppCompatActivity {
             Intent nextInt = new Intent(this, NewRecordActivity2.class);
             nextInt.putExtra("location", new Double[]{lat,lng});
             startActivity(nextInt);
-            finish();
         }
     }
 
