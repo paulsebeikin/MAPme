@@ -53,7 +53,7 @@
             android:label="@string/new_record_title" />
         <activity android:name=".MapActivity"
             android:label="@string/map"
-            android:theme="@style/Theme.AppCompat.Dialog"></activity>
+            android:theme="@style/Theme.AppCompat.Dialog"/>
         <activity
             android:name=".ProfileActivity"
             android:label="@string/profileTitle" />
@@ -64,8 +64,8 @@
             android:name=".HelpActivity"
             android:label="Help"/>
         <activity
-            android:label="Help"/>
-            android:name=".HelpDetailsActivity"
+            android:label="Help"
+            android:name=".HelpDetailsActivity"/>
     </application>
 
 </manifest>
