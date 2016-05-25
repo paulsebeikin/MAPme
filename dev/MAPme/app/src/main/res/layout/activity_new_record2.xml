@@ -93,6 +93,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/desc"
                 android:text="@string/desc"/>
             <EditText
                 android:layout_width="match_parent"

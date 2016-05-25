@@ -1,23 +1,36 @@
 package Classes;
 
 import android.graphics.PointF;
+import android.support.annotation.NonNull;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Objects;
 
 /**
  * Created by Paul on 5/22/2016.
  */
 public class Template {
 
-    private String project, country, province, town, desc, environment, species, numObserved, natCul, growth;
-    private Date dt;
-    private PointF location;
-    private Double altitude;
-    private Boolean flower, fruit;
-    private String[] images;
+    public String project, country, province, town, desc, environment, species, numObserved, natCul, growth;
+    public Date dt;
+    public Double[] location;
+    public Double altitude;
+    public Boolean flower, fruit;
+    public String[] images;
 
-    public Template(){
+    public Template(String project, String country, String province, String town, String desc, Date dt, Double[] location,
+                    Double altitude, String[] images, Objects... params) {
 
     }
 
+    public Template() {
+        dt = new Date();
+        images = new String[3];
+    }
 }
+

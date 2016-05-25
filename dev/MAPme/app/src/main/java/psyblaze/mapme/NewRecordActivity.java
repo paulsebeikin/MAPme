@@ -1,11 +1,10 @@
 package psyblaze.mapme;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.PointF;
-import android.location.LocationManager;
-import android.provider.Settings;
+import android.content.SharedPreferences.Editor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -18,16 +17,29 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import Classes.Template;
+
 public class NewRecordActivity extends AppCompatActivity {
 
-    public static final String PREFS_NAME = "MyPrefsFile";
+
+    // UI Views
     Spinner proj_spinner;
     TextView datePicker;
+    EditText gps_lat, gps_long, gps_alt;
+
+    //Objects
     SelectDateFragment datePickerFragment;
-    EditText gps_lat, gps_long;
+    Gson gson;
+    SharedPreferences settings;
+    Editor editor;
+    Template template;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,43 +47,45 @@ public class NewRecordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_record);
 
         Toolbar action_bar = (Toolbar) findViewById(R.id.mapme_toolbar);
-        setSupportActionBar(action_bar);
+
+
+        // get UI elements
+        datePicker = (TextView) findViewById(R.id.date_picker);
+        proj_spinner = (Spinner)findViewById(R.id.project_spinner);
+        gps_lat = (EditText) findViewById(R.id.gps_lat);
+        gps_long = (EditText) findViewById(R.id.gps_long);
+        gps_alt = (EditText) findViewById(R.id.gps_alt);
 
         String[] values = getResources().getStringArray(R.array.Projects);
-
-        // get datePicker element and set default date as today
-        datePicker = (TextView) findViewById(R.id.date_picker);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        datePicker.setText(sdf.format(new Date()));
-
-        // fetch spinner object from the layout
-        proj_spinner = (Spinner)findViewById(R.id.project_spinner);
-
         // create adapter for spinner
         ArrayAdapter spinnerAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, values);
-
         // configure drop-down layout style
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-
         // attaching data adapter to spinner
         proj_spinner.setAdapter(spinnerAdapter);
 
-        gps_lat = (EditText) findViewById(R.id.gps_lat);
-        gps_long = (EditText) findViewById(R.id.gps_long);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-        // Grahamstown test
-        gps_long.setText(Double.toString(-33.312408));
-        gps_lat.setText(Double.toString(26.519080));
+        // Shared Preference restore
+        settings = getSharedPreferences(LoginActivity.PREFS_NAME, Context.MODE_PRIVATE);
+        gson = new Gson();
+        String json = settings.getString("template", null);
+        if (json != null){
+            template = gson.fromJson(json, Template.class);
+            gps_long.setText(template.location[0].toString());
+            gps_lat.setText(template.location[1].toString());
+            gps_alt.setText(template.altitude.toString());
+            datePicker.setText(sdf.format(template.dt));
+            for (int i = 0; i < spinnerAdapter.getCount(); i++){
+                if (proj_spinner.getItemAtPosition(i) == template.project) proj_spinner.setSelection(i);
+            }
+        }
+        else {
+            template = new Template();
+            datePicker.setText(sdf.format(new Date()));
+        }
 
-        // Example Tests for Reverse GeoCoding
-
-        //Joburg test
-        //gps_long.setText(Double.toString(-26.204110));
-        //gps_lat.setText(Double.toString(28.030736));
-
-        //Seattle test
-        //gps_long.setText(Double.toString(47.603585));
-        //gps_lat.setText(Double.toString(-122.344180));
+        setSupportActionBar(action_bar);
 
         // Permission to turn on location service
 
@@ -83,6 +97,12 @@ public class NewRecordActivity extends AppCompatActivity {
             Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
             startActivity(intent);
         }*/
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        saveTemplate();
     }
 
     @Override
@@ -119,6 +139,15 @@ public class NewRecordActivity extends AppCompatActivity {
         datePickerFragment.setOnDateSetListener(new DatePickerDialog.OnDateSetListener(){
             public void onDateSet(DatePicker view, int year, int month, int day){
                 datePicker.setText(day + "/" + month + "/" + year);
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                Date date;
+                try {
+                    date = sdf.parse(day + "/" + month + "/" + year);
+                }
+                catch (ParseException ex){
+                   date = null;
+                }
+                template.dt = date;
             }
         });
         datePickerFragment.show(getSupportFragmentManager(), "datePicker");
@@ -135,5 +164,22 @@ public class NewRecordActivity extends AppCompatActivity {
     public void addImage(View view) {
         Intent nextInt = new Intent(this, AddImage.class);
         startActivity(nextInt);
+    }
+
+    private void saveTemplate(){
+        // get editor ready
+        editor = settings.edit();
+
+        // update the template
+        String long_tmp = gps_long.getText().toString();
+        String lat_tmp = gps_lat.getText().toString();
+        String alt_tmp = gps_alt.getText().toString();
+        template.location = new Double[]{Double.parseDouble(long_tmp), Double.parseDouble(lat_tmp)};
+        template.altitude = Double.parseDouble(alt_tmp);
+        template.project = proj_spinner.getSelectedItem().toString();
+
+        String json = gson.toJson(template);
+        editor.putString("template", json);
+        editor.commit();
     }
 }

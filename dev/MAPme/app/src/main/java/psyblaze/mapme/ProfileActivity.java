@@ -1,20 +1,24 @@
 package psyblaze.mapme;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
-public class AboutActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity {
 
+    Spinner country_spin;
+    Spinner province_spin;
+    Spinner project_spin;
+
+
+    ArrayAdapter spinnerAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about);
+        setContentView(R.layout.activity_profile);
 
         Toolbar action_bar = (Toolbar) findViewById(R.id.mapme_toolbar);
         setSupportActionBar(action_bar);
@@ -26,6 +30,14 @@ public class AboutActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-    }
 
+
+        String[] project_values = getResources().getStringArray(R.array.Projects);
+
+        project_spin = (Spinner) findViewById(R.id.profProject);
+        spinnerAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, project_values);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        project_spin.setAdapter(spinnerAdapter);
+
+    }
 }

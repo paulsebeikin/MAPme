@@ -55,4 +55,14 @@ public class HomeScreenActivity extends AppCompatActivity {
         Intent aboutInt = new Intent(this, AboutActivity.class);
         startActivity(aboutInt);
     }
+
+    public void openProfile(View view) {
+        Intent proIntent = new Intent(this, ProfileActivity.class);
+        startActivity(proIntent);
+    }
+
+    public void openHelp(View view) {
+        Intent helpInt = new Intent (this, HelpActivity.class);
+        startActivity(helpInt);
+    }
 }

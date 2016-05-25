@@ -1,6 +1,8 @@
 package psyblaze.mapme;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
@@ -13,17 +15,31 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import Classes.Template;
+
 public class NewRecordActivity2 extends AppCompatActivity {
 
+    // Class Variables
     private String api_key = "AIzaSyAAOj2-rMW7agCLakPjq0pPxxMPlilq7hw";
     String url_str = "https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=" + api_key;
-    Geocoder geocoder;
 
-    EditText country, province, town;
+    // UI Views
+    EditText country, province, town, desc;
+
+    //Objects
+    Gson gson;
+    SharedPreferences settings;
+    SharedPreferences.Editor editor;
+    Template template;
+    Geocoder geocoder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +52,31 @@ public class NewRecordActivity2 extends AppCompatActivity {
         country = (EditText) findViewById(R.id.country);
         province = (EditText) findViewById(R.id.province);
         town = (EditText) findViewById(R.id.town);
+        //desc = (EditText) findViewById(R.id.desc);
+
+        // Shared Preference restore
+        settings = getSharedPreferences(LoginActivity.PREFS_NAME, Context.MODE_PRIVATE);
+        gson = new Gson();
+        String json = settings.getString("template", null);
+        if (json != null){
+            template = gson.fromJson(json, Template.class);
+
+        }
+        else {
+            template = new Template();
+
+        }
 
         geocoder = new Geocoder(this, Locale.getDefault());
         Bundle bundle = getIntent().getExtras();
         Double [] location = (Double[]) bundle.get("location");
         new GeoCodeAsyncTask().execute(location);
+    }
+
+    protected void onDestroy(){
+        super.onDestroy();
+        editor = settings.edit();
+
     }
 
     private class GeoCodeAsyncTask extends AsyncTask<Double, Void, Address> {

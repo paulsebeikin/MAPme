@@ -33,7 +33,8 @@
 
     <!-- Strings for Add Image(s) -->
     <string name="browseImage">Browse</string>
-    <string name="saveImages">Done</string>
+    <string name="saveImages">Save</string>
+    <string name="add_image_title">Add Image(s)</string>
 
 
     <!-- Strings related to New Template -->
@@ -57,4 +58,21 @@
     <string name="number">Number Observed</string>
     <string name="nat.cul">Natural / Cultivated</string>
     <string name="growth">Growth Form</string>
+
+    <!-- Strings for Profile activity -->
+    <string name="profileTitle">Profile</string>
+    <string name="profileName">Name</string>
+    <string name="profileEmail">Email</string>
+    <string name="profileADU"> ADU</string>
+    <string name="profileCountry">Country</string>
+    <string name="profileProvince">Province</string>
+    <string name="profileNearestTown">Nearest Town</string>
+    <string name="profileProject">Project</string>
+    <string name="profileSaveBtn">Save</string>
+
+    <!-- Strings for Help activity and related -->
+    <string name="newRec">- Creating a New Record</string>
+    <string name="logReg">- Registering and Logging In</string>
+    <string name="profSettings">- Profile Settings</string>
+    <string name="historySettings">- Checking Submission History</string>
 </resources>

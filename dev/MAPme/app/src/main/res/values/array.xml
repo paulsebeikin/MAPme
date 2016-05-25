@@ -19,7 +19,9 @@
     <item>SpiderMAP (Spiders)</item>
     <item>TreeMAP (Tree Atlas)</item>
 </string-array>
-    <string-array name="countries"></string-array>
+    <string-array name="countries">
+       <item>South Africa</item><item></item>
+    </string-array>
     <string-array name="provinces"></string-array>
     <string-array name="NumberObserved">
         <item>1</item>
