@@ -27,11 +27,12 @@ public class Record {
     //region Properties
     @DatabaseField(generatedId = true)
     private int id;
-    @DatabaseField(canBeNull = false)
-    private int adu;
 
     @DatabaseField(canBeNull = false)
     private String username;
+
+    @DatabaseField(canBeNull = false)
+    private int adu;
 
     @DatabaseField(canBeNull = false)
     private String email;
@@ -130,6 +131,10 @@ public class Record {
     //endregion
 
     //region GET/SET Methods
+    public int getId() {
+        return id;
+    }
+
     public int getAdu() {
         return adu;
     }
@@ -259,6 +264,10 @@ public class Record {
 
     public int getDay() {
         return day;
+    }
+
+    public String getDate(){
+        return year + "/" + month + "/" + day;
     }
 
     public void setDay(int day) {
@@ -424,19 +433,26 @@ public class Record {
         sb.append("adu=").append(adu);
         sb.append(", ").append("username=").append(username);
         sb.append(", ").append("email=").append(email);
-        sb.append(", ").append("latitude=").append(latitude);
-        sb.append(", ").append("longitude=").append(longitude);
-        sb.append(", ").append("altitude=").append(altitude);
-        sb.append(", ").append("project=").append(project);
+        sb.append(", ").append("observers=").append(observers);
         sb.append(", ").append("country=").append(country);
         sb.append(", ").append("province=").append(province);
         sb.append(", ").append("town=").append(town);
         sb.append(", ").append("desc=").append(desc);
-        sb.append(", ").append("url=").append(url);
+        sb.append(", ").append("altitude=").append(altitude);
+        sb.append(", ").append("latitude=").append(latitude);
+        sb.append(", ").append("longitude=").append(longitude);
+        sb.append(", ").append("datum=").append(datum);
+        sb.append(", ").append("accuracy=").append(accuracy);
+        sb.append(", ").append("source=").append(source);
         sb.append(", ").append("year=").append(year);
         sb.append(", ").append("month=").append(month);
         sb.append(", ").append("day=").append(day);
-        sb.append(", ").append("source=").append(source);
+        sb.append(", ").append("project=").append(project);
+
+        sb.append(", ").append("url=").append(url);
+
+        sb.append(", ").append("uploaded=").append(uploaded);
+
         return sb.toString();
     }
 }

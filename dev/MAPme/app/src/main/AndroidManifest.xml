@@ -54,21 +54,23 @@
         <activity
             android:name=".NewRecordActivity3"
             android:label="@string/new_record_title" />
-        <activity android:name=".MapActivity"
+        <activity
+            android:name=".MapActivity"
             android:label="@string/map"
-            android:theme="@style/Theme.AppCompat.Dialog"/>
+            android:theme="@style/Theme.AppCompat.Dialog" />
         <activity
             android:name=".ProfileActivity"
             android:label="@string/profileTitle" />
         <activity
             android:name=".HistoryActivity"
-            android:label="History"/>
+            android:label="History" />
         <activity
             android:name=".HelpActivity"
-            android:label="Help"/>
+            android:label="Help" />
         <activity
-            android:label="Help"
-            android:name=".HelpDetailsActivity"/>
+            android:name=".HelpDetailsActivity"
+            android:label="Help" />
+        <activity android:name=".HistoryDetailActivity"></activity>
     </application>
 
 </manifest>

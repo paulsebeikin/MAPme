@@ -28,6 +28,11 @@ public class HistoryArrayAdapter extends ArrayAdapter {
         this.values = values;
     }
 
+    public Record getRecord(int position) {
+        if (position < values.size()) return values.get(position);
+        return null;
+    }
+
     @Override
     public View getView (int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -73,5 +78,3 @@ public class HistoryArrayAdapter extends ArrayAdapter {
         return rowView;
     }
 }
-
-

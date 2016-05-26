@@ -81,4 +81,14 @@
     <!-- String related to Map Widget -->
     <string name="back">Back</string>
 
+    <!--Strings related to History Details -->
+    <string name="dateHist">Date</string>
+    <string name="projectHist">Project</string>
+    <string name="descHist">Description</string>
+    <string name="imgHist">Images</string>
+    <string name="gpsHist">GPS</string>
+    <string name="countryHist">Country</string>
+    <string name="provinceHist">Province</string>
+    <string name="townHist">Nearest Town</string>
+
 </resources>
