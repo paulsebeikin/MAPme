@@ -143,6 +143,30 @@ public class Record {
         this.email = email;
     }
 
+    public boolean isUploaded() {
+        return uploaded;
+    }
+
+    public String getProject() {
+        return project;
+    }
+
+    public void setProject(String project) {
+        this.project = project;
+    }
+
+    public void setUploaded(boolean uploaded) {
+        this.uploaded = uploaded;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
     public String getUsername() {
         return username;
     }

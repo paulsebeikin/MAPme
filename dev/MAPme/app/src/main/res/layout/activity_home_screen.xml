@@ -53,6 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="History"
+                android:onClick="openHistory"
                 android:textAlignment="center"/>
         </LinearLayout>
 

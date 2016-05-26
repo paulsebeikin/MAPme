@@ -16,7 +16,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="[Record Name]"
-
             android:id="@+id/record_name"
             />
         <ImageView
@@ -51,16 +50,19 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/record_dt"
                 android:text="[date]"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="[desc]"
+                android:id="@+id/record_desc"
                 android:paddingTop="3pt"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="[country]"
+                android:id="@+id/record_country"
                 android:paddingTop="3pt"/>
 
         </LinearLayout>
@@ -68,7 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_gallery"
+            android:src="@drawable/ic_drilldown"
             android:layout_weight="1.5"/>
     </LinearLayout>
 </LinearLayout>
