@@ -11,6 +11,8 @@
     <style name="labelsAbout">
         <item name="android:textSize">10pt</item>
         <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_gravity">center</item>
     </style>
 
     <style name="historyRowLabel">
@@ -57,11 +59,10 @@
         <item name="popupTheme">@style/Theme.AppCompat.Light</item>
     </style>
 
-    <style name="linLayoutForHistoryDetails">
-        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+    <style name="linLayoutForHistoryDetailsLabels">
         <item name="android:textAlignment">textEnd</item>
         <item name="android:layout_gravity">center_vertical</item>
-        <item name="android:layout_weight">0.7</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
 
