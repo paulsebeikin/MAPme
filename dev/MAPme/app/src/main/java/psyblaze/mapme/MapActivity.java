@@ -72,8 +72,12 @@ public class MapActivity extends AppCompatActivity {
     }
 
     public void onSave(View view){
+        editor = settings.edit();
+        template.location = new Double[]{ location.latitude, location.longitude };
+        String json = gson.toJson(template);
+        editor.putString("template", json);
+        editor.commit();
         Intent resultInt = new Intent(this, NewRecordActivity.class);
-        resultInt.putExtra("location", location);
         setResult(Activity.RESULT_OK, resultInt);
         finish();
     }

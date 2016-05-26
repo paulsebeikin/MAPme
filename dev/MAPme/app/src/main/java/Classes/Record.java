@@ -25,7 +25,9 @@ public class Record {
     //endregion
 
     //region Properties
-    @DatabaseField(id = true)
+    @DatabaseField(generatedId = true)
+    private int id;
+    @DatabaseField(canBeNull = false)
     private int adu;
 
     @DatabaseField(canBeNull = false)
@@ -113,7 +115,7 @@ public class Record {
     private String institution_code;
 
     @DatabaseField
-    private String collecttion;
+    private String collection;
 
     @DatabaseField
     private int cat_number;
@@ -352,11 +354,11 @@ public class Record {
     }
 
     public String getCollecttion() {
-        return collecttion;
+        return collection;
     }
 
     public void setCollecttion(String collecttion) {
-        this.collecttion = collecttion;
+        this.collection = collecttion;
     }
 
     public int getCat_number() {

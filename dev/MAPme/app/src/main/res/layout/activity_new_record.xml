@@ -14,8 +14,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
-        android:theme="@style/AppTheme"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        android:theme="@style/mapmeTheme"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

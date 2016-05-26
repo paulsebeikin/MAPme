@@ -9,6 +9,8 @@ import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatCallback;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.view.ActionMode;
@@ -77,9 +79,9 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
 
         geocoder = new Geocoder(this, Locale.getDefault());
         Bundle bundle = getIntent().getExtras();
-        double[] location = (double[]) bundle.get("location"); // BUG: THIS CAST DOESN'T WORK ON KITKAT
+        double[] location = (double[]) bundle.get("location");
         new GeoCodeAsyncTask().execute(new Double[]{Double.valueOf(location[0]),
-                Double.valueOf(location[1])});
+                    Double.valueOf(location[1])});
     }
 
     protected void onPause(){
@@ -123,9 +125,6 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
 
         recordDao.create(toInsert);
 
-        List<Record> allRecords = recordDao.queryForAll();
-        for (Record r : allRecords) Log.i("record", r.toString());
-
         //clear images from current template
         template.images = new String[3];
 
@@ -165,18 +164,21 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
                 List<Address> addresses = geocoder.getFromLocation(location[0], location[1], 1);
                 return addresses.get(0);
             }
-            catch (IOException ex) {
+            catch (IOException ex){
                 return null;
             }
-
+            catch (IndexOutOfBoundsException ex) {
+                return null;
+            }
         }
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(Address result) {
-            country.setText(result.getCountryName());
-            province.setText(result.getAdminArea());
-            town.setText(result.getLocality());
-
+            if (result != null) {
+                country.setText(result.getCountryName());
+                province.setText(result.getAdminArea());
+                town.setText(result.getLocality());
+            }
         }
     }
 

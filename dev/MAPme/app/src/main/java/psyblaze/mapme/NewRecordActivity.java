@@ -35,7 +35,6 @@ public class NewRecordActivity extends AppCompatActivity {
 
     // Class Level Variables
     private static final int GET_COORDS = 1;
-    private static boolean RECORD_UPDATED = false;
 
     // UI Views
     Spinner proj_spinner, source_spinner;
@@ -83,7 +82,7 @@ public class NewRecordActivity extends AppCompatActivity {
 
         settings = getSharedPreferences(LoginActivity.PREFS_NAME, Context.MODE_PRIVATE);
         gson = new Gson();
-        SharedPrefsRestore();
+        SharedPrefRestore();
 
         // Permission to turn on location service
 
@@ -100,7 +99,7 @@ public class NewRecordActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        SharedPrefsRestore();
+        SharedPrefRestore();
     }
 
     @Override
@@ -109,13 +108,13 @@ public class NewRecordActivity extends AppCompatActivity {
         saveTemplate();
     }
 
-    private void SharedPrefsRestore(){
+    private void SharedPrefRestore(){
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String json = settings.getString("template", null);
         if (json != null) {
             template = gson.fromJson(json, Template.class);
-            if (template.location[0] != 0.0) gps_long.setText(template.location[0].toString());
-            if (template.location[1] != 0.0) gps_lat.setText(template.location[1].toString());
+            if (template.location[0] != 0.0) gps_lat.setText(template.location[0].toString());
+            if (template.location[1] != 0.0) gps_long.setText(template.location[1].toString());
             if (template.altitude != 0.0) gps_alt.setText(template.altitude.toString());
             datePicker.setText(sdf.format(template.dt));
             proj_spinner.setSelection(projAdapter.getPosition(template.project));
@@ -147,12 +146,7 @@ public class NewRecordActivity extends AppCompatActivity {
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            if (requestCode == GET_COORDS) {
-                // get the selected location coordinate and update the views
-                LatLng location = data.getParcelableExtra("location");
-                gps_long.setText(String.valueOf(location.longitude));
-                gps_lat.setText(String.valueOf(location.latitude));
-            }
+
         }
     }
 
@@ -243,7 +237,7 @@ public class NewRecordActivity extends AppCompatActivity {
         String lat_tmp = gps_lat.getText().toString();
         String alt_tmp = gps_alt.getText().toString();
         if (!long_tmp.isEmpty() && !lat_tmp.isEmpty()) {
-            template.location = new Double[]{Double.parseDouble(long_tmp), Double.parseDouble(lat_tmp)};
+            template.location = new Double[]{Double.parseDouble(lat_tmp), Double.parseDouble(long_tmp)};
         }
         if (!alt_tmp.isEmpty()) {
             template.altitude = Double.parseDouble(alt_tmp);

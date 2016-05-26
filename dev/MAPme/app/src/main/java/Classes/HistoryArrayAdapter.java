@@ -57,7 +57,9 @@ public class HistoryArrayAdapter extends ArrayAdapter {
         recordDesc.setText(curr.getDesc());
         recordCountry.setText(curr.getCountry());
         String[] imgList = curr.getUrl().split(";");
-        switch (imgList.length){
+        int count = 0;
+        for (String str : imgList) if(!str.equals("null")) count++;
+        switch (count){
             case 1:
                 numImg.setImageResource(R.drawable.ic_numimg1);
                 break;
