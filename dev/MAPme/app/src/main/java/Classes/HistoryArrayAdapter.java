@@ -66,13 +66,13 @@ public class HistoryArrayAdapter extends ArrayAdapter {
         for (String str : imgList) if(!str.equals("null")) count++;
         switch (count){
             case 1:
-                numImg.setImageResource(R.drawable.ic_numimg1);
+                numImg.setImageResource(R.drawable.ic_num_img1);
                 break;
             case 2:
-                numImg.setImageResource(R.drawable.ic_numimg2);
+                numImg.setImageResource(R.drawable.ic_num_img1);
                 break;
             case 3:
-                numImg.setImageResource(R.drawable.ic_numimg3);
+                numImg.setImageResource(R.drawable.ic_num_img3);
                 break;
         }
         return rowView;

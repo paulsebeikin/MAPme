@@ -70,12 +70,5 @@
                 android:paddingTop="3pt"/>
 
         </LinearLayout>
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_drilldown"
-            android:layout_weight="1.8"
-            />
     </LinearLayout>
 </LinearLayout>

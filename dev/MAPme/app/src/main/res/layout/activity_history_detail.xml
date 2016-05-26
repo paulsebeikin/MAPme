@@ -96,36 +96,56 @@
             android:layout_weight="0.3"/>
     </LinearLayout>
 
+
     <LinearLayout
         style="@style/linLayoutForLabels"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@id/img_layout"
-        android:id="@+id/gps_layout"
+        android:id="@+id/coord_layout"
         android:weightSum="1">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/gpsHist"
-            android:layout_weight="0.6"/>
+            android:text="Latitude"
+            android:layout_weight="0.7"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/gps_lat"
-            android:layout_weight="0.2"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/gps_long"
-            android:layout_weight="0.2"/>
+            android:text="[lat]" />
     </LinearLayout>
+
     <LinearLayout
         style="@style/linLayoutForLabels"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@id/gps_layout"
+        android:layout_below="@id/coord_layout"
+        android:id="@+id/long_layout"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Longitude"
+            android:layout_weight="0.7"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/gps_long"
+            android:text="[long]"
+            android:layout_weight="0.2"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        style="@style/linLayoutForLabels"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/long_layout"
         android:id="@+id/country_layout"
         android:weightSum="1">
         <TextView
