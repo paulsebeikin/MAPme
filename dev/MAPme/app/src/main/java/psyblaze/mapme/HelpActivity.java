@@ -39,10 +39,10 @@ public class HelpActivity extends AppCompatActivity implements HelpLiterals {
 
         listView = (ListView) findViewById(R.id.listView);
         Help [] allHelp = new Help[4];
-        allHelp[0] = new Help(newRecHelp, "Creating a New Record");
-        allHelp[1] = new Help(logRegHelp, "How to register and log in");
-        allHelp[2] = new Help(profHelp, "Using the Profile");
-        allHelp[3] = new Help(historyHelp, "history help");
+        allHelp[0] = new Help(newRecHelp, newRecord);
+        allHelp[1] = new Help(logRegHelp, loginRegister);
+        allHelp[2] = new Help(profHelp, profile);
+        allHelp[3] = new Help(historyHelp, history);
 
         arrayAdapter = new HelpArrayAdapter(this, new ArrayList(Arrays.asList(allHelp)));
         listView.setAdapter(arrayAdapter);

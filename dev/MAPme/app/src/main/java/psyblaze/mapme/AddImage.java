@@ -71,6 +71,7 @@ public class AddImage extends AppCompatActivity {
         }
         else {
             template = new Template();
+            paths = template.images;
         }
     }
 

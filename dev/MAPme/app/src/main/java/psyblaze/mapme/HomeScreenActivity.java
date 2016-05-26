@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 public class HomeScreenActivity extends AppCompatActivity {
 
+    //region Lifecycle Methods
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,7 +20,36 @@ public class HomeScreenActivity extends AppCompatActivity {
         Toolbar action_bar = (Toolbar) findViewById(R.id.mapme_toolbar);
         setSupportActionBar(action_bar);
     }
+    //endregion
 
+    //region Activity Methods
+    public void NewRecord(View view){
+        Intent newRecInt = new Intent(this, NewRecordActivity.class);
+        startActivity(newRecInt);
+    }
+
+    public void goAbout(View view){
+        Intent aboutInt = new Intent(this, AboutActivity.class);
+        startActivity(aboutInt);
+    }
+
+    public void openHistory(View view){
+        Intent historyIntent = new Intent(this, HistoryActivity.class);
+        startActivity(historyIntent);
+    }
+
+    public void openProfile(View view) {
+        Intent proIntent = new Intent(this, ProfileActivity.class);
+        startActivity(proIntent);
+    }
+
+    public void openHelp(View view) {
+        Intent helpInt = new Intent (this, HelpActivity.class);
+        startActivity(helpInt);
+    }
+    //endregion
+
+    //region Toolbar Stuff
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -42,27 +72,12 @@ public class HomeScreenActivity extends AppCompatActivity {
                 Intent newRecInt = new Intent(this, NewRecordActivity.class);
                 startActivity(newRecInt);
                 return true;
+            case R.id.action_history:
+                Intent historyInt = new Intent(this, HistoryActivity.class);
+                startActivity(historyInt);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
-
-    public void NewRecord(View view){
-        Intent newRecInt = new Intent(this, NewRecordActivity.class);
-        startActivity(newRecInt);
-    }
-
-    public void goAbout(View view){
-        Intent aboutInt = new Intent(this, AboutActivity.class);
-        startActivity(aboutInt);
-    }
-
-    public void openProfile(View view) {
-        Intent proIntent = new Intent(this, ProfileActivity.class);
-        startActivity(proIntent);
-    }
-
-    public void openHelp(View view) {
-        Intent helpInt = new Intent (this, HelpActivity.class);
-        startActivity(helpInt);
-    }
+    //endregion
 }

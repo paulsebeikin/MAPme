@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        style="@style/linLayoutForLabels"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/record_row"
+        android:gravity="center_vertical"
+        android:weightSum="2"
+        android:orientation="horizontal">
+        <TextView
+            style="@style/labelsAbout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="[Record Name]"
+            android:id="@+id/record_name"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_del_img"
+            android:id="@+id/del_img"
+            android:layout_weight="0.2"
+            android:layout_centerInParent="true"
+            android:layout_toRightOf="@id/record_name"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add_img"
+            android:id="@+id/img_num"
+            android:layout_weight="0.2"
+            android:layout_toRightOf="@id/del_img"/>
+    </LinearLayout>
+    <LinearLayout
+        style="@style/linLayoutForLabels"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/record_dt"
+                android:text="[date]"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="[desc]"
+                android:id="@+id/record_desc"
+                android:paddingTop="3pt"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="[country]"
+                android:id="@+id/record_country"
+                android:paddingTop="3pt"/>
+
+        </LinearLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_drilldown"
+            android:layout_weight="1.5"/>
+    </LinearLayout>
+</LinearLayout>
