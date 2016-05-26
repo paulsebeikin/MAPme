@@ -42,6 +42,7 @@ public class HistoryArrayAdapter extends ArrayAdapter {
         TextView recordDate = (TextView) rowView.findViewById(R.id.record_dt);
         TextView recordDesc = (TextView) rowView.findViewById(R.id.record_desc);
         TextView recordCountry = (TextView) rowView.findViewById(R.id.record_country);
+        ImageView sync = (ImageView) rowView.findViewById(R.id.synced);
         ImageView numImg = (ImageView) rowView.findViewById(R.id.img_num);
 
         Record curr = values.get(position);
@@ -73,6 +74,15 @@ public class HistoryArrayAdapter extends ArrayAdapter {
                 break;
             case 3:
                 numImg.setImageResource(R.drawable.ic_numimg3);
+                break;
+        }
+        int synced = curr.isUploaded() ? 1 : 0;
+        switch(synced){
+            case 0:
+                sync.setImageResource((R.drawable.ic_sync_local));
+                break;
+            case 1:
+                sync.setImageResource((R.drawable.ic_sync_remote));
                 break;
         }
         return rowView;

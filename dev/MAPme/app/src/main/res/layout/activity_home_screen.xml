@@ -3,10 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:weightSum="1"
-    android:layout_gravity="center">
+    android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/mapme_toolbar"
@@ -17,79 +14,80 @@
         android:theme="@style/AppTheme"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center_vertical">
+        android:layout_height="match_parent">
 
         <LinearLayout
-            style="@style/buttonPadding">
-            <ImageView
-                android:layout_width="47dp"
-                android:layout_height="51dp"
-                android:src="@drawable/ic_new_submission"
-                android:layout_alignParentLeft="true"
-                android:layout_gravity="top"/>
-            <Button style="@style/largeButtons"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="New Record"
-                android:id="@+id/button"
-                android:textAlignment="center"
-                android:onClick="NewRecord"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                style="@style/homebuttonLayout">
+                <ImageView
+                    android:layout_width="47dp"
+                    android:layout_height="51dp"
+                    android:src="@drawable/ic_new_submission"
+                    android:layout_alignParentLeft="true"
+                    android:layout_gravity="top"/>
+                <Button style="@style/largeButtons"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="New Record"
+                    android:id="@+id/button"
+                    android:textAlignment="center"
+                    android:onClick="NewRecord"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                style="@style/homebuttonLayout">
+                <ImageView
+                    android:layout_width="47dp"
+                    android:layout_height="51dp"
+                    android:src="@drawable/ic_history"
+                    android:layout_alignParentLeft="true" />
                 />
+                <Button style="@style/largeButtons"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="History"
+                    android:onClick="openHistory"
+                    android:textAlignment="center"/>
+            </LinearLayout>
+            <LinearLayout
+                style="@style/homebuttonLayout">
+                <ImageView
+                    android:layout_width="47dp"
+                    android:layout_height="51dp"
+                    android:src="@drawable/ic_profile"
+                    android:layout_alignParentLeft="true"
+                    android:layout_gravity="top"/>
+
+                <Button style="@style/largeButtons"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Profile"
+                    android:textAlignment="center"
+                    android:onClick="openProfile"/>
+
+            </LinearLayout>
+            <LinearLayout
+                style="@style/homebuttonLayout">
+                <ImageView
+                    android:layout_width="47dp"
+                    android:layout_height="51dp"
+                    android:src="@drawable/ic_help"
+                    android:layout_alignParentLeft="true"
+                    android:layout_gravity="top"/>
+
+                <Button style="@style/largeButtons"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Help"
+                    android:textAlignment="center"
+                    android:onClick="openHelp"/>
+            </LinearLayout>
         </LinearLayout>
-        <LinearLayout
-            style="@style/buttonPadding">
-            <ImageView
-                android:layout_width="47dp"
-                android:layout_height="51dp"
-                android:src="@drawable/ic_history"
-                android:layout_alignParentLeft="true"
-                android:layout_gravity="top"/>
-            />
-            <Button style="@style/largeButtons"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="History"
-                android:onClick="openHistory"
-                android:textAlignment="center"/>
-        </LinearLayout>
+    </ScrollView>
 
-        <LinearLayout
-            style="@style/buttonPadding">
-
-            <ImageView
-                android:layout_width="47dp"
-                android:layout_height="51dp"
-                android:src="@drawable/ic_profile"
-                android:layout_alignParentLeft="true"
-                android:layout_gravity="top"/>
-
-            <Button style="@style/largeButtons"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Profile"
-                android:textAlignment="center"
-                android:onClick="openProfile"/>
-
-        </LinearLayout>
-        <LinearLayout
-            style="@style/buttonPadding">
-            <ImageView
-                android:layout_width="47dp"
-                android:layout_height="51dp"
-                android:src="@drawable/ic_help"
-                android:layout_alignParentLeft="true"
-                android:layout_gravity="top"/>
-
-            <Button style="@style/largeButtons"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Help"
-                android:textAlignment="center"
-                android:onClick="openHelp"/>
-        </LinearLayout>
-    </LinearLayout>
 </LinearLayout>

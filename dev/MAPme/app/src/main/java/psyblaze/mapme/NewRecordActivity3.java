@@ -175,7 +175,8 @@ public class NewRecordActivity3 extends OrmLiteBaseActivity<RecordHelper> implem
         for (Record r : allRecords) Log.i("record", r.toString());
 
         //clear images from current template
-        template.images = new String[3];
+        template.Reset();
+        saveTemplate();
 
         // go back to home page
         Intent goHome = new Intent(this, HomeScreenActivity.class);

@@ -126,7 +126,8 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
         recordDao.create(toInsert);
 
         //clear images from current template
-        template.images = new String[3];
+        template.Reset();
+        saveTemplate();
 
         // go back to home page
         Intent goHome = new Intent(this, HomeScreenActivity.class);

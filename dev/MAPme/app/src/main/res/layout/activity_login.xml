@@ -107,9 +107,6 @@
                 android:text="@string/action_sign_in"
                 android:textStyle="bold"/>
         </LinearLayout>
-
-
-
         <TextView
             android:gravity="center_horizontal"
             android:layout_width="200dp"

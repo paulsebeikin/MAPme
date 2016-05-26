@@ -90,5 +90,7 @@
     <string name="countryHist">Country</string>
     <string name="provinceHist">Province</string>
     <string name="townHist">Nearest Town</string>
+    <string name="numImg_desc">Displays the number of images associated with this Record.</string>
+    <string name="sync_desc">Indicates whether this Record has been synced to the ADU server.</string>
 
 </resources>

@@ -9,14 +9,13 @@
     </style>
 
     <style name="labelsAbout">
-        <item name="android:textSize">10pt</item>
+        <item name="android:textSize">8pt</item>
         <item name="android:fontFamily">sans-serif</item>
     </style>
 
     <style name="historyRowLabel">
-        <item name="android:textSize">5pt</item>
-        <!--<item name="android:layout_gravity">left</item>-->
-        <item name="android:paddingTop">10dp</item>
+        <item name="android:textSize">6pt</item>
+        <item name="android:paddingTop">12dp</item>
         <item name="android:fontFamily">sans-serif</item>
     </style>
 
@@ -27,11 +26,12 @@
         <item name="android:layout_weight">0.7</item>
     </style>
 
-    <style name="buttonPadding">
+    <style name="homebuttonLayout">
         <item name="android:paddingTop">20pt</item>
-        <item name="android:layout_width">354dp</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center</item>
         <item name="android:paddingRight">10pt</item>
         <item name="android:paddingLeft">10pt</item>
     </style>

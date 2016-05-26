@@ -28,6 +28,11 @@ public class Template {
 
     }
 
+    public void Reset(){
+        location = new Double[]{0.0,0.0};
+        images = new String[3];
+    }
+
     public Template() {
         location = new Double[]{0.0,0.0};
         altitude = 0.0;
