@@ -15,8 +15,6 @@ import com.j256.ormlite.dao.RuntimeExceptionDao;
 
 import java.text.DecimalFormat;
 
-import Classes.Help;
-import Classes.HistoryArrayAdapter;
 import Classes.Record;
 import Classes.RecordHelper;
 
@@ -103,7 +101,6 @@ public class HistoryDetailActivity extends OrmLiteBaseActivity<RecordHelper> imp
         else if (img3[lastElement3].equals("null")) result = img1[lastElement] + "\n" + img2[lastElement2];
         else result = img1[lastElement] + "\n" + img2[lastElement2] + "\n" + img3[lastElement3];
         return result;
-
     }
     //endregion
 

@@ -70,6 +70,10 @@
     <string name="profileProject">Project</string>
     <string name="profileSaveBtn">Save</string>
 
+    <string name="nameTemp">[Name]</string>
+    <string name="emailTemp">[Email</string>
+    <string name="aduTemp">[ADU]</string>
+
     <!-- Strings for Help activity and related -->
     <string name="newRec">- Creating a New Record</string>
     <string name="logReg">- Registering and Logging In</string>

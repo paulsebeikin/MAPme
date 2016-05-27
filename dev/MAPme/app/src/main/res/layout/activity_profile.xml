@@ -38,12 +38,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/profileName"/>
-            <EditText
+            <TextView
+                android:padding="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/nameTemp"
                 android:layout_weight="0.3"
-                android:id="@+id/profName"
-                android:singleLine="true" />
+                android:text="@string/nameTemp"/>
         </LinearLayout>
         <LinearLayout
             style="@style/linLayoutForLabels"
@@ -57,12 +58,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/profileEmail"/>
-            <EditText
+            <TextView
+                android:padding="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/emailTemp"
                 android:layout_weight="0.3"
-                android:id="@+id/profEmail"
-                android:singleLine="true" />
+                android:text="@string/emailTemp"/>
         </LinearLayout>
         <LinearLayout
             style="@style/linLayoutForLabels"
@@ -76,12 +78,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/profileADU"/>
-            <EditText
+            <TextView
+                android:padding="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/aduTemp"
                 android:layout_weight="0.3"
-                android:id="@+id/profADU"
-                android:singleLine="true" />
+                android:text="@string/aduTemp"/>
         </LinearLayout>
         <LinearLayout
             style="@style/linLayoutForLabels"
