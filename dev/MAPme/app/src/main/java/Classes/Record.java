@@ -408,7 +408,7 @@ public class Record {
     }
 
     public Record(Template template){
-        this.username = "Paul Sebeikin";
+        this.username = Web.username;
         this.latitude = template.location[0];
         this.longitude = template.location[1];
         this.altitude = template.altitude;

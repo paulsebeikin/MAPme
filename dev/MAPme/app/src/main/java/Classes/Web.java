@@ -1,6 +1,9 @@
 package Classes;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import org.json.*;
@@ -13,6 +16,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.MessageDigest;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 
 public class Web {
 
@@ -20,6 +25,8 @@ public class Web {
     private static final String API = "2f4c0a20237553a41c817ec5940f00bf";
     private static final String authenticationUrl = "http://api.adu.org.za/validation/user/login?";
     private static String jsonResponse;
+    public static String[] projects = null;
+    public static String username = "";
     // POST URL to ADU server
     private static final String postUrl = "http://vmus.adu.org.za/api/v1/insertrecord";
     // get all the projects
@@ -47,6 +54,8 @@ public class Web {
     private static final String NOTE ="note";
     //endregion
 
+    private static SharedPreferences settings;
+
     public static Boolean postRecord(Record record) {
         String recSubmissionResponse = "";
         URL url = null;
@@ -70,7 +79,7 @@ public class Web {
                 .appendQueryParameter(YEAR, String.valueOf(record.getYear()))
                 .appendQueryParameter(SOURCE, record.getSource())
                 .appendQueryParameter(IMAGES, record.getUrl())
-                .appendQueryParameter(NOTE , record.getNote())
+                //.appendQueryParameter(NOTE , record.getNote())
                 .build();
         try {
            url = new URL(builtUri.toString());
@@ -104,7 +113,10 @@ public class Web {
             e.printStackTrace();
         } catch (JSONException j) {
             j.printStackTrace();
-        } finally {
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        finally {
             if (urlConn != null) urlConn.disconnect();
             if (reader != null) {
                 try {
@@ -158,6 +170,12 @@ public class Web {
             JSONObject obj = new JSONObject(jsonResponse);
             success = (String) obj.getJSONObject("registered").getJSONObject("status").get("result");
 
+            String firstname = (String) obj.getJSONObject("registered").getJSONObject("status").get("Name");
+            String surname = (String) obj.getJSONObject("registered").getJSONObject("status").get("Surname");
+
+            username = firstname + " " + surname;
+
+
         } catch (IOException e) {
             jsonResponse = null;
             e.printStackTrace();
@@ -192,8 +210,7 @@ public class Web {
         return null;
     }
 
-    public static String[] getProjects() {
-        String projects [] = null;
+    public static void getProjects() {
         URL url;
         BufferedReader reader = null;
         HttpURLConnection urlConn =  null;
@@ -242,7 +259,7 @@ public class Web {
                 }
             }
         }
-        return projects;
     }
+
 }
 

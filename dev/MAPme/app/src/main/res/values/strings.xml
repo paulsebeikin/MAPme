@@ -61,7 +61,7 @@
 
     <!-- Strings for Profile activity -->
     <string name="profileTitle">Profile</string>
-    <string name="profileName">Name</string>
+    <string name="profileName">Username</string>
     <string name="profileEmail">Email</string>
     <string name="profileADU"> ADU</string>
     <string name="profileCountry">Country</string>

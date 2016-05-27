@@ -8,26 +8,6 @@
     <item>1:50 000 Map</item>
     <item>1:250 000 Map</item>
 </string-array>
-
-<string-array name="Projects">
-    <item>OrchidMAP (Orchids)</item>
-    <item>FrogMAP (Frogs)</item>
-    <item>MammalMAP (Mammals)</item>
-    <item>BirdPIX (Bird Pictures)</item>
-    <item>BOP (Birds with Odd Plumages)</item>
-    <item>DungBeetleMAP (Dung Beetles)</item>
-    <item>EchinoMAP (Echinoderma)</item>
-    <item>FishMAP (Freshwater Fish)</item>
-    <item>LacewingMAP (Neuroptera: Lacewings)</item>
-    <item>LepiMAP (Butterflies and Moths)</item>
-    <item>MushroomMAP (Mushrooms)</item>
-    <item>OdonataMAP (Dragonflies and Damselflies)</item>
-    <item>PHOWN (Weaver nests)</item>
-    <item>ReptileMAP (Reptiles)</item>
-    <item>ScorpionMAP (Scorpions)</item>
-    <item>SpiderMAP (Spiders)</item>
-    <item>TreeMAP (Tree Atlas)</item>
-</string-array>
     <string-array name="countries">
        <item>South Africa</item><item></item>
     </string-array>

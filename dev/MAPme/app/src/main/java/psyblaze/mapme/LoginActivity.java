@@ -108,7 +108,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         Toolbar action_bar = (Toolbar) findViewById(R.id.mapme_toolbar);
         setSupportActionBar(action_bar);
 
-
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -135,6 +134,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     public void savePreferences(){
         editor = settings.edit();
+        editor.putString("username", Web.username);
         editor.putString("email", mEmailView.getText().toString());
         editor.putString("adu", mADUView.getText().toString());
         editor.putString("pwd", mPasswordView.getText().toString());
@@ -385,23 +385,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
             return Web.attemptAduLogin(mEmail, mAdu, mPassword);
-
-            /*
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
-
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-            */
         }
 
         @Override
@@ -410,6 +393,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
+                new GetProjectsAsyncTask().execute();
                 savePreferences();
                 goHome();
                 finish();
@@ -423,6 +407,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected void onCancelled() {
             mAuthTask = null;
             showProgress(false);
+        }
+    }
+
+    private class GetProjectsAsyncTask extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            Web.getProjects();
+            return null;
         }
     }
 }

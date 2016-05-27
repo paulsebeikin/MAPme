@@ -35,7 +35,7 @@
             android:layout_gravity="center"
             android:layout_weight="1" />
 
-        <ImageButton
+        <ImageView
             android:layout_width="62dp"
             android:layout_height="53dp"
             android:src="@drawable/ic_gallery"
@@ -134,7 +134,7 @@
         android:layout_weight="0.00001"
         android:padding="7pt"
         android:weightSum="1">
-        <ImageButton
+        <ImageView
             android:layout_width="62dp"
             android:layout_height="97dp"
             android:src="@drawable/ic_open_cam"
@@ -145,17 +145,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center_horizontal"
-        android:layout_weight="0.00001"
-        android:padding="7pt"
-        android:weightSum="1">
+        android:gravity="center_horizontal">
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/saveImages"
             android:id="@+id/btnDone"
             android:onClick="doneClicked"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="0.19" />
+            android:layout_gravity="center_horizontal"/>
     </LinearLayout>
 </LinearLayout>

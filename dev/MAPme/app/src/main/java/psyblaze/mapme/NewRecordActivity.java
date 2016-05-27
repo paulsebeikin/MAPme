@@ -30,6 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import Classes.Template;
+import Classes.Web;
 import Fragments.SelectDateFragment;
 
 public class NewRecordActivity extends AppCompatActivity {
@@ -74,17 +75,13 @@ public class NewRecordActivity extends AppCompatActivity {
         gps_long = (EditText) findViewById(R.id.gps_long);
         gps_alt = (EditText) findViewById(R.id.gps_alt);
 
-        // get array values
-        String[] values = getResources().getStringArray(R.array.Projects);
         // create adapter for spinner
-        projAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, values);
-        // configure drop-down layout style
-        //projAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        projAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, Web.projects);
         // attaching data adapter to spinner
         proj_spinner.setAdapter(projAdapter);
 
 
-        values = getResources().getStringArray(R.array.source);
+        String [] values = getResources().getStringArray(R.array.source);
         sourceAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, values);
         //sourceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         source_spinner.setAdapter(sourceAdapter);

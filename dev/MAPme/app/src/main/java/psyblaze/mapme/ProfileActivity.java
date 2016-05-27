@@ -23,6 +23,8 @@ public class ProfileActivity extends AppCompatActivity {
     Spinner province_spin;
     Spinner project_spin;
 
+    ArrayAdapter projAdapter;
+
     TextView name, email, adu;
     //endregion
 
@@ -53,38 +55,25 @@ public class ProfileActivity extends AppCompatActivity {
         email = (TextView) findViewById(R.id.emailTemp);
         adu = (TextView) findViewById(R.id.aduTemp);
 
+        project_spin = (Spinner) findViewById(R.id.profProject);
+        projAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, Web.projects);
+        projAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        project_spin.setAdapter(projAdapter);
+
         settings = getSharedPreferences(LoginActivity.PREFS_NAME, Context.MODE_PRIVATE);
         gson = new Gson();
         SharedPrefRestore();
-
-        new GetProjectsAsyncTask().execute();
     }
 
     private void SharedPrefRestore() {
         String json = settings.getString("template", null);
         if (json != null) {
             template = gson.fromJson(json, Template.class);
+            name.setText(settings.getString("username", ""));
             email.setText(settings.getString("email", ""));
             adu.setText(settings.getString("adu", ""));
         } else {
             template = new Template();
-        }
-    }
-
-    private class GetProjectsAsyncTask extends AsyncTask<Void, Void, String[]> {
-        @Override
-        protected String[] doInBackground(Void... params) {
-           return Web.getProjects();
-        }
-
-        @Override
-        protected void onPostExecute(String[] strings) {
-            super.onPostExecute(strings);
-
-            project_spin = (Spinner) findViewById(R.id.profProject);
-            spinnerAdapter = new ArrayAdapter(ProfileActivity.this, android.R.layout.simple_spinner_item, strings);
-            spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-            project_spin.setAdapter(spinnerAdapter);
         }
     }
 }

@@ -171,12 +171,7 @@ public class NewRecordActivity3 extends OrmLiteBaseActivity<RecordHelper> implem
         toInsert.setAdu(Integer.parseInt(settings.getString("adu","")));
 
         recordDao.create(toInsert);
-
-        //List<Record> allRecords = recordDao.queryForAll();
-        //for (Record r : allRecords) Log.i("record", r.toString());
-
-
-        //Web.postRecord(toInsert);
+        Web.postRecord(toInsert);
 
         //clear images from current template
         template.Reset();

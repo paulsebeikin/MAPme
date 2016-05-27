@@ -119,7 +119,7 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
         helper.getWritableDatabase();
         RuntimeExceptionDao<Record,Integer> recordDao = getHelper().getRecordDao();
 
-        Record toInsert = new Record(template);
+        final Record toInsert = new Record(template);
         toInsert.setEmail(settings.getString("email",""));
         String aduStr = settings.getString("adu","");
         toInsert.setAdu(Integer.parseInt(aduStr));
@@ -134,9 +134,9 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
         submit.execute();
 
         // go back to home page
-        Intent goHome = new Intent(this, HomeScreenActivity.class);
-        startActivity(goHome);
-        finish();
+        //Intent goHome = new Intent(this, HomeScreenActivity.class);
+        //startActivity(goHome);
+        //finish();
 
 
     }
