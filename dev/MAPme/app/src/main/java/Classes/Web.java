@@ -14,10 +14,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.MessageDigest;
 
-
-/**
- * Created by Paul on 5/27/2016.
- */
 public class Web {
 
     //region static variables
@@ -76,7 +72,6 @@ public class Web {
                 .appendQueryParameter(IMAGES, record.getUrl())
                 .appendQueryParameter(NOTE , record.getNote())
                 .build();
-
         try {
            url = new URL(builtUri.toString());
         } catch(MalformedURLException mal) {
@@ -119,8 +114,6 @@ public class Web {
                 }
             }
         }
-
-
         Log.i("TEST URI", builtUri.toString());
         return false;
     }
@@ -200,8 +193,8 @@ public class Web {
     }
 
     public static String[] getProjects() {
-        String projects [];
-        URL url = null;
+        String projects [] = null;
+        URL url;
         BufferedReader reader = null;
         HttpURLConnection urlConn =  null;
 
@@ -227,6 +220,11 @@ public class Web {
             JSONObject obj = new JSONObject(jsonResponse);
             JSONArray arr = obj.getJSONArray("projects");
 
+            if (arr != null) {
+                int len = arr.length();
+                projects = new String[len];
+                for (int i = 0; i < len; i++) projects[i] = arr.getJSONObject(i).getString("Project_acronym");
+            }
             Log.i("test", "test");
 
         } catch (IOException e) {
@@ -244,8 +242,7 @@ public class Web {
                 }
             }
         }
-
-        return null;
+        return projects;
     }
 }
 

@@ -2,7 +2,6 @@ package psyblaze.mapme;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.location.Address;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,10 +13,6 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
-import java.io.IOException;
-import java.util.List;
-
-import Classes.Record;
 import Classes.Template;
 import Classes.Web;
 
@@ -54,14 +49,6 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-
-        String[] project_values = getResources().getStringArray(R.array.Projects);
-
-        project_spin = (Spinner) findViewById(R.id.profProject);
-        spinnerAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, project_values);
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        project_spin.setAdapter(spinnerAdapter);
-
         name = (TextView) findViewById(R.id.nameTemp);
         email = (TextView) findViewById(R.id.emailTemp);
         adu = (TextView) findViewById(R.id.aduTemp);
@@ -84,17 +71,20 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-
     private class GetProjectsAsyncTask extends AsyncTask<Void, Void, String[]> {
         @Override
         protected String[] doInBackground(Void... params) {
            return Web.getProjects();
-
         }
 
         @Override
         protected void onPostExecute(String[] strings) {
             super.onPostExecute(strings);
+
+            project_spin = (Spinner) findViewById(R.id.profProject);
+            spinnerAdapter = new ArrayAdapter(ProfileActivity.this, android.R.layout.simple_spinner_item, strings);
+            spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+            project_spin.setAdapter(spinnerAdapter);
         }
     }
 }
