@@ -30,6 +30,7 @@ import java.util.Locale;
 import Classes.Record;
 import Classes.RecordHelper;
 import Classes.Template;
+import Classes.Web;
 
 public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implements AppCompatCallback{
 
@@ -129,10 +130,15 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
         template.Reset();
         saveTemplate();
 
+        submitRecordAsyncTask submit = new submitRecordAsyncTask(toInsert);
+        submit.execute();
+
         // go back to home page
         Intent goHome = new Intent(this, HomeScreenActivity.class);
         startActivity(goHome);
         finish();
+
+
     }
 
     public void navigateNext(View view){
@@ -183,6 +189,22 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
         }
     }
 
+    public class submitRecordAsyncTask extends AsyncTask<Record, Void, Boolean> {
+
+        Record toInsert;
+        submitRecordAsyncTask (Record record) {
+            toInsert = record;
+        }
+        @Override
+        protected Boolean doInBackground(Record... record) {
+            return Web.postRecord(toInsert);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+        }
+    }
     //endregion
 
     //region Toolbar Stuff

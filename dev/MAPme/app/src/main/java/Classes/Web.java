@@ -23,11 +23,11 @@ public class Web {
     //region static variables
     private static final String API = "2f4c0a20237553a41c817ec5940f00bf";
     private static final String authenticationUrl = "http://api.adu.org.za/validation/user/login?";
-    private static String jsonLoginResponse;
+    private static String jsonResponse;
     // POST URL to ADU server
     private static final String postUrl = "http://vmus.adu.org.za/api/v1/insertrecord";
     // get all the projects
-    private static final String projectUrl = "http://vmus.adu.org/api/v1/projects";
+    private static final String projectUrl = "http://vmus.adu.org.za/api/v1/projects";
     // Keys for all fields
     private static final String API_KEY = "API_KEY";
     private static final String PASS_ID = "passid";
@@ -51,7 +51,10 @@ public class Web {
     private static final String NOTE ="note";
     //endregion
 
-    public static void postRecord(Record record) {
+    public static Boolean postRecord(Record record) {
+        String recSubmissionResponse = "";
+        URL url = null;
+        BufferedReader reader = null;
         HttpURLConnection urlConn =  null;
         Uri builtUri = Uri.parse(postUrl).buildUpon()
                 .appendQueryParameter(USERNAME, record.getUsername())
@@ -75,12 +78,51 @@ public class Web {
                 .build();
 
         try {
-            URL url = new URL(builtUri.toString());
+           url = new URL(builtUri.toString());
         } catch(MalformedURLException mal) {
             mal.printStackTrace();
         }
 
+        try {
+            urlConn = (HttpURLConnection) url.openConnection();
+            urlConn.setRequestMethod("POST");
+            urlConn.connect();
+
+            InputStream response = urlConn.getInputStream();
+            StringBuffer buffer = new StringBuffer();
+
+            if (response == null) jsonResponse = null;
+            reader = new BufferedReader(new InputStreamReader(response));
+
+            String line;
+            while ((line = reader.readLine()) != null) buffer.append(line + "\n");
+
+            if (buffer.length() == 0) jsonResponse = null;
+
+            jsonResponse = buffer.toString(); // response message, so will have token
+
+            JSONObject obj = new JSONObject(jsonResponse);
+            recSubmissionResponse = (String) obj.getJSONObject("registered").getJSONObject("status").get("result");
+
+        } catch (IOException e) {
+            jsonResponse = null;
+            e.printStackTrace();
+        } catch (JSONException j) {
+            j.printStackTrace();
+        } finally {
+            if (urlConn != null) urlConn.disconnect();
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (final IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
         Log.i("TEST URI", builtUri.toString());
+        return false;
     }
 
     public static Boolean attemptAduLogin(String email, String adu, String password) {
@@ -110,21 +152,21 @@ public class Web {
             InputStream response = urlConn.getInputStream();
             StringBuffer buffer = new StringBuffer();
 
-            if (response == null) jsonLoginResponse = null;
+            if (response == null) jsonResponse = null;
             reader = new BufferedReader(new InputStreamReader(response));
 
             String line;
             while ((line = reader.readLine()) != null) buffer.append(line + "\n");
 
-            if (buffer.length() == 0) jsonLoginResponse = null;
+            if (buffer.length() == 0) jsonResponse = null;
 
-            jsonLoginResponse = buffer.toString(); // response message, so will have token
+            jsonResponse = buffer.toString(); // response message, so will have token
 
-            JSONObject obj = new JSONObject(jsonLoginResponse);
+            JSONObject obj = new JSONObject(jsonResponse);
             success = (String) obj.getJSONObject("registered").getJSONObject("status").get("result");
 
         } catch (IOException e) {
-            jsonLoginResponse = null;
+            jsonResponse = null;
             e.printStackTrace();
         } catch (JSONException j) {
             j.printStackTrace();
@@ -154,6 +196,55 @@ public class Web {
             return sb.toString();
         } catch (java.security.NoSuchAlgorithmException e) {
         }
+        return null;
+    }
+
+    public static String[] getProjects() {
+        String projects [];
+        URL url = null;
+        BufferedReader reader = null;
+        HttpURLConnection urlConn =  null;
+
+        try {
+            url = new URL(projectUrl);
+            urlConn = (HttpURLConnection) url.openConnection();
+            urlConn.setRequestMethod("GET");
+            urlConn.connect();
+
+            InputStream response = urlConn.getInputStream();
+            StringBuffer buffer = new StringBuffer();
+
+            if (response == null) jsonResponse = null;
+            reader = new BufferedReader(new InputStreamReader(response));
+
+            String line;
+            while ((line = reader.readLine()) != null) buffer.append(line + "\n");
+
+            if (buffer.length() == 0) jsonResponse = null;
+
+            jsonResponse = buffer.toString(); // response message, so will have token
+
+            JSONObject obj = new JSONObject(jsonResponse);
+            JSONArray arr = obj.getJSONArray("projects");
+
+            Log.i("test", "test");
+
+        } catch (IOException e) {
+            jsonResponse = null;
+            e.printStackTrace();
+        } catch (JSONException j) {
+            j.printStackTrace();
+        } finally {
+            if (urlConn != null) urlConn.disconnect();
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (final IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
         return null;
     }
 }

@@ -2,6 +2,8 @@ package psyblaze.mapme;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.location.Address;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -11,7 +13,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+
+import java.io.IOException;
+import java.util.List;
+
+import Classes.Record;
 import Classes.Template;
+import Classes.Web;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -61,17 +69,32 @@ public class ProfileActivity extends AppCompatActivity {
         settings = getSharedPreferences(LoginActivity.PREFS_NAME, Context.MODE_PRIVATE);
         gson = new Gson();
         SharedPrefRestore();
+
+        new GetProjectsAsyncTask().execute();
     }
 
-    private void SharedPrefRestore(){
+    private void SharedPrefRestore() {
         String json = settings.getString("template", null);
-        if (json != null){
+        if (json != null) {
             template = gson.fromJson(json, Template.class);
-            email.setText(settings.getString("email",""));
-            adu.setText(settings.getString("adu",""));
-        }
-        else {
+            email.setText(settings.getString("email", ""));
+            adu.setText(settings.getString("adu", ""));
+        } else {
             template = new Template();
+        }
+    }
+
+
+    private class GetProjectsAsyncTask extends AsyncTask<Void, Void, String[]> {
+        @Override
+        protected String[] doInBackground(Void... params) {
+           return Web.getProjects();
+
+        }
+
+        @Override
+        protected void onPostExecute(String[] strings) {
+            super.onPostExecute(strings);
         }
     }
 }
