@@ -70,7 +70,7 @@ public class HistoryArrayAdapter extends ArrayAdapter {
                 numImg.setImageResource(R.drawable.ic_num_img1);
                 break;
             case 2:
-                numImg.setImageResource(R.drawable.ic_num_img1);
+                numImg.setImageResource(R.drawable.ic_num_img2);
                 break;
             case 3:
                 numImg.setImageResource(R.drawable.ic_num_img3);
