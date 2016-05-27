@@ -425,6 +425,11 @@ public class Record {
         this.month = c.get(Calendar.MONTH);
         this.year = c.get(Calendar.YEAR);
         this.source = template.source;
+
+        //optional parameters
+        this.natCul = template.natCul;
+        this.species = template.species;
+        this.note = createNote(template);
     }
 
     @Override
@@ -452,6 +457,17 @@ public class Record {
         sb.append(", ").append("url=").append(url);
 
         sb.append(", ").append("uploaded=").append(uploaded);
+
+        return sb.toString();
+    }
+
+    private String createNote(Template template) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("environment=").append(template.environment);
+        sb.append("; ").append("flower=").append(template.flower.toString());
+        sb.append("; ").append("fruit=").append(template.fruit.toString());
+        sb.append("; ").append("num_observed=").append(template.numObserved);
+        sb.append("; ").append("growth_form=").append(template.growth);
 
         return sb.toString();
     }

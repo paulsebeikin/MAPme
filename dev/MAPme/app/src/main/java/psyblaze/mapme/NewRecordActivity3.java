@@ -29,6 +29,7 @@ import java.util.List;
 import Classes.Record;
 import Classes.RecordHelper;
 import Classes.Template;
+import Classes.Web;
 
 public class NewRecordActivity3 extends OrmLiteBaseActivity<RecordHelper> implements AppCompatCallback {
 
@@ -171,8 +172,9 @@ public class NewRecordActivity3 extends OrmLiteBaseActivity<RecordHelper> implem
 
         recordDao.create(toInsert);
 
-        List<Record> allRecords = recordDao.queryForAll();
-        for (Record r : allRecords) Log.i("record", r.toString());
+        //List<Record> allRecords = recordDao.queryForAll();
+        //for (Record r : allRecords) Log.i("record", r.toString());
+        Web.postRecord(toInsert);
 
         //clear images from current template
         template.Reset();

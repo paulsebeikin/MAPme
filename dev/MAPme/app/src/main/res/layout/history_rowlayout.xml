@@ -19,6 +19,7 @@
             android:text="[Record Name]"
             android:id="@+id/record_name"
             android:layout_weight="1"
+
             />
     </LinearLayout>
     <LinearLayout

@@ -11,8 +11,7 @@
     <style name="labelsAbout">
         <item name="android:textSize">8pt</item>
         <item name="android:fontFamily">sans-serif</item>
-        <item name="android:textAlignment">center</item>
-        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_gravity">left</item>
     </style>
 
     <style name="historyRowLabel">

@@ -23,6 +23,8 @@ import android.widget.Toast;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 
+import org.json.JSONObject;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -253,6 +255,7 @@ public class NewRecordActivity extends AppCompatActivity {
         template.source = source_spinner.getSelectedItem().toString();
 
         String json = gson.toJson(template);
+
         editor.putString("template", json);
         editor.commit();
     }

@@ -42,6 +42,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import Classes.Web;
+
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
@@ -77,7 +79,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mADUView;
     private View mProgressView;
     private View mLoginFormView;
-    private View mLoginView;
+    //private View mLoginView;
     private SharedPreferences settings;
     private Editor editor;
 
@@ -111,13 +113,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                //attemptLogin();
-                savePreferences();
-                goHome();
+                attemptLogin();
+               // savePreferences(); //OUR CODE
+               // goHome(); // OUR CODE
             }
         });
 
         mProgressView = findViewById(R.id.login_progress);
+        mLoginFormView = findViewById(R.id.login_form);
 
         ((TextView) findViewById(R.id.register_link)).setMovementMethod(LinkMovementMethod.getInstance());
         ((TextView) findViewById(R.id.register_link)).setText(Html.fromHtml(getResources().getString(R.string.register_link)));
@@ -226,6 +229,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
+        String adu = mADUView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -256,7 +260,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
+            mAuthTask = new UserLoginTask(email, adu, password);
             mAuthTask.execute((Void) null);
         }
     }
@@ -369,16 +373,20 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         private final String mEmail;
         private final String mPassword;
+        private final String mAdu;
 
-        UserLoginTask(String email, String password) {
+        UserLoginTask(String email, String adu, String password) {
             mEmail = email;
             mPassword = password;
+            mAdu = adu;
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
+            return Web.attemptAduLogin(mEmail, mAdu, mPassword);
 
+            /*
             try {
                 // Simulate network access.
                 Thread.sleep(2000);
@@ -393,9 +401,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     return pieces[1].equals(mPassword);
                 }
             }
-
-            // TODO: register the new account here.
-            return true;
+            */
         }
 
         @Override
@@ -404,6 +410,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
+                goHome();
                 finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
