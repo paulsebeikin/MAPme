@@ -13,12 +13,15 @@ import android.widget.TextView;
 import com.j256.ormlite.android.apptools.OrmLiteBaseActivity;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 
-import Classes.Help;
-import Classes.HistoryArrayAdapter;
+import java.text.DecimalFormat;
+
 import Classes.Record;
 import Classes.RecordHelper;
 
 public class HistoryDetailActivity extends OrmLiteBaseActivity<RecordHelper> implements AppCompatCallback {
+
+    //region Variables
+    DecimalFormat df = new DecimalFormat("#.##");
 
     //region UI Views
     TextView date, proj, desc, img, gps_lat, gps_long, country, province, town;
@@ -74,12 +77,32 @@ public class HistoryDetailActivity extends OrmLiteBaseActivity<RecordHelper> imp
         proj.setText(record.getProject());
         desc.setText(record.getDesc());
         img.setText(record.getUrl());
-        gps_lat.setText(String.valueOf(record.getLatitude()));
-        gps_long.setText(String.valueOf(record.getLongitude()));
+        img.setText(getImageNames(record.getUrl()));
+        gps_lat.setText(String.valueOf(df.format(record.getLatitude())));
+        gps_long.setText(String.valueOf(df.format(record.getLongitude())));
         country.setText(record.getCountry());
         province.setText(record.getProvince());
         town.setText(record.getTown());
     }
+
+    //region Formatter methods
+    private String getImageNames(String paths) {
+        String result;
+        String arr [] = paths.split(";");
+        String [] img1 = arr[0].split("/");
+        String [] img2 = arr[1].split("/");
+        String [] img3 = arr[2].split("/");
+
+        int lastElement  = img1.length - 1;
+        int lastElement2 = img2.length - 1;
+        int lastElement3 = img3.length - 1;
+
+        if (img2[lastElement2].equals("null")) result = img1[lastElement];
+        else if (img3[lastElement3].equals("null")) result = img1[lastElement] + "\n" + img2[lastElement2];
+        else result = img1[lastElement] + "\n" + img2[lastElement2] + "\n" + img3[lastElement3];
+        return result;
+    }
+    //endregion
 
     //region Toolbar Stuff
 

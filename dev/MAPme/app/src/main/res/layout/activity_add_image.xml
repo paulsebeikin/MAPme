@@ -10,7 +10,6 @@
     android:layout_gravity="center"
     android:clickable="true"
     tools:context="psyblaze.mapme.AddImage">
-
     <android.support.v7.widget.Toolbar
         android:id="@+id/mapme_toolbar"
         android:layout_width="match_parent"
@@ -19,7 +18,6 @@
         android:elevation="4dp"
         android:theme="@style/AppTheme"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,7 +35,7 @@
             android:layout_gravity="center"
             android:layout_weight="1" />
 
-        <ImageView
+        <ImageButton
             android:layout_width="62dp"
             android:layout_height="53dp"
             android:src="@drawable/ic_gallery"
@@ -45,7 +43,6 @@
             android:layout_gravity="right"
             android:onClick="openGallery"/>
     </LinearLayout>
-
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -136,15 +133,13 @@
         android:gravity="center_horizontal"
         android:layout_weight="0.00001"
         android:padding="7pt"
-        android:weightSum="1"
-        >
-        <ImageView
+        android:weightSum="1">
+        <ImageButton
             android:layout_width="62dp"
             android:layout_height="97dp"
             android:src="@drawable/ic_open_cam"
             android:layout_weight="0.16"
             android:onClick="openCamera"/>
-
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -154,7 +149,6 @@
         android:layout_weight="0.00001"
         android:padding="7pt"
         android:weightSum="1">
-
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -164,6 +158,4 @@
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.19" />
     </LinearLayout>
-
-
 </LinearLayout>

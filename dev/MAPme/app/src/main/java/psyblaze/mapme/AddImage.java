@@ -10,6 +10,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -19,9 +20,7 @@ import com.google.gson.Gson;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import Classes.Template;
 
@@ -46,6 +45,17 @@ public class AddImage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_image);
+
+        Toolbar action_bar = (Toolbar) findViewById(R.id.mapme_toolbar);
+        setSupportActionBar(action_bar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        action_bar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         image1 = (TextView) findViewById(R.id.textView1);
         image2 = (TextView) findViewById(R.id.textView2);

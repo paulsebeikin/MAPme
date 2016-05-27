@@ -4,7 +4,7 @@ The HelpActivity must implement this interface.
 */
 package Classes;
 public interface HelpLiterals {
-    // Help content
+    //region Help content
     String newRecHelp = "All new records have compulsory entries that you must fill out first before you can go onto the next page:\n\n" +
             "\t\u2022 Up to 3 images must be submitted either taken with the camera " +
             "tor chosen from your gallery\n\n" +
@@ -43,8 +43,14 @@ public interface HelpLiterals {
             "or where most specimens are found. You can also select the nearest town and " +
             "default project that you want to submit to.\n\n" +
             "This information is saved by clicking the 'Save' button";
-    String historyHelp = "This is where all the help should go for " +
-            "using the history feature";
+    String historyHelp = "You can view your previous submission history by clicking on" +
+            " the History button on the home screen. Previous submissions are " +
+            " summarised in a table. The summary details the Project, date, description" +
+            " and country of the specimen. The number of images submitted are indicated by the number next to the Project name.\n\n" +
+            "You can clear your 'History' by clicking the 'bin' icon on the row.\n\n" +
+            "You can view further details about the submission by clicking on a row of interest. " +
+            "This screen will display all the relevant information pertaining to the submission.\n\n" +
+            "This history item can be deleted by clicking on the 'bin' icon at the bottom of the screen.";
 
     // Help descriptions:
     String newRecord = "Creating a New Record";

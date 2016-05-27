@@ -70,6 +70,10 @@
     <string name="profileProject">Project</string>
     <string name="profileSaveBtn">Save</string>
 
+    <string name="nameTemp">[Name]</string>
+    <string name="emailTemp">[Email</string>
+    <string name="aduTemp">[ADU]</string>
+
     <!-- Strings for Help activity and related -->
     <string name="newRec">- Creating a New Record</string>
     <string name="logReg">- Registering and Logging In</string>
@@ -92,5 +96,16 @@
     <string name="townHist">Nearest Town</string>
     <string name="numImg_desc">Displays the number of images associated with this Record.</string>
     <string name="sync_desc">Indicates whether this Record has been synced to the ADU server.</string>
+
+    <string name="dateTemp">[Date]</string>
+    <string name="projTemp">[Project]</string>
+    <string name="descTemp">[Description]</string>
+    <string name="imgTemp">[Images]</string>
+    <string name="latTemp">[Lat]</string>
+    <string name="longTemp">[Long]</string>
+    <string name="countryTemp">[Country]</string>
+    <string name="provinceTemp">[Province]</string>
+    <string name="townTemp">[Nearest Town]</string>
+
 
 </resources>
