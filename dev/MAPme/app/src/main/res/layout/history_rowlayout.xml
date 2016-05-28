@@ -1,87 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal">
 
-    <LinearLayout
-        style="@style/linLayoutForLabels"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/record_row"
-        android:gravity="center_vertical"
-        android:weightSum="2"
-        android:orientation="horizontal">
-        <TextView
-            style="@style/labelsAbout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="[Record Name]"
-            android:id="@+id/record_name"
-            android:layout_weight="1"
 
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2">
-
+    <com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:id="@+id/swipe_row">
+        <!-- Bottom View Start-->
         <LinearLayout
-            style="@style/linLayoutForLabels"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:orientation="vertical"
-            android:id="@+id/rowDetails_layout"
-            android:gravity="left"
-            android:layout_gravity="left">
-            <TextView
-                style="@style/historyRowLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/record_dt"
-                android:text="[date]"/>
-            <TextView
-                style="@style/historyRowLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="[desc]"
-                android:maxLines="1"
-                android:id="@+id/record_desc"
-                android:paddingTop="3pt"/>
-            <TextView
-                style="@style/historyRowLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="[country]"
-                android:id="@+id/record_country"
-                android:paddingTop="3pt"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
+            android:background="@color/white"
+            android:id="@+id/bottom_wrapper"
+            android:layout_width="160dp"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_weight="1.5"
-            android:gravity="center"
-            android:layout_gravity="right">
+            app:drag_edge="right">
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_add_img"
-                android:id="@+id/img_num"
-                android:layout_gravity="right"
-                android:contentDescription="@string/numImg_desc" />
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_add_img"
-                android:id="@+id/synced"
-                android:layout_gravity="right"
-                android:contentDescription="@string/sync_desc" />
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_del_img"/>
+
         </LinearLayout>
+        <!-- Bottom View End-->
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:weightSum="3">
+
+            <LinearLayout
+                style="@style/linLayoutForLabels"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/record_row"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_weight="2">
+                <TextView
+                    style="@style/labelsAbout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="[Record Name]"
+                    android:id="@+id/record_name"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1">
+                <LinearLayout
+                    style="@style/linLayoutForLabels"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:orientation="vertical"
+                    android:id="@+id/rowDetails_layout"
+                    android:gravity="left"
+                    android:layout_gravity="left">
+                    <TextView
+                        style="@style/historyRowLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/record_dt"
+                        android:text="[date]"/>
+                    <TextView
+                        style="@style/historyRowLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="[desc]"
+                        android:maxLines="1"
+                        android:id="@+id/record_desc"
+                        android:paddingTop="3pt"/>
+                    <TextView
+                        style="@style/historyRowLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="[country]"
+                        android:id="@+id/record_country"
+                        android:paddingTop="3pt"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1.5"
+                    android:gravity="center"
+                    android:layout_gravity="right">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_add_img"
+                        android:id="@+id/img_num"
+                        android:layout_gravity="right"
+                        android:contentDescription="@string/numImg_desc" />
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_add_img"
+                        android:id="@+id/synced"
+                        android:layout_gravity="right"
+                        android:contentDescription="@string/sync_desc" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </com.daimajia.swipe.SwipeLayout>
+
+
 </LinearLayout>

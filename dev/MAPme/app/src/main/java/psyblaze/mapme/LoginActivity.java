@@ -113,8 +113,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public void onClick(View view) {
                 attemptLogin();
-               // savePreferences(); //OUR CODE
-               // goHome(); // OUR CODE
             }
         });
 
@@ -130,6 +128,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         settings = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         mEmailView.setText(settings.getString("email",""));
         mADUView.setText(settings.getString("adu",""));
+
+        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                    attemptLogin();
+                }
+                return false;
+            }
+        });
     }
 
     public void savePreferences(){
