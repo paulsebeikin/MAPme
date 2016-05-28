@@ -134,9 +134,9 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
         submit.execute();
 
         // go back to home page
-        //Intent goHome = new Intent(this, HomeScreenActivity.class);
-        //startActivity(goHome);
-        //finish();
+        Intent goHome = new Intent(this, HomeScreenActivity.class);
+        startActivity(goHome);
+        finish();
 
 
     }

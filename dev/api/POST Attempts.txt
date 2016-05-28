@@ -1,0 +1,5 @@
+http://vmus.adu.org.za/api/v1/insertrecord?token=b4e596eebb42063ef358e5c6ade4e0d3&userid=16843&username=Paul%20Sebeikin&email=paulsebeikin%40hotmail.com&project=BirdPix&lat=16.972738454616973&long=27.597671002149582&minelev=12.0&maxelev=12.0&country=Sudan&province=Shamal%20Darfur&nearesttown=Shamal%20Darfur&locality=nice&day=27&month=4&year=2016&source=GPS&images%5B%5D=%2Fstorage%2Femulated%2F0%2FDCIM%2FCamera%2F20160522_122427.jpg%3Bnull%3Bnull
+
+http://vmus.adu.org.za/api/v1/insertrecord?API_KEY=2f4c0a20237553a41c817ec5940f00bf&userid=16852&username=Dylan%20Smith&email=dylan.smith888%40gmail.com&project=BirdPix&lat=-29.634335939268933&long=22.607520036399364&minelev=12.0&maxelev=12.0&country=South%20Africa&province=Northern%20Cape&nearesttown=Northern%20Cape&locality=praens&day=27&month=4&year=2016&source=GPS&images%5B%5D=%2Fstorage%2Femulated%2F0%2FPictures%2FMAPme_20160528_102908_1830341279.jpg%3Bnull%3Bnull
+
+{"meta":{"status":"failed","error":"API_KEY is required","total_file_uploads":null}}

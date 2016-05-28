@@ -1,13 +1,9 @@
 package Classes;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.util.Log;
-
 import org.json.*;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,22 +12,23 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.MessageDigest;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 
 public class Web {
 
     //region static variables
     private static final String API = "2f4c0a20237553a41c817ec5940f00bf";
     private static final String authenticationUrl = "http://api.adu.org.za/validation/user/login?";
+    private static final String validationUrl = "http://api.adu.org.za/validation/data/access";
     private static String jsonResponse;
     public static String[] projects = null;
     public static String username = "";
+    public static String token = "";
     // POST URL to ADU server
     private static final String postUrl = "http://vmus.adu.org.za/api/v1/insertrecord";
     // get all the projects
     private static final String projectUrl = "http://vmus.adu.org.za/api/v1/projects";
     // Keys for all fields
+    private static final String TOKEN = "token";
     private static final String API_KEY = "API_KEY";
     private static final String PASS_ID = "passid";
     private static final String USERNAME = "username";
@@ -62,8 +59,9 @@ public class Web {
         BufferedReader reader = null;
         HttpURLConnection urlConn =  null;
         Uri builtUri = Uri.parse(postUrl).buildUpon()
-                .appendQueryParameter(USERNAME, record.getUsername())
+                .appendQueryParameter(API_KEY, API)
                 .appendQueryParameter(USERID, String.valueOf(record.getAdu()))
+                .appendQueryParameter(USERNAME, record.getUsername())
                 .appendQueryParameter(EMAIL, record.getEmail())
                 .appendQueryParameter(PROJECT, record.getProject())
                 .appendQueryParameter(LATITUDE, String.valueOf(record.getLatitude()))
@@ -83,6 +81,7 @@ public class Web {
                 .build();
         try {
            url = new URL(builtUri.toString());
+            Log.i("BUILT URI STRING: ", builtUri.toString());
         } catch(MalformedURLException mal) {
             mal.printStackTrace();
         }
@@ -106,7 +105,8 @@ public class Web {
             jsonResponse = buffer.toString(); // response message, so will have token
 
             JSONObject obj = new JSONObject(jsonResponse);
-            recSubmissionResponse = (String) obj.getJSONObject("registered").getJSONObject("status").get("result");
+            //recSubmissionResponse = (String) obj.getJSONObject("registered").getJSONObject("status").get("result");
+            Log.i("RESPONSE FROM SERVER", obj.toString());
 
         } catch (IOException e) {
             jsonResponse = null;
@@ -129,6 +129,7 @@ public class Web {
         Log.i("TEST URI", builtUri.toString());
         return false;
     }
+
 
     public static Boolean attemptAduLogin(String email, String adu, String password) {
         String success = "";
@@ -168,12 +169,16 @@ public class Web {
             jsonResponse = buffer.toString(); // response message, so will have token
 
             JSONObject obj = new JSONObject(jsonResponse);
+            Log.i("LOGIN RESPONSE" , obj.toString());
             success = (String) obj.getJSONObject("registered").getJSONObject("status").get("result");
+            token = (String) obj.getJSONObject("registered").getJSONObject("status").get("token");
+            Log.i("TOKEN", token);
 
-            String firstname = (String) obj.getJSONObject("registered").getJSONObject("status").get("Name");
-            String surname = (String) obj.getJSONObject("registered").getJSONObject("status").get("Surname");
+            String firstname = (String) obj.getJSONObject("registered").getJSONObject("data").get("Name");
+            String surname = (String) obj.getJSONObject("registered").getJSONObject("data").get("Surname");
 
             username = firstname + " " + surname;
+            Log.i("USERNAME SET TO: ", username);
 
 
         } catch (IOException e) {
@@ -192,8 +197,64 @@ public class Web {
             }
         }
 
+        validate();
+
         if (success.equals("success")) return true;
         else return false;
+    }
+
+    public static void validate(){
+        URL url = null;
+        HttpURLConnection urlConn =  null;
+        BufferedReader reader = null;
+
+        Uri builtUri = Uri.parse(validationUrl).buildUpon()
+                .appendQueryParameter(TOKEN, token)
+                .build();
+
+        try {
+            url = new URL(builtUri.toString());
+        } catch(MalformedURLException mal) {
+            mal.printStackTrace();
+        }
+
+        try {
+            urlConn = (HttpURLConnection) url.openConnection();
+            urlConn.setRequestMethod("GET");
+            urlConn.connect();
+
+            InputStream response = urlConn.getInputStream();
+            StringBuffer buffer = new StringBuffer();
+
+            if (response == null) jsonResponse = null;
+            reader = new BufferedReader(new InputStreamReader(response));
+
+            String line;
+            while ((line = reader.readLine()) != null) buffer.append(line + "\n");
+
+            if (buffer.length() == 0) jsonResponse = null;
+
+            jsonResponse = buffer.toString(); // response message, so will have token
+
+            JSONObject obj = new JSONObject(jsonResponse);
+            Log.i("VALIDATION RESPONSE", obj.toString());
+
+
+        } catch (IOException e) {
+            jsonResponse = null;
+            e.printStackTrace();
+        } catch (JSONException j) {
+            j.printStackTrace();
+        } finally {
+            if (urlConn != null) urlConn.disconnect();
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (final IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     private static String MD5(String md5) {

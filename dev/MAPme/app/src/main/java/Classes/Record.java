@@ -1,5 +1,7 @@
 package Classes;
 
+import android.util.Log;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -409,6 +411,7 @@ public class Record {
 
     public Record(Template template){
         this.username = Web.username;
+        Log.i("USERNAME SET IN RECORD TO: ", getUsername());
         this.latitude = template.location[0];
         this.longitude = template.location[1];
         this.altitude = template.altitude;

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatCallback;
@@ -171,7 +172,7 @@ public class NewRecordActivity3 extends OrmLiteBaseActivity<RecordHelper> implem
         toInsert.setAdu(Integer.parseInt(settings.getString("adu","")));
 
         recordDao.create(toInsert);
-        Web.postRecord(toInsert);
+        new submitRecordAsyncTask(toInsert).execute();
 
         //clear images from current template
         template.Reset();
@@ -181,6 +182,26 @@ public class NewRecordActivity3 extends OrmLiteBaseActivity<RecordHelper> implem
         Intent goHome = new Intent(this, HomeScreenActivity.class);
         startActivity(goHome);
         finish();
+    }
+
+    //endregion
+
+    //region Asynchronous Methods
+    public class submitRecordAsyncTask extends AsyncTask<Record, Void, Boolean> {
+
+        Record toInsert;
+        submitRecordAsyncTask (Record record) {
+            toInsert = record;
+        }
+        @Override
+        protected Boolean doInBackground(Record... record) {
+            return Web.postRecord(toInsert);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+        }
     }
 
     //endregion
