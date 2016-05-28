@@ -1,28 +1,26 @@
 package psyblaze.mapme;
 
-import android.content.Intent;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatCallback;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.daimajia.swipe.SwipeLayout;
+import com.daimajia.swipe.util.Attributes;
 import com.j256.ormlite.android.apptools.OrmLiteBaseActivity;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
+import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.stmt.Where;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.sql.SQLException;
 import java.util.List;
 
-import Classes.Help;
-import Classes.HelpArrayAdapter;
-import Classes.HistoryArrayAdapter;
+import Classes.ListViewAdapter;
 import Classes.Record;
 import Classes.RecordHelper;
 
@@ -33,10 +31,12 @@ public class HistoryActivity extends OrmLiteBaseActivity<RecordHelper> implement
 
     //region UI Views
     ListView historyView;
+    SwipeLayout swipeLayout;
     //endregion
 
     //region Objects
-    HistoryArrayAdapter historyArrayAdapter;
+    //HistoryArrayAdapter listViewAdapter;
+    ListViewAdapter listViewAdapter;
     RuntimeExceptionDao runtimeExceptionDao;
     AppCompatDelegate delegate;
     RecordHelper helper;
@@ -67,23 +67,36 @@ public class HistoryActivity extends OrmLiteBaseActivity<RecordHelper> implement
         helper.getWritableDatabase();
         runtimeExceptionDao = getHelper().getRecordDao();
 
-        List<Record> allRecords = runtimeExceptionDao.queryForAll();
+        List<Record> allRecords = null;
+        try {
+            QueryBuilder<Record, Integer> queryBuilder = runtimeExceptionDao.queryBuilder();
+            Where<Record, Integer> where = queryBuilder.where();
+            where.eq("deleted", false);
+            PreparedQuery preparedQuery = queryBuilder.prepare();
+            allRecords = runtimeExceptionDao.query(preparedQuery);
+        }
+        catch (SQLException ex){
+             ex.printStackTrace();
+        }
+
+        /*
+        historyView = (ListView) findViewById(R.id.historyView);
+        listViewAdapter = new HistoryArrayAdapter(this, allRecords);
+        historyView.setAdapter(listViewAdapter);
+        listViewAdapter.setMode(Attributes.Mode.Single);
+        */
 
         historyView = (ListView) findViewById(R.id.historyView);
-        historyArrayAdapter = new HistoryArrayAdapter(this, allRecords);
-        historyView.setAdapter(historyArrayAdapter);
+        listViewAdapter = new ListViewAdapter(this, allRecords);
+        historyView.setAdapter(listViewAdapter);
+        listViewAdapter.setMode(Attributes.Mode.Single);
 
-        historyView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent detailsIntent = new Intent(getApplicationContext(), HistoryDetailActivity.class);
-                detailsIntent.putExtra("id", historyArrayAdapter.getRecord(position).getId());
-                startActivity(detailsIntent);
-            }
-        });
     }
     //endregion
 
+    public void updateHistory(Record record){
+
+    }
     //region Activity Methods
     //endregion
 

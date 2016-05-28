@@ -1,34 +1,36 @@
 package Classes;
 
+import android.app.Fragment;
 import android.content.Context;
-import android.provider.ContactsContract;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
+import com.daimajia.swipe.SimpleSwipeListener;
 import com.daimajia.swipe.SwipeLayout;
-import com.daimajia.swipe.adapters.ArraySwipeAdapter;
 import com.daimajia.swipe.adapters.BaseSwipeAdapter;
-import com.j256.ormlite.android.apptools.OrmLiteBaseActivity;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import psyblaze.mapme.HistoryActivity;
+import psyblaze.mapme.HistoryDetailActivity;
 import psyblaze.mapme.R;
 
-public class HistoryArrayAdapter extends BaseSwipeAdapter {
 
-    Context context;
-    List<Record> values;
+public class ListViewAdapter extends BaseSwipeAdapter{
 
-    public HistoryArrayAdapter (Context context, List<Record> values) {
-        this.context = context;
+    private Context mContext;
+    public List<Record> values;
+
+    public ListViewAdapter(Context mContext, List<Record> values) {
+        this.mContext = mContext;
         this.values = values;
     }
 
@@ -38,80 +40,60 @@ public class HistoryArrayAdapter extends BaseSwipeAdapter {
     }
 
     @Override
-    public int getCount() {
-        return 0;
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return null;
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    @Override
     public int getSwipeLayoutResourceId(int position) {
         return R.id.swipe_row;
     }
 
     @Override
-    public View generateView(int position, ViewGroup parent) {
-        View v = LayoutInflater.from(context).inflate(R.layout.history_rowlayout, null);
-
-        //LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        //View rowView = inflater.inflate(R.layout.history_rowlayout, parent, false);
-
-        SwipeLayout swipeLayout =  (SwipeLayout) v.findViewById(getSwipeLayoutResourceId(position));
-
-        //set show mode.
-        swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
-
-        //add drag edge.(If the BottomView has 'layout_gravity' attribute, this line is unnecessary)
-        swipeLayout.addDrag(SwipeLayout.DragEdge.Right, v.findViewById(R.id.bottom_wrapper));
-
-        swipeLayout.addSwipeListener(new SwipeLayout.SwipeListener() {
+    public View generateView(final int position, final ViewGroup parent) {
+        View v = LayoutInflater.from(mContext).inflate(R.layout.history_rowlayout, null);
+        SwipeLayout swipeLayout = (SwipeLayout)v.findViewById(getSwipeLayoutResourceId(position));
+        final View swipe_row = v.findViewById(R.id.swipe_row);
+        ImageView delRow = (ImageView)v.findViewById(R.id.delRow);
+        swipeLayout.addSwipeListener(new SimpleSwipeListener() {
+            @Override
+            public void onOpen(SwipeLayout layout) {
+                super.onOpen(layout);
+                swipe_row.setClickable(false);
+            }
             @Override
             public void onClose(SwipeLayout layout) {
-                //when the SurfaceView totally cover the BottomView.
-            }
-
-            @Override
-            public void onUpdate(SwipeLayout layout, int leftOffset, int topOffset) {
-                //you are swiping.
+                super.onClose(layout);
+                swipe_row.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipe_row.setClickable(true);
+                    }
+                } , 100);
             }
 
             @Override
             public void onStartOpen(SwipeLayout layout) {
-
-            }
-
-            @Override
-            public void onOpen(SwipeLayout layout) {
-                //when the BottomView totally show.
-
+                swipe_row.setClickable(false);
+                super.onStartOpen(layout);
             }
 
             @Override
             public void onStartClose(SwipeLayout layout) {
-
-            }
-
-            @Override
-            public void onHandRelease(SwipeLayout layout, float xvel, float yvel) {
-                //when user's hand released.
+                swipe_row.setClickable(false);
+                super.onStartClose(layout);
             }
         });
-
-        v.findViewById(R.id.delRow).setOnClickListener(new View.OnClickListener() {
+        swipe_row.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent detailsIntent = new Intent(mContext, HistoryDetailActivity.class);
+                detailsIntent.putExtra("id", getRecord(position).getId());
+                mContext.startActivity(detailsIntent);
+            }
+        });
+        delRow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                values.get(position).setDeleted(true);
+                values.remove(position);
             }
         });
-        fillValues(position, v);
         return v;
     }
 
@@ -124,7 +106,7 @@ public class HistoryArrayAdapter extends BaseSwipeAdapter {
         ImageView sync = (ImageView) convertView.findViewById(R.id.synced);
         ImageView numImg = (ImageView) convertView.findViewById(R.id.img_num);
 
-        Record curr = values.get(position);
+        Record curr = getItem(position);
 
         recordName.setText(curr.getProject());
         int day = curr.getDay();
@@ -164,5 +146,21 @@ public class HistoryArrayAdapter extends BaseSwipeAdapter {
                 sync.setImageResource((R.drawable.ic_sync_remote));
                 break;
         }
+    }
+
+    @Override
+    public int getCount() {
+        return values.size();
+    }
+
+    @Override
+    public Record getItem(int position) {
+        if (position > getCount()) return null;
+        return values.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 }

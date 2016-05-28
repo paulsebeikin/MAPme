@@ -12,17 +12,20 @@
         android:id="@+id/swipe_row">
         <!-- Bottom View Start-->
         <LinearLayout
-            android:background="@color/white"
+            android:background="@color/red"
             android:id="@+id/bottom_wrapper"
-            android:layout_width="160dp"
+            android:layout_width="100dp"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:gravity="center_horizontal|center_vertical"
             app:drag_edge="right">
 
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_del_img"/>
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_del_img_white"
+                android:onClick="deleteRecord"
+                android:id="@+id/delRow"/>
 
         </LinearLayout>
         <!-- Bottom View End-->
