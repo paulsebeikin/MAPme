@@ -8,10 +8,35 @@
     <item>1:50 000 Map</item>
     <item>1:250 000 Map</item>
 </string-array>
-    <string-array name="countries">
-       <item>South Africa</item><item></item>
+    <string-array name="countryArr">
+        <item>""</item>
+        <item>South Africa</item>
+        <item>Angola</item>
+        <item>Lesotho</item>
+        <item>Angola</item>
+        <item>Madagascar</item>
+        <item>Malawi</item>
+        <item>Mozambique</item>
+        <item>Namibia</item>
+        <item>Nigeria</item>
+        <item>Swaziland</item>
+        <item>Tanzania</item>
+        <item>Uganda</item>
+        <item>Zimbabwe</item>
+        <item>Zambia</item>
+        <item>Other, please specify below</item>
     </string-array>
-    <string-array name="provinces"></string-array>
+    <string-array name="provincesArr">
+        <item>Eastern Cape</item>
+        <item>Western Cape</item>
+        <item>Free State</item>
+        <item>Limpopo</item>
+        <item>KwaZulu-Natal</item>
+        <item>North-West</item>
+        <item>Northern Cape</item>
+        <item>Gauteng</item>
+        <item>Mpumalanga</item>
+    </string-array>
     <string-array name="NumberObserved">
         <item>1</item>
         <item>2-10</item>
@@ -61,8 +86,8 @@
         <item>Nama Karroo</item>
         <item>Plantation</item>
         <item>Renosterveld</item>
-        <item>Savanna (arid)</item>
-        <item>Savanna (moist)</item>
+        <item>Savanna</item>
+        <item>Savanna</item>
         <item>Strandveld</item>
         <item>Subantarctic tundra</item>
         <item>Succulent Karroo</item>

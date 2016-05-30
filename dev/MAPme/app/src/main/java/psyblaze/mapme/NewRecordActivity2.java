@@ -1,6 +1,7 @@
 package psyblaze.mapme;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -9,13 +10,11 @@ import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatCallback;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,13 +29,14 @@ import java.util.Locale;
 import Classes.Record;
 import Classes.RecordHelper;
 import Classes.Template;
-import Classes.Web;
 
 public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implements AppCompatCallback{
 
     //region UI Views
     EditText country, province, town, desc;
     //endregion
+
+    Boolean useGPS = true;
 
     //region Objects
     Gson gson;
@@ -75,11 +75,6 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
         town = (EditText) findViewById(R.id.town);
         desc = (EditText) findViewById(R.id.desc_text);
 
-        // Shared Preference restore
-        settings = getSharedPreferences(LoginActivity.PREFS_NAME, Context.MODE_PRIVATE);
-        gson = new Gson();
-        SharedPrefRestore();
-
         geocoder = new Geocoder(this, Locale.getDefault());
         Bundle bundle = getIntent().getExtras();
         double[] location = (double[]) bundle.get("location");
@@ -89,7 +84,7 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
 
     protected void onPause(){
         super.onPause();
-        saveTemplate();
+        SharedPrefCommit();
     }
 
     protected void onResume(){
@@ -100,7 +95,7 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
 
     //region Activity Methods
 
-    private void saveTemplate(){
+    private void SharedPrefCommit(){
         // get editor ready
         editor = settings.edit();
 
@@ -116,7 +111,7 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
     }
 
     public void onSubmit(View view){
-        saveTemplate();
+        SharedPrefCommit();
         RecordHelper helper = new RecordHelper(this);
         helper.getWritableDatabase();
         RuntimeExceptionDao<Record,Integer> recordDao = getHelper().getRecordDao();
@@ -130,7 +125,7 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
 
         //clear images from current template
         template.Reset();
-        saveTemplate();
+        SharedPrefCommit();
 
         //submitRecordAsyncTask submit = new submitRecordAsyncTask(toInsert);
         //submit.execute();
@@ -149,10 +144,13 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
     }
 
     private void SharedPrefRestore(){
+        settings = getSharedPreferences(LoginActivity.PREFS_NAME, Context.MODE_PRIVATE);
+        gson = new Gson();
         String json = settings.getString("template", null);
         if (json != null){
             template = gson.fromJson(json, Template.class);
             desc.setText(template.desc);
+
             country.setText(template.country);
             province.setText(template.province);
             town.setText(template.town);
@@ -183,10 +181,34 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(Address result) {
+
+            // Shared Preference restore
+            settings = getSharedPreferences(LoginActivity.PREFS_NAME, Context.MODE_PRIVATE);
+            gson = new Gson();
+            SharedPrefRestore();
+            boolean useGPS = settings.getBoolean("useGPS", false);
+
             if (result != null) {
-                country.setText(result.getCountryName());
-                province.setText(result.getAdminArea());
-                town.setText(result.getLocality());
+                if (!result.getCountryName().equals(template.country)) {
+                    displayDialog();
+                    if (useGPS) {
+                        //true branch
+                        country.setText(result.getCountryName());
+                        province.setText(result.getAdminArea());
+                        town.setText(result.getLocality());
+                    }
+                    else if (!useGPS) {
+                        //false branch
+                        country.setText(template.country);
+                        province.setText(template.province);
+                        town.setText(template.town);
+                    }
+                }
+                else{
+                    country.setText(result.getCountryName());
+                    province.setText(result.getAdminArea());
+                    town.setText(result.getLocality());
+                }
             }
         }
     }
@@ -250,6 +272,37 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    //endregion
+
+    //region Helper methods
+    private void displayDialog() {
+        AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+        dlgAlert.setMessage("You have selected GPS coodinates.\n" +
+                "Country and/or province have been automatically detected.\n" +
+                "Would you like to use your Profile settings or the GPS data?");
+        final Boolean res;
+        dlgAlert.setTitle("MAPme New Record");
+        dlgAlert.setPositiveButton("Profile Settings", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                settings = getSharedPreferences(LoginActivity.PREFS_NAME, Context.MODE_PRIVATE);
+                editor = settings.edit();
+                editor.putBoolean("useGPS", false);
+                editor.commit();
+            }
+        });
+        dlgAlert.setNegativeButton("GPS Data", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                settings = getSharedPreferences(LoginActivity.PREFS_NAME, Context.MODE_PRIVATE);
+                editor = settings.edit();
+                editor.putBoolean("useGPS", true);
+                editor.commit();
+            }
+        });
+        dlgAlert.setCancelable(true);
+        dlgAlert.create().show();
     }
     //endregion
 }

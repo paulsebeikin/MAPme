@@ -23,8 +23,6 @@ import android.widget.Toast;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 
-import org.json.JSONObject;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -111,7 +109,7 @@ public class NewRecordActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        saveTemplate();
+        SharedPrefsCommit();
     }
 
     private void SharedPrefRestore(){
@@ -228,7 +226,7 @@ public class NewRecordActivity extends AppCompatActivity {
         startActivity(nextInt);
     }
 
-    private void saveTemplate(){
+    private void SharedPrefsCommit(){
         // get editor ready
         editor = settings.edit();
 
