@@ -76,16 +76,16 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
         town = (EditText) findViewById(R.id.town);
         desc = (EditText) findViewById(R.id.desc_text);
 
-        // Shared Preference restore
-        settings = getSharedPreferences(LoginActivity.PREFS_NAME, Context.MODE_PRIVATE);
-        gson = new Gson();
-        SharedPrefRestore();
-
         geocoder = new Geocoder(this, Locale.getDefault());
         Bundle bundle = getIntent().getExtras();
         double[] location = (double[]) bundle.get("location");
         new GeoCodeAsyncTask().execute(new Double[]{Double.valueOf(location[0]),
                     Double.valueOf(location[1])});
+
+        /*// Shared Preference restore
+        settings = getSharedPreferences(LoginActivity.PREFS_NAME, Context.MODE_PRIVATE);
+        gson = new Gson();
+        SharedPrefRestore();*/
     }
 
     protected void onPause(){
@@ -185,6 +185,12 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(Address result) {
+
+            // Shared Preference restore
+            settings = getSharedPreferences(LoginActivity.PREFS_NAME, Context.MODE_PRIVATE);
+            gson = new Gson();
+            SharedPrefRestore();
+
             if (result != null) {
                 if (!result.getCountryName().equals(template.country)) {
                     displayDialog();
@@ -278,25 +284,28 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
         dlgAlert.setMessage("You have selected GPS coodinates.\n" +
                 "Country and/or province have been automatically detected.\n" +
                 "Would you like to use your Profile settings or the GPS data?");
+        final Boolean res;
         dlgAlert.setTitle("MAPme New Record");
         dlgAlert.setPositiveButton("Profile Settings", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // USE SHARED PREFERENCES DATA
-                setUseGPS(false);
+                settings = getSharedPreferences(LoginActivity.PREFS_NAME, Context.MODE_PRIVATE);
+                editor = settings.edit();
+                editor.putBoolean("useGPS", false);
+                editor.commit();
             }
         });
         dlgAlert.setNegativeButton("GPS Data", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // USE GPS DATA
-                setUseGPS(true);
+                settings = getSharedPreferences(LoginActivity.PREFS_NAME, Context.MODE_PRIVATE);
+                editor = settings.edit();
+                editor.putBoolean("useGPS", true);
+                editor.commit();
             }
         });
         dlgAlert.setCancelable(true);
         dlgAlert.create().show();
     }
     //endregion
-
-    public void setUseGPS (Boolean x) {useGPS = x;}
 }
