@@ -24,7 +24,6 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@drawable/ic_del_img_white"
-                android:onClick="deleteRecord"
                 android:id="@+id/delRow"/>
 
         </LinearLayout>

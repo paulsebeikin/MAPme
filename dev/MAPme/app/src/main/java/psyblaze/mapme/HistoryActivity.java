@@ -1,5 +1,6 @@
 package psyblaze.mapme;
 
+import android.content.Context;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatCallback;
@@ -94,7 +95,7 @@ public class HistoryActivity extends OrmLiteBaseActivity<RecordHelper> implement
     }
     //endregion
 
-    public void updateHistory(Record record){
+    public static void deleteRecord(Record values, Context context){
 
     }
     //region Activity Methods

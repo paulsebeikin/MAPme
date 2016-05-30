@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.util.Log;
 import org.json.*;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -12,11 +14,15 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.MessageDigest;
+import com.loopj.android.http.*;
+
+import cz.msebera.android.httpclient.Header;
 
 public class Web {
 
     //region static variables
     private static final String API = "2f4c0a20237553a41c817ec5940f00bf";
+    private static final String API_ALTERNATE = "4081130aec02a4e0d90023bc3b5f9141";
     private static final String authenticationUrl = "http://api.adu.org.za/validation/user/login?";
     private static final String validationUrl = "http://api.adu.org.za/validation/data/access";
     private static String jsonResponse;
@@ -24,12 +30,13 @@ public class Web {
     public static String username = "";
     public static String token = "";
     // POST URL to ADU server
-    private static final String postUrl = "http://vmus.adu.org.za/api/v1/insertrecord";
+    protected static final String postUrl = "http://vmus.adu.org.za/api/v1/insertrecord";
     // get all the projects
     private static final String projectUrl = "http://vmus.adu.org.za/api/v1/projects";
     // Keys for all fields
     private static final String TOKEN = "token";
     private static final String API_KEY = "API_KEY";
+    private static final String API_KEY_ALT = "apiKey";
     private static final String PASS_ID = "passid";
     private static final String USERNAME = "username";
     private static final String USERID = "userid";
@@ -52,6 +59,78 @@ public class Web {
     //endregion
 
     private static SharedPreferences settings;
+
+    public static void post(Record record){
+        RequestParams params = generateParams(record);
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.post(postUrl, params, new JsonHttpResponseHandler(){
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                Log.i("SUCCESS JSONOBJ", response.toString());
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                super.onSuccess(statusCode, headers, response);
+                Log.i("SUCCESS JSONARR", response.toString());
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Log.e("FAILED JSONOBJ", errorResponse.toString());
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Log.e("FAILED JSONARR", errorResponse.toString());
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                Log.e("FAILED STRING", responseString);
+            }
+        });
+    }
+
+    public static RequestParams generateParams(Record record){
+        String[] imgList = record.getUrl().split(";");
+        int count = 0;
+        for (String x : imgList) if (!x.equals("null")) count++;
+        File[] files = new File[count];
+        for (int x = 0; x<files.length; x++) files[x] = new File(imgList[x]);
+        RequestParams params = new RequestParams();
+        params.setForceMultipartEntityContentType(true);
+        try{
+            params.put(API_KEY, API);
+            params.put(TOKEN, token);
+            params.put(USERID, String.valueOf(record.getAdu()));
+            params.put(USERNAME, record.getUsername());
+            params.put(EMAIL, record.getEmail());
+            params.put(PROJECT, record.getProject());
+            params.put(LATITUDE, String.valueOf(record.getLatitude()));
+            params.put(LONGITUDE, String.valueOf(record.getLongitude()));
+            params.put(MIN_ELEV, String.valueOf(record.getAltitude()));
+            params.put(MAX_ELEV, String.valueOf(record.getAltitude()));
+            params.put(COUNTRY, record.getCountry());
+            params.put(PROVINCE, record.getProvince());
+            params.put(TOWN, record.getTown());
+            params.put(LOCALITY, record.getDesc());
+            params.put(DAY, String.valueOf(record.getDay()));
+            params.put(MONTH, String.valueOf(record.getMonth()));
+            params.put(YEAR, String.valueOf(record.getYear()));
+            params.put(SOURCE, record.getSource());
+            params.put(IMAGES, files);
+        }
+        catch (FileNotFoundException ex){
+            ex.printStackTrace();
+        }
+        return params;
+    }
 
     public static Boolean postRecord(Record record) {
         String recSubmissionResponse = "";
@@ -130,7 +209,6 @@ public class Web {
         return false;
     }
 
-
     public static Boolean attemptAduLogin(String email, String adu, String password) {
         String success = "";
         URL url = null;
@@ -196,7 +274,6 @@ public class Web {
                 }
             }
         }
-
         validate();
 
         if (success.equals("success")) return true;

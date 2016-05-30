@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -40,6 +42,8 @@ public class AddImage extends AppCompatActivity {
     SharedPreferences settings;
     Gson gson;
     Editor editor;
+
+    //region Lifecycle Methods
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,34 +89,6 @@ public class AddImage extends AppCompatActivity {
         }
     }
 
-    public void openGallery(View view) {
-        if (paths[0] != null && paths[1] != null && paths[2] != null){
-            Toast.makeText(AddImage.this, "You've already selected 3 images", Toast.LENGTH_LONG).show();}
-        else {
-            Intent intent = new Intent();
-            intent.setType("image/");
-            intent.setAction(Intent.ACTION_GET_CONTENT); // add resolveActivityCheck
-            startActivityForResult(Intent.createChooser(intent, "Select Image to Submit"), SELECT_PICTURE);
-        }
-    }
-
-    public void doneClicked(View view) {
-        saveTemplate();
-        Intent doneInt = new Intent(this, NewRecordActivity.class);
-        startActivity(doneInt);
-    }
-
-    private void saveTemplate(){
-        // get editor ready
-        editor = settings.edit();
-
-        // update the template
-        template.images = paths;
-        String json = gson.toJson(template);
-        editor.putString("template", json);
-        editor.commit();
-    }
-
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             if (requestCode == SELECT_PICTURE) {
@@ -156,6 +132,54 @@ public class AddImage extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    //endregion
+
+    //region Class Methods
+    public void openGallery(View view) {
+        if (paths[0] != null && paths[1] != null && paths[2] != null){
+            Toast.makeText(AddImage.this, "You've already selected 3 images", Toast.LENGTH_LONG).show();}
+        else {
+            Intent intent = new Intent();
+            intent.setType("image/");
+            intent.setAction(Intent.ACTION_GET_CONTENT); // add resolveActivityCheck
+            startActivityForResult(Intent.createChooser(intent, "Select Image to Submit"), SELECT_PICTURE);
+        }
+    }
+
+    public void doneClicked(View view) {
+        saveTemplate();
+        Intent doneInt = new Intent(this, NewRecordActivity.class);
+        startActivity(doneInt);
+    }
+
+    private void saveTemplate(){
+        // get editor ready
+        editor = settings.edit();
+
+        for (String x : paths){
+            try {
+                if (x != null && !x.equals("")) {
+                    ExifInterface exifInterface = new ExifInterface(x);
+                    float[] coords = new float[2];
+                    exifInterface.getLatLong(coords);
+                    double lat = (double) coords[0];
+                    double lng = (double) coords[1];
+                    template.location = new Double[]{lat, lng};
+                    break; // use only the coordinates from the first image as the coordinates for this record.
+                }
+            }
+            catch (IOException e){
+                Log.e("GEOTAG UNAVAILABLE", "No Geotag was found in this image");
+            }
+        }
+
+        // update the template
+        template.images = paths;
+        String json = gson.toJson(template);
+        editor.putString("template", json);
+        editor.commit();
     }
 
     public String getPath(Uri uri) {
@@ -258,4 +282,6 @@ public class AddImage extends AppCompatActivity {
         paths[2] = null;
         row3.setVisibility(View.INVISIBLE);
     }
+
+    //endregion
 } // class

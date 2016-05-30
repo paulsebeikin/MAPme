@@ -172,7 +172,8 @@ public class NewRecordActivity3 extends OrmLiteBaseActivity<RecordHelper> implem
         toInsert.setAdu(Integer.parseInt(settings.getString("adu","")));
 
         recordDao.create(toInsert);
-        new submitRecordAsyncTask(toInsert).execute();
+        Web.post(toInsert);
+        //new submitRecordAsyncTask(toInsert).execute();
 
         //clear images from current template
         template.Reset();
@@ -195,7 +196,9 @@ public class NewRecordActivity3 extends OrmLiteBaseActivity<RecordHelper> implem
         }
         @Override
         protected Boolean doInBackground(Record... record) {
-            return Web.postRecord(toInsert);
+            Web.post(toInsert);
+            Log.i("GOT HERE", "Got Here");
+            return true;
         }
 
         @Override

@@ -128,6 +128,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         settings = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         mEmailView.setText(settings.getString("email",""));
         mADUView.setText(settings.getString("adu",""));
+        String tmp = settings.getString("pwd" ,"");
+        if (tmp != "") {
+            mPasswordView.setText(tmp);
+            attemptLogin();
+        }
 
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {

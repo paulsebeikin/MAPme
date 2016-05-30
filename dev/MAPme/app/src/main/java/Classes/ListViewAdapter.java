@@ -28,6 +28,7 @@ public class ListViewAdapter extends BaseSwipeAdapter{
 
     private Context mContext;
     public List<Record> values;
+    public static int OPENED;
 
     public ListViewAdapter(Context mContext, List<Record> values) {
         this.mContext = mContext;
@@ -35,8 +36,10 @@ public class ListViewAdapter extends BaseSwipeAdapter{
     }
 
     public Record getRecord(int position) {
-        if (position < values.size()) return values.get(position);
-        return null;
+        try {
+            return values.get(position);
+        }
+        catch (IndexOutOfBoundsException ex) { return null; }
     }
 
     @Override
@@ -53,6 +56,7 @@ public class ListViewAdapter extends BaseSwipeAdapter{
         swipeLayout.addSwipeListener(new SimpleSwipeListener() {
             @Override
             public void onOpen(SwipeLayout layout) {
+                OPENED = position;
                 super.onOpen(layout);
                 swipe_row.setClickable(false);
             }
@@ -90,8 +94,10 @@ public class ListViewAdapter extends BaseSwipeAdapter{
         delRow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Record delete = values.get(position);
                 values.get(position).setDeleted(true);
                 values.remove(position);
+                HistoryActivity.deleteRecord(delete, mContext);
             }
         });
         return v;
