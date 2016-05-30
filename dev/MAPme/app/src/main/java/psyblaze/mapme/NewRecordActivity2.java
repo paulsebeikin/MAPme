@@ -1,6 +1,7 @@
 package psyblaze.mapme;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -37,6 +38,8 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
     //region UI Views
     EditText country, province, town, desc;
     //endregion
+
+    Boolean useGPS = true;
 
     //region Objects
     Gson gson;
@@ -151,6 +154,7 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
         if (json != null){
             template = gson.fromJson(json, Template.class);
             desc.setText(template.desc);
+
             country.setText(template.country);
             province.setText(template.province);
             town.setText(template.town);
@@ -182,9 +186,26 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
         @Override
         protected void onPostExecute(Address result) {
             if (result != null) {
-                country.setText(result.getCountryName());
-                province.setText(result.getAdminArea());
-                town.setText(result.getLocality());
+                if (!result.getCountryName().equals(template.country)) {
+                    displayDialog();
+                    if (useGPS == true) {
+                        //true branch
+                        country.setText(result.getCountryName());
+                        province.setText(result.getAdminArea());
+                        town.setText(result.getLocality());
+                    }
+                    else if (useGPS == false) {
+                        //false branch
+                        country.setText(template.country);
+                        province.setText(template.province);
+                        town.setText(template.town);
+                    }
+                }
+                else{
+                    country.setText(result.getCountryName());
+                    province.setText(result.getAdminArea());
+                    town.setText(result.getLocality());
+                }
             }
         }
     }
@@ -250,4 +271,32 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
         return super.onOptionsItemSelected(item);
     }
     //endregion
+
+    //region Helper methods
+    private void displayDialog() {
+        AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+        dlgAlert.setMessage("You have selected GPS coodinates.\n" +
+                "Country and/or province have been automatically detected.\n" +
+                "Would you like to use your Profile settings or the GPS data?");
+        dlgAlert.setTitle("MAPme New Record");
+        dlgAlert.setPositiveButton("Profile Settings", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // USE SHARED PREFERENCES DATA
+                setUseGPS(false);
+            }
+        });
+        dlgAlert.setNegativeButton("GPS Data", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // USE GPS DATA
+                setUseGPS(true);
+            }
+        });
+        dlgAlert.setCancelable(true);
+        dlgAlert.create().show();
+    }
+    //endregion
+
+    public void setUseGPS (Boolean x) {useGPS = x;}
 }

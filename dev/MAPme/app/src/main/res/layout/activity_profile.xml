@@ -109,6 +109,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:id="@+id/otherCountry_layout">
+            <TextView
+                style="@style/labelsNewRecord"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Other"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:id="@+id/countryOther"
+                android:singleLine="true" />
+
+        </LinearLayout>
+        <LinearLayout
+            style="@style/linLayoutForLabels"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:id="@+id/province_layout">
             <TextView
                 style="@style/labelsNewRecord"
@@ -165,5 +184,6 @@
         android:layout_height="wrap_content"
         android:text="@string/saveImages"
         android:layout_gravity="bottom"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+        android:onClick="saveProfileSettings"/>
 </RelativeLayout>
