@@ -10,13 +10,11 @@ import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatCallback;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,7 +29,6 @@ import java.util.Locale;
 import Classes.Record;
 import Classes.RecordHelper;
 import Classes.Template;
-import Classes.Web;
 
 public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implements AppCompatCallback{
 
@@ -81,16 +78,11 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
         double[] location = (double[]) bundle.get("location");
         new GeoCodeAsyncTask().execute(new Double[]{Double.valueOf(location[0]),
                     Double.valueOf(location[1])});
-
-        /*// Shared Preference restore
-        settings = getSharedPreferences(LoginActivity.PREFS_NAME, Context.MODE_PRIVATE);
-        gson = new Gson();
-        SharedPrefRestore();*/
     }
 
     protected void onPause(){
         super.onPause();
-        saveTemplate();
+        SharedPrefCommit();
     }
 
     protected void onResume(){
@@ -101,7 +93,7 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
 
     //region Activity Methods
 
-    private void saveTemplate(){
+    private void SharedPrefCommit(){
         // get editor ready
         editor = settings.edit();
 
@@ -117,7 +109,7 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
     }
 
     public void onSubmit(View view){
-        saveTemplate();
+        SharedPrefCommit();
         RecordHelper helper = new RecordHelper(this);
         helper.getWritableDatabase();
         RuntimeExceptionDao<Record,Integer> recordDao = getHelper().getRecordDao();
@@ -131,7 +123,7 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
 
         //clear images from current template
         template.Reset();
-        saveTemplate();
+        SharedPrefCommit();
 
         //submitRecordAsyncTask submit = new submitRecordAsyncTask(toInsert);
         //submit.execute();
@@ -150,6 +142,8 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
     }
 
     private void SharedPrefRestore(){
+        settings = getSharedPreferences(LoginActivity.PREFS_NAME, Context.MODE_PRIVATE);
+        gson = new Gson();
         String json = settings.getString("template", null);
         if (json != null){
             template = gson.fromJson(json, Template.class);
@@ -190,17 +184,18 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
             settings = getSharedPreferences(LoginActivity.PREFS_NAME, Context.MODE_PRIVATE);
             gson = new Gson();
             SharedPrefRestore();
+            boolean useGPS = settings.getBoolean("useGPS", false);
 
             if (result != null) {
                 if (!result.getCountryName().equals(template.country)) {
                     displayDialog();
-                    if (useGPS == true) {
+                    if (useGPS) {
                         //true branch
                         country.setText(result.getCountryName());
                         province.setText(result.getAdminArea());
                         town.setText(result.getLocality());
                     }
-                    else if (useGPS == false) {
+                    else if (!useGPS) {
                         //false branch
                         country.setText(template.country);
                         province.setText(template.province);
