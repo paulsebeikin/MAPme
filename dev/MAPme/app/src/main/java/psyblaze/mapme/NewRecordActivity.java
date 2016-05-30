@@ -150,12 +150,6 @@ public class NewRecordActivity extends AppCompatActivity {
         startActivityForResult(mapInt, GET_COORDS);
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-
-        }
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

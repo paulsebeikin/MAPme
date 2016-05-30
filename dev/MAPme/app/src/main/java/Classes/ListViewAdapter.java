@@ -3,6 +3,8 @@ package Classes;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.widget.SwipeDismissBehavior;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +18,12 @@ import com.daimajia.swipe.adapters.BaseSwipeAdapter;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import psyblaze.mapme.HistoryActivity;
 import psyblaze.mapme.HistoryDetailActivity;
@@ -27,12 +33,16 @@ import psyblaze.mapme.R;
 public class ListViewAdapter extends BaseSwipeAdapter{
 
     private Context mContext;
-    public List<Record> values;
+    private List<Record> values;
+    public String[] deletedIDs;
+    private int counter;
     private SwipeLayout open;
 
     public ListViewAdapter(Context mContext, List<Record> values) {
         this.mContext = mContext;
         this.values = values;
+        deletedIDs = new String[values.size()];
+        counter=0;
     }
 
     public Record getRecord(int position) {
@@ -42,9 +52,23 @@ public class ListViewAdapter extends BaseSwipeAdapter{
         catch (IndexOutOfBoundsException ex) { return null; }
     }
 
+    public List<Record> getRecords(){
+        return values;
+    }
+
+    public Record getRecordbyId(int id) {
+        for (Record x : values) if (x.getId() == id) return x;
+        return null;
+    }
+
     @Override
     public int getSwipeLayoutResourceId(int position) {
         return R.id.swipe_row;
+    }
+
+    @Override
+    public void removeShownLayouts(SwipeLayout layout) {
+        super.removeShownLayouts(layout);
     }
 
     @Override
@@ -94,8 +118,10 @@ public class ListViewAdapter extends BaseSwipeAdapter{
         delRow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                values.get(position).setDeleted(true);
-                //swipeLayout.removeView(swipe_row);
+                deletedIDs[counter] = String.valueOf(values.get(position).getId());
+                counter++;
+                values.remove(position);
+                removeShownLayouts(swipeLayout);
                 open.close();
                 notifyDataSetChanged();
             }

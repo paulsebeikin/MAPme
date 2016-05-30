@@ -1,5 +1,7 @@
 package psyblaze.mapme;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ import com.j256.ormlite.dao.RuntimeExceptionDao;
 
 import java.text.DecimalFormat;
 
+import Classes.ListViewAdapter;
 import Classes.Record;
 import Classes.RecordHelper;
 
@@ -85,7 +88,7 @@ public class HistoryDetailActivity extends OrmLiteBaseActivity<RecordHelper> imp
         town.setText(record.getTown());
     }
 
-    //region Formatter methods
+    //region Activity Methods
     private String getImageNames(String paths) {
         String result;
         String arr [] = paths.split(";");
@@ -101,6 +104,14 @@ public class HistoryDetailActivity extends OrmLiteBaseActivity<RecordHelper> imp
         else if (img3[lastElement3].equals("null")) result = img1[lastElement] + "\n" + img2[lastElement2];
         else result = img1[lastElement] + "\n" + img2[lastElement2] + "\n" + img3[lastElement3];
         return result;
+    }
+
+    public void deleteRecord(View view){
+        Record deleted = HistoryActivity.listViewAdapter.getRecordbyId(record.getId());
+        HistoryActivity.deletedID = String.valueOf(record.getId());
+        Intent resultInt = new Intent(this, HistoryActivity.class);
+        startActivity(resultInt);
+        finish();
     }
     //endregion
 

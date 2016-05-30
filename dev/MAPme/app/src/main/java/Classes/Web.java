@@ -9,6 +9,7 @@ import org.json.*;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -119,31 +120,37 @@ public class Web {
         Bitmap image = BitmapFactory.decodeFile(imgList[0]);
         image.compress(Bitmap.CompressFormat.JPEG, 70, stream);
 
+        File file = new File(imgList[0]);
         //String image64encoded = getEncoded64BitString(image);
         RequestParams params = new RequestParams();
         params.setForceMultipartEntityContentType(true);
         //params.setContentEncoding("gzip, deflate");
 
-        params.setForceMultipartEntityContentType(true);
-        params.put(API_KEY, API_ALTERNATE);
-        params.put(TOKEN, token);
-        params.put(USERID, String.valueOf(record.getAdu()));
-        params.put(USERNAME, record.getUsername());
-        params.put(EMAIL, record.getEmail());
-        params.put(PROJECT, record.getProject());
-        params.put(LATITUDE, String.valueOf(record.getLatitude()));
-        params.put(LONGITUDE, String.valueOf(record.getLongitude()));
-        params.put(MIN_ELEV, String.valueOf(record.getAltitude()));
-        params.put(MAX_ELEV, String.valueOf(record.getAltitude()));
-        params.put(COUNTRY, record.getCountry());
-        params.put(PROVINCE, record.getProvince());
-        params.put(TOWN, record.getTown());
-        params.put(LOCALITY, record.getDesc());
-        params.put(DAY, String.valueOf(record.getDay()));
-        params.put(MONTH, String.valueOf(record.getMonth()));
-        params.put(YEAR, String.valueOf(record.getYear()));
-        params.put(SOURCE, record.getSource());
-        params.put(IMAGES,"http://www.aos.org/AOS/media/Content-Images/Orchids/orchid-care-phal.jpg");
+       // try {
+            params.setForceMultipartEntityContentType(true);
+            params.put(API_KEY, API_ALTERNATE);
+            params.put(TOKEN, token);
+            params.put(USERID, String.valueOf(record.getAdu()));
+            params.put(USERNAME, record.getUsername());
+            params.put(EMAIL, record.getEmail());
+            params.put(PROJECT, record.getProject());
+            params.put(LATITUDE, String.valueOf(record.getLatitude()));
+            params.put(LONGITUDE, String.valueOf(record.getLongitude()));
+            params.put(MIN_ELEV, String.valueOf(record.getAltitude()));
+            params.put(MAX_ELEV, String.valueOf(record.getAltitude()));
+            params.put(COUNTRY, record.getCountry());
+            params.put(PROVINCE, record.getProvince());
+            params.put(TOWN, record.getTown());
+            params.put(LOCALITY, record.getDesc());
+            params.put(DAY, String.valueOf(record.getDay()));
+            params.put(MONTH, String.valueOf(record.getMonth()));
+            params.put(YEAR, String.valueOf(record.getYear()));
+            params.put(SOURCE, record.getSource());
+            params.put(IMAGES, imgList[0]);
+     //   }
+        //catch (FileNotFoundException ex){
+          //  ex.printStackTrace();
+        //}
         return params;
     }
 

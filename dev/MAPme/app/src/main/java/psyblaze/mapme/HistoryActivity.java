@@ -14,6 +14,8 @@ import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.util.Attributes;
 import com.j256.ormlite.android.apptools.OrmLiteBaseActivity;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
+import com.j256.ormlite.stmt.DeleteBuilder;
+import com.j256.ormlite.stmt.PreparedDelete;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.UpdateBuilder;
@@ -39,7 +41,8 @@ public class HistoryActivity extends OrmLiteBaseActivity<RecordHelper> implement
 
     //region Objects
     //HistoryArrayAdapter listViewAdapter;
-    ListViewAdapter listViewAdapter;
+    public static ListViewAdapter listViewAdapter;
+    public static String deletedID;
     RuntimeExceptionDao runtimeExceptionDao;
     AppCompatDelegate delegate;
     RecordHelper helper;
@@ -71,7 +74,6 @@ public class HistoryActivity extends OrmLiteBaseActivity<RecordHelper> implement
         listViewAdapter = new ListViewAdapter(this, allRecords);
         historyView.setAdapter(listViewAdapter);
         listViewAdapter.setMode(Attributes.Mode.Single);
-
     }
 
     private List<Record> selectRecords(){
@@ -94,11 +96,47 @@ public class HistoryActivity extends OrmLiteBaseActivity<RecordHelper> implement
 
     protected void onPause(){
         super.onPause();
-        /*try {
+        int counter = 0;
+        String[] tmp = listViewAdapter.deletedIDs;
+        String[] forDeleteQuery = null;
+        if (tmp == null) return;
+        for (String x : tmp) {
+            if (x != null) counter++;
         }
-        catch (SQLException ex) {
+        forDeleteQuery = new String[counter];
+        for (int i = 0; i < counter; i++) forDeleteQuery[i] = listViewAdapter.deletedIDs[i];
+        if (counter >= 1) execDelete(forDeleteQuery);
+    }
+
+    private void execDelete(String[] forDeleteQuery){
+        try {
+            DeleteBuilder<Record, Integer> deleteBuilder = runtimeExceptionDao.deleteBuilder();
+            Where<Record, Integer> where = deleteBuilder.where();
+            where.in("id", forDeleteQuery);
+            PreparedDelete delete = deleteBuilder.prepare();
+            runtimeExceptionDao.delete(delete);
+        } catch (SQLException ex) {
             ex.printStackTrace();
-        }*/
+        }
+    }
+
+    protected void onResume(){
+        super.onResume();
+        if (deletedID != null && deletedID != ""){
+            try {
+                DeleteBuilder<Record, Integer> deleteBuilder = runtimeExceptionDao.deleteBuilder();
+                Where<Record, Integer> where = deleteBuilder.where();
+                where.idEq(Integer.valueOf(deletedID));
+                PreparedDelete delete = deleteBuilder.prepare();
+                runtimeExceptionDao.delete(delete);
+            }
+            catch (SQLException ex){
+                ex.printStackTrace();
+            }
+        }
+        allRecords = selectRecords();
+        listViewAdapter = new ListViewAdapter(this, allRecords);
+        historyView.setAdapter(listViewAdapter);
     }
     //endregion
 
