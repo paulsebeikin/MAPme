@@ -105,7 +105,7 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
         // update the template
         template.country = country.getText().toString();
         template.province = province.getText().toString();
-        template.town = province.getText().toString();
+        template.town = town.getText().toString();
         template.desc = desc.getText().toString();
 
         String json = gson.toJson(template);
@@ -130,8 +130,8 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
         template.Reset();
         saveTemplate();
 
-        submitRecordAsyncTask submit = new submitRecordAsyncTask(toInsert);
-        submit.execute();
+        //submitRecordAsyncTask submit = new submitRecordAsyncTask(toInsert);
+        //submit.execute();
 
         // go back to home page
         Intent goHome = new Intent(this, HomeScreenActivity.class);
@@ -189,7 +189,7 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
         }
     }
 
-    public class submitRecordAsyncTask extends AsyncTask<Record, Void, Boolean> {
+    /*public class submitRecordAsyncTask extends AsyncTask<Record, Void, Boolean> {
 
         Record toInsert;
         submitRecordAsyncTask (Record record) {
@@ -204,7 +204,7 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
         }
-    }
+    }*/
     //endregion
 
     //region Toolbar Stuff

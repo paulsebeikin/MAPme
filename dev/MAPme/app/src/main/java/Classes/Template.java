@@ -31,6 +31,7 @@ public class Template {
     public void Reset(){
         location = new Double[]{0.0,0.0};
         images = new String[3];
+        altitude = 0.0;
     }
 
     public Template() {

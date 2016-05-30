@@ -28,7 +28,7 @@ public class ListViewAdapter extends BaseSwipeAdapter{
 
     private Context mContext;
     public List<Record> values;
-    public static int OPENED;
+    private SwipeLayout open;
 
     public ListViewAdapter(Context mContext, List<Record> values) {
         this.mContext = mContext;
@@ -50,15 +50,15 @@ public class ListViewAdapter extends BaseSwipeAdapter{
     @Override
     public View generateView(final int position, final ViewGroup parent) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.history_rowlayout, null);
-        SwipeLayout swipeLayout = (SwipeLayout)v.findViewById(getSwipeLayoutResourceId(position));
+        final SwipeLayout swipeLayout = (SwipeLayout)v.findViewById(getSwipeLayoutResourceId(position));
         final View swipe_row = v.findViewById(R.id.swipe_row);
         ImageView delRow = (ImageView)v.findViewById(R.id.delRow);
         swipeLayout.addSwipeListener(new SimpleSwipeListener() {
             @Override
             public void onOpen(SwipeLayout layout) {
-                OPENED = position;
                 super.onOpen(layout);
                 swipe_row.setClickable(false);
+                open = layout;
             }
             @Override
             public void onClose(SwipeLayout layout) {
@@ -94,10 +94,10 @@ public class ListViewAdapter extends BaseSwipeAdapter{
         delRow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Record delete = values.get(position);
                 values.get(position).setDeleted(true);
-                values.remove(position);
-                HistoryActivity.deleteRecord(delete, mContext);
+                //swipeLayout.removeView(swipe_row);
+                open.close();
+                notifyDataSetChanged();
             }
         });
         return v;

@@ -1,12 +1,14 @@
 package Classes;
 
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
 import org.json.*;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -22,9 +24,10 @@ public class Web {
 
     //region static variables
     private static final String API = "2f4c0a20237553a41c817ec5940f00bf";
-    private static final String API_ALTERNATE = "4081130aec02a4e0d90023bc3b5f9141";
+    private static final String API_ALTERNATE = "cb91fc7c001b8fd6151901e3c49c28b6";
     private static final String authenticationUrl = "http://api.adu.org.za/validation/user/login?";
     private static final String validationUrl = "http://api.adu.org.za/validation/data/access";
+    private static final String testUrl = "http://vmus.adu.org.za/api/v1/test.php";
     private static String jsonResponse;
     public static String[] projects = null;
     public static String username = "";
@@ -54,7 +57,7 @@ public class Web {
     private static final String MONTH ="month";
     private static final String YEAR = "year";
     private static final String SOURCE = "source";
-    private static final String IMAGES = "images[]";
+    private static final String IMAGES = "images";
     private static final String NOTE ="note";
     //endregion
 
@@ -97,42 +100,54 @@ public class Web {
         });
     }
 
+    private static String getEncoded64BitString(Bitmap bitmap){
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream);
+        byte[] byteFormat = stream.toByteArray();
+        return Base64.encodeToString(byteFormat, Base64.NO_WRAP);
+    }
+
     public static RequestParams generateParams(Record record){
+        //int count = 0;
+        //for (String x : imgList) if (!x.equals("null")) count++;
+        //File[] files = new File[count];
+        //for (int x = 0; x<files.length; x++) files[x] = new File(imgList[x]);
+        //File file = new File(imgList[0]);
         String[] imgList = record.getUrl().split(";");
-        int count = 0;
-        for (String x : imgList) if (!x.equals("null")) count++;
-        File[] files = new File[count];
-        for (int x = 0; x<files.length; x++) files[x] = new File(imgList[x]);
+
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        Bitmap image = BitmapFactory.decodeFile(imgList[0]);
+        image.compress(Bitmap.CompressFormat.JPEG, 70, stream);
+
+        //String image64encoded = getEncoded64BitString(image);
         RequestParams params = new RequestParams();
         params.setForceMultipartEntityContentType(true);
-        try{
-            params.put(API_KEY, API);
-            params.put(TOKEN, token);
-            params.put(USERID, String.valueOf(record.getAdu()));
-            params.put(USERNAME, record.getUsername());
-            params.put(EMAIL, record.getEmail());
-            params.put(PROJECT, record.getProject());
-            params.put(LATITUDE, String.valueOf(record.getLatitude()));
-            params.put(LONGITUDE, String.valueOf(record.getLongitude()));
-            params.put(MIN_ELEV, String.valueOf(record.getAltitude()));
-            params.put(MAX_ELEV, String.valueOf(record.getAltitude()));
-            params.put(COUNTRY, record.getCountry());
-            params.put(PROVINCE, record.getProvince());
-            params.put(TOWN, record.getTown());
-            params.put(LOCALITY, record.getDesc());
-            params.put(DAY, String.valueOf(record.getDay()));
-            params.put(MONTH, String.valueOf(record.getMonth()));
-            params.put(YEAR, String.valueOf(record.getYear()));
-            params.put(SOURCE, record.getSource());
-            params.put(IMAGES, files);
-        }
-        catch (FileNotFoundException ex){
-            ex.printStackTrace();
-        }
+        //params.setContentEncoding("gzip, deflate");
+
+        params.setForceMultipartEntityContentType(true);
+        params.put(API_KEY, API_ALTERNATE);
+        params.put(TOKEN, token);
+        params.put(USERID, String.valueOf(record.getAdu()));
+        params.put(USERNAME, record.getUsername());
+        params.put(EMAIL, record.getEmail());
+        params.put(PROJECT, record.getProject());
+        params.put(LATITUDE, String.valueOf(record.getLatitude()));
+        params.put(LONGITUDE, String.valueOf(record.getLongitude()));
+        params.put(MIN_ELEV, String.valueOf(record.getAltitude()));
+        params.put(MAX_ELEV, String.valueOf(record.getAltitude()));
+        params.put(COUNTRY, record.getCountry());
+        params.put(PROVINCE, record.getProvince());
+        params.put(TOWN, record.getTown());
+        params.put(LOCALITY, record.getDesc());
+        params.put(DAY, String.valueOf(record.getDay()));
+        params.put(MONTH, String.valueOf(record.getMonth()));
+        params.put(YEAR, String.valueOf(record.getYear()));
+        params.put(SOURCE, record.getSource());
+        params.put(IMAGES,"http://www.aos.org/AOS/media/Content-Images/Orchids/orchid-care-phal.jpg");
         return params;
     }
 
-    public static Boolean postRecord(Record record) {
+    /*public static Boolean postRecord(Record record) {
         String recSubmissionResponse = "";
         URL url = null;
         BufferedReader reader = null;
@@ -207,7 +222,7 @@ public class Web {
         }
         Log.i("TEST URI", builtUri.toString());
         return false;
-    }
+    }*/
 
     public static Boolean attemptAduLogin(String email, String adu, String password) {
         String success = "";
@@ -216,7 +231,7 @@ public class Web {
         BufferedReader reader = null;
 
         Uri builtUri = Uri.parse(authenticationUrl).buildUpon()
-                .appendQueryParameter(API_KEY, API)
+                .appendQueryParameter(API_KEY, API_ALTERNATE)
                 .appendQueryParameter(USERID, adu)
                 .appendQueryParameter(EMAIL, email)
                 .appendQueryParameter(PASS_ID, MD5(password))

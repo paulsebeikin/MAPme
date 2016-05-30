@@ -16,6 +16,7 @@ import com.j256.ormlite.android.apptools.OrmLiteBaseActivity;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.stmt.UpdateBuilder;
 import com.j256.ormlite.stmt.Where;
 
 import java.sql.SQLException;
@@ -29,6 +30,7 @@ public class HistoryActivity extends OrmLiteBaseActivity<RecordHelper> implement
 
     //region Variables
     private static final int DISPLAY_RECORD = 1;
+    List<Record> allRecords;
 
     //region UI Views
     ListView historyView;
@@ -64,41 +66,40 @@ public class HistoryActivity extends OrmLiteBaseActivity<RecordHelper> implement
             }
         });
 
-        helper = new RecordHelper(this);
-        helper.getWritableDatabase();
-        runtimeExceptionDao = getHelper().getRecordDao();
-
-        List<Record> allRecords = null;
-        try {
-            QueryBuilder<Record, Integer> queryBuilder = runtimeExceptionDao.queryBuilder();
-            Where<Record, Integer> where = queryBuilder.where();
-            where.eq("deleted", false);
-            PreparedQuery preparedQuery = queryBuilder.prepare();
-            allRecords = runtimeExceptionDao.query(preparedQuery);
-        }
-        catch (SQLException ex){
-             ex.printStackTrace();
-        }
-
-        /*
-        historyView = (ListView) findViewById(R.id.historyView);
-        listViewAdapter = new HistoryArrayAdapter(this, allRecords);
-        historyView.setAdapter(listViewAdapter);
-        listViewAdapter.setMode(Attributes.Mode.Single);
-        */
-
+        allRecords = selectRecords();
         historyView = (ListView) findViewById(R.id.historyView);
         listViewAdapter = new ListViewAdapter(this, allRecords);
         historyView.setAdapter(listViewAdapter);
         listViewAdapter.setMode(Attributes.Mode.Single);
 
     }
-    //endregion
 
-    public static void deleteRecord(Record values, Context context){
-
+    private List<Record> selectRecords(){
+        List<Record> selected = null;
+        helper = new RecordHelper(this);
+        helper.getWritableDatabase();
+        runtimeExceptionDao = getHelper().getRecordDao();
+        try {
+            QueryBuilder<Record, Integer> queryBuilder = runtimeExceptionDao.queryBuilder();
+            Where<Record, Integer> where = queryBuilder.where();
+            where.eq("deleted", false);
+            PreparedQuery preparedQuery = queryBuilder.prepare();
+            selected = runtimeExceptionDao.query(preparedQuery);
+        }
+        catch (SQLException ex){
+            ex.printStackTrace();
+        }
+        return selected;
     }
-    //region Activity Methods
+
+    protected void onPause(){
+        super.onPause();
+        /*try {
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }*/
+    }
     //endregion
 
     //region Toolbar Stuff
