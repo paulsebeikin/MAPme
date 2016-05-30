@@ -60,6 +60,8 @@ public class HistoryActivity extends OrmLiteBaseActivity<RecordHelper> implement
         delegate.setContentView(R.layout.activity_history);
         Toolbar action_bar = (Toolbar) findViewById(R.id.mapme_toolbar);
         delegate.setSupportActionBar(action_bar);
+        action_bar.setPopupTheme(R.style.mapmeTheme);
+        action_bar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         delegate.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         delegate.getSupportActionBar().setDisplayShowHomeEnabled(true);
         action_bar.setNavigationOnClickListener(new View.OnClickListener() {

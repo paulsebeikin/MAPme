@@ -59,6 +59,8 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
         delegate.setContentView(R.layout.activity_new_record2);
         Toolbar toolbar = (Toolbar) findViewById(R.id.mapme_toolbar);
         delegate.setSupportActionBar(toolbar);
+        toolbar.setPopupTheme(R.style.mapmeTheme);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         delegate.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         delegate.getSupportActionBar().setDisplayShowHomeEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
