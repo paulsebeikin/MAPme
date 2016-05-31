@@ -75,7 +75,8 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
         town = (EditText) findViewById(R.id.town);
         desc = (EditText) findViewById(R.id.desc_text);
 
-        initGeoTask();
+        SharedPrefRestore();
+        //initGeoTask();
     }
 
     protected void onPause(){
@@ -153,11 +154,11 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
         String json = settings.getString("template", null);
         if (json != null){
             template = gson.fromJson(json, Template.class);
-            desc.setText(template.desc);
+            /*desc.setText(template.desc);
 
             country.setText(template.country);
             province.setText(template.province);
-            town.setText(template.town);
+            town.setText(template.town);*/
         }
         else {
             template = new Template();
@@ -187,26 +188,15 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
         protected void onPostExecute(Address result) {
 
             // Shared Preference restore
-            SharedPrefRestore();
-            boolean useGPS = settings.getBoolean("useGPS", false);
+            //SharedPrefRestore();
+            settings = getSharedPreferences(LoginActivity.PREFS_NAME, Context.MODE_PRIVATE);
+            gson = new Gson();
+            displayDialog();
+            boolean useGPS = settings.getBoolean("useGPS", true);
 
             if (result != null) {
-                if (!result.getCountryName().equals(template.country)) {
-                    displayDialog();
-                    if (useGPS) {
-                        //true branch
-                        country.setText(result.getCountryName());
-                        province.setText(result.getAdminArea());
-                        town.setText(result.getLocality());
-                    }
-                    else if (!useGPS) {
-                        //false branch
-                        country.setText(settings.getString("country",""));
-                        province.setText(settings.getString("province",""));
-                        town.setText(settings.getString("town",""));
-                    }
-                }
-                else{
+                if (useGPS) {
+                    //true branch
                     country.setText(result.getCountryName());
                     province.setText(result.getAdminArea());
                     town.setText(result.getLocality());
@@ -292,6 +282,9 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
                 editor = settings.edit();
                 editor.putBoolean("useGPS", false);
                 editor.commit();
+                country.setText(settings.getString("country", ""));
+                province.setText(settings.getString("province", ""));
+                town.setText(settings.getString("town", ""));
             }
         });
         dlgAlert.setNegativeButton("GPS Data", new DialogInterface.OnClickListener() {
