@@ -30,7 +30,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="@string/back"/>
+            android:text="@string/back"
+            android:onClick="goBack"/>
     </LinearLayout>
 
 </LinearLayout>

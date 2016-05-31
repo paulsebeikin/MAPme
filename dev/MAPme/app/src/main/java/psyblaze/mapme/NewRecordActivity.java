@@ -84,8 +84,6 @@ public class NewRecordActivity extends AppCompatActivity {
         //sourceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         source_spinner.setAdapter(sourceAdapter);
 
-        settings = getSharedPreferences(LoginActivity.PREFS_NAME, Context.MODE_PRIVATE);
-        gson = new Gson();
         SharedPrefRestore();
 
         // Permission to turn on location service
@@ -113,6 +111,8 @@ public class NewRecordActivity extends AppCompatActivity {
     }
 
     private void SharedPrefRestore(){
+        settings = getSharedPreferences(LoginActivity.PREFS_NAME, Context.MODE_PRIVATE);
+        gson = new Gson();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String json = settings.getString("template", null);
         if (json != null) {
@@ -121,7 +121,7 @@ public class NewRecordActivity extends AppCompatActivity {
             if (template.location[1] != 0.0) gps_long.setText(template.location[1].toString());
             if (template.altitude != 0.0) gps_alt.setText(template.altitude.toString());
             datePicker.setText(sdf.format(template.dt));
-            proj_spinner.setSelection(projAdapter.getPosition(template.project));
+            proj_spinner.setSelection(projAdapter.getPosition(settings.getString("project","")));
             source_spinner.setSelection(sourceAdapter.getPosition(template.source));
         }
         else {
@@ -227,6 +227,8 @@ public class NewRecordActivity extends AppCompatActivity {
     }
 
     private void SharedPrefsCommit(){
+        settings = getSharedPreferences(LoginActivity.PREFS_NAME, Context.MODE_PRIVATE);
+        gson = new Gson();
         // get editor ready
         editor = settings.edit();
 

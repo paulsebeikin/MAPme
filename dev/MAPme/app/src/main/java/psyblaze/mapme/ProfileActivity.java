@@ -97,22 +97,25 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         // get the shared preferences
-        settings = getSharedPreferences(LoginActivity.PREFS_NAME, Context.MODE_PRIVATE);
-        gson = new Gson();
-        SharedPrefRestore();
+        SharedPrefsRestore();
     }
 
-    private void SharedPrefRestore() {
-        String json = settings.getString("template", null);
-        if (json != null) {
-            template = gson.fromJson(json, Template.class);
-            name.setText(settings.getString("username", ""));
-            email.setText(settings.getString("email", ""));
-            adu.setText(settings.getString("adu", ""));
-            town.setText(settings.getString("town",""));
-        } else {
-            template = new Template();
+    private void SharedPrefsRestore() {
+        settings = getSharedPreferences(LoginActivity.PREFS_NAME, Context.MODE_PRIVATE);
+        name.setText(settings.getString("username", ""));
+        email.setText(settings.getString("email", ""));
+        adu.setText(settings.getString("adu", ""));
+        town.setText(settings.getString("town",""));
+        Boolean foundCountry = false;
+        for (String x : getResources().getStringArray(R.array.countryArr)){
+            if (x.equals(settings.getString("country",""))) {
+                country_spin.setSelection(countryAdapter.getPosition(settings.getString("country","")));
+                foundCountry = true;
+            }
         }
+        if (!foundCountry) otherCountry.setText(settings.getString("country",""));
+        province_spin.setSelection(provinceAdapter.getPosition(settings.getString("province", "Gauteng")));
+        project_spin.setSelection(projAdapter.getPosition(settings.getString("project", "OrchidMAP")));
     }
 
     private void checkCountry(String country) {
@@ -130,58 +133,37 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-
-    private void saveTemplate () {
+    private void SharedPrefsCommit() {
         editor = settings.edit();
 
         if (country_spin.getSelectedItem().toString().equals("")) {
             Toast.makeText(this, "Invalid country selected", Toast.LENGTH_LONG).show();
         }
         else if (country_spin.getSelectedItem().toString().equals("Other, please specify below")){
-            template.country = otherCountry.getText().toString();
-            template.province = province_spin.getSelectedItem().toString();
-            template.town = town.getText().toString();
-            template.project = project_spin.getSelectedItem().toString();
-
-            String json = gson.toJson(template);
-            editor.putString("template", json);
+            editor.putString("country", otherCountry.getText().toString());
+            editor.putString("town",town.getText().toString());
+            editor.putString("project", project_spin.getSelectedItem().toString());
             editor.commit();
         }
         else {
-            template.country = country_spin.getSelectedItem().toString();
-            template.province = province_spin.getSelectedItem().toString();
-            template.town = town.getText().toString();
-            template.project = project_spin.getSelectedItem().toString();
-
-            String json = gson.toJson(template);
-            editor.putString("template", json);
+            editor.putString("country", country_spin.getSelectedItem().toString());
+            editor.putString("town", town.getText().toString());
+            editor.putString("project", project_spin.getSelectedItem().toString());
+            editor.putString("province", province_spin.getSelectedItem().toString());
             editor.commit();
         }
     }
 
     public void saveProfileSettings (View view) {
-        saveTemplate();
+        SharedPrefsCommit();
         Toast.makeText(this, "Profile settings saved", Toast.LENGTH_LONG).show();
         onBackPressed();
-    }
-
-    private void SharedPrefsRestore(){
-        String json = settings.getString("template", null);
-        if (json != null){
-            template = gson.fromJson(json, Template.class);
-            country_spin.setSelection(countryAdapter.getPosition(template.country));
-            province_spin.setSelection(provinceAdapter.getPosition(template.province));
-            project_spin.setSelection(projAdapter.getPosition(template.country));
-        }
-        else {
-            template = new Template();
-        }
     }
 
     @Override
     public void onPause(){
         super.onPause();
-        saveTemplate();
+        SharedPrefsCommit();
     }
 
     @Override

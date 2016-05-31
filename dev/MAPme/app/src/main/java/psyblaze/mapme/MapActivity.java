@@ -81,4 +81,9 @@ public class MapActivity extends AppCompatActivity {
         setResult(Activity.RESULT_OK, resultInt);
         finish();
     }
+
+    public void goBack(View view){
+        onBackPressed();
+        finish();
+    }
 }

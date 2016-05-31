@@ -69,8 +69,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private UserLoginTask mAuthTask = null;
 
     public static final String PREFS_NAME = "MyPrefsFile";
-    public static final String Email = "nameKey";
-    public static final String ADU = "aduKey";
 
 
     // UI references.

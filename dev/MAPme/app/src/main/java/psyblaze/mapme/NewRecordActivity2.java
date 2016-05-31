@@ -75,11 +75,7 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
         town = (EditText) findViewById(R.id.town);
         desc = (EditText) findViewById(R.id.desc_text);
 
-        geocoder = new Geocoder(this, Locale.getDefault());
-        Bundle bundle = getIntent().getExtras();
-        double[] location = (double[]) bundle.get("location");
-        new GeoCodeAsyncTask().execute(new Double[]{Double.valueOf(location[0]),
-                    Double.valueOf(location[1])});
+        initGeoTask();
     }
 
     protected void onPause(){
@@ -89,11 +85,19 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
 
     protected void onResume(){
         super.onResume();
-        SharedPrefRestore();
+        initGeoTask();
     }
     //endregion
 
     //region Activity Methods
+
+    private void initGeoTask(){
+        geocoder = new Geocoder(this, Locale.getDefault());
+        Bundle bundle = getIntent().getExtras();
+        double[] location = (double[]) bundle.get("location");
+        new GeoCodeAsyncTask().execute(new Double[]{Double.valueOf(location[0]),
+                Double.valueOf(location[1])});
+    }
 
     private void SharedPrefCommit(){
         // get editor ready
@@ -183,8 +187,6 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
         protected void onPostExecute(Address result) {
 
             // Shared Preference restore
-            settings = getSharedPreferences(LoginActivity.PREFS_NAME, Context.MODE_PRIVATE);
-            gson = new Gson();
             SharedPrefRestore();
             boolean useGPS = settings.getBoolean("useGPS", false);
 
@@ -199,9 +201,9 @@ public class NewRecordActivity2 extends OrmLiteBaseActivity<RecordHelper> implem
                     }
                     else if (!useGPS) {
                         //false branch
-                        country.setText(template.country);
-                        province.setText(template.province);
-                        town.setText(template.town);
+                        country.setText(settings.getString("country",""));
+                        province.setText(settings.getString("province",""));
+                        town.setText(settings.getString("town",""));
                     }
                 }
                 else{
