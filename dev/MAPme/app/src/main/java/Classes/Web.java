@@ -58,7 +58,7 @@ public class Web {
     private static final String MONTH ="month";
     private static final String YEAR = "year";
     private static final String SOURCE = "source";
-    private static final String IMAGES = "images";
+    private static final String IMAGES = "images[]";
     private static final String NOTE ="note";
     //endregion
 
@@ -126,7 +126,7 @@ public class Web {
         params.setForceMultipartEntityContentType(true);
         //params.setContentEncoding("gzip, deflate");
 
-       // try {
+        try {
             params.setForceMultipartEntityContentType(true);
             params.put(API_KEY, API_ALTERNATE);
             params.put(TOKEN, token);
@@ -146,11 +146,11 @@ public class Web {
             params.put(MONTH, String.valueOf(record.getMonth()));
             params.put(YEAR, String.valueOf(record.getYear()));
             params.put(SOURCE, record.getSource());
-            params.put(IMAGES, imgList[0]);
-     //   }
-        //catch (FileNotFoundException ex){
+            params.put(IMAGES, file, "image/jpeg");
+        }
+        catch (FileNotFoundException ex){
           //  ex.printStackTrace();
-        //}
+        }
         return params;
     }
 
