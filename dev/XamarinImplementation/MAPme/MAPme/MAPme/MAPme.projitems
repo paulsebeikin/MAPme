@@ -27,6 +27,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)DAL\AduApiKeys.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DAL\AduSiteData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DAL\SQLite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\AduRecord.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\AduUser.cs" />
