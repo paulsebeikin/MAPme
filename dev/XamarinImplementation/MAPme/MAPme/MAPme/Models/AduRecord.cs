@@ -13,13 +13,13 @@ namespace MAPme.Models
         [Indexed]
         public int AduUserId { get; set; }
 
-        [NotNull]
+        [NotNull, MaxLength(50)]
         public string Country { get; set; }
-        [NotNull]
+        [NotNull, MaxLength(50)]
         public string Province { get; set; }
-        [NotNull]
+        [NotNull, MaxLength(50)]
         public string Town { get; set; }
-        [NotNull]
+        [NotNull, MaxLength(25)]
         public string Project { get; set; }
 
         // locality field in ADU API
@@ -49,21 +49,23 @@ namespace MAPme.Models
         public string Note { get; set; }
 
         // represents the userdet field optional in the API
+        [MaxLength(255)]
         public string Species { get; set; }
 
-        public string Obvservers { get; set; }
+        public string Observers { get; set; }
 
         // used for the PHOWN projects (weavers)
         public int NestCount { get; set; }
 
         // used for the PHOWN projects (weavers)
         public string NestSite { get; set; }
+        public bool RoadKill { get; set; }
 
         public int TaxonId { get; set; }
         public string TaxonName { get; set; }
         public string InstitutionCode { get; set; }
         public string Collection { get; set; }
-        public string CatNumber { get; set; }
+        public int CatNumber { get; set; }
         public string RecordBasis { get; set; }
 
         // represents the optional recordStatus field in the API

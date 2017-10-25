@@ -6,9 +6,11 @@ namespace MAPme.Models
     {
         [AutoIncrement, PrimaryKey]
         public int Id { get; set; }
+        [NotNull]
         public bool RecordUploaded { get; set; }
 
         // still going to use soft deletes?
+        [NotNull]
         public bool RecordDeleted { get; set; }
     }
 }

@@ -6,11 +6,11 @@ namespace MAPme.Models
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-        [NotNull]
+        [NotNull, MaxLength(50)]
         private string Username { get; set; }
-        [NotNull]
+        [NotNull, MaxLength(255)]
         private string Email { get; set; }
-        [NotNull]
+        [NotNull, MaxLength(50)]
         public string Adu { get; set; }
     }
 }
