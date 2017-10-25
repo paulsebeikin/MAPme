@@ -14,6 +14,8 @@ EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		MAPme\MAPme\MAPme.projitems*{19c3d94d-5b2a-49d4-85a2-f56084e541d4}*SharedItemsImports = 4
+		MAPme\MAPme\MAPme.projitems*{433993f6-4925-47b8-88d6-c951ccf8d986}*SharedItemsImports = 4
+		MAPme\MAPme\MAPme.projitems*{d9db764d-5c49-4bda-8b7e-7da8147c3740}*SharedItemsImports = 4
 		MAPme\MAPme\MAPme.projitems*{d9f557b6-bb12-49dd-a620-6b94aedf7fab}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
