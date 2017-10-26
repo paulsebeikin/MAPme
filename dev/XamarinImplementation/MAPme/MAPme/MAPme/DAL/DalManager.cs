@@ -17,21 +17,21 @@ namespace MAPme.DAL
             {
                 var dbName = "mapme.db";
                 #if SILVERLIGHT
-                    var path = filename;
+                    var path = dbName;
                 #else
                     #if __ANDROID__
-                        string libraryPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal); ;
+                        string location = Environment.GetFolderPath(Environment.SpecialFolder.Personal); ;
                     #else
                         #if __IOS__
-                            string documentsPath = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
-                            string libraryPath = Path.Combine (documentsPath, "..", "Library");
+                            string personalPath = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
+                            string location = Path.Combine (personalPath, "..", "Library");
                         #else
                             // UWP
-                            string libraryPath = Windows.Storage.ApplicationData.Current.LocalFolder.Path;
+                            string location = Windows.Storage.ApplicationData.Current.LocalFolder.Path;
                         #endif
                     #endif
-                        var path = Path.Combine(libraryPath, dbName);
-                 #endif
+                var path = Path.Combine(location, dbName);
+                #endif
 
                 return path;
             }
