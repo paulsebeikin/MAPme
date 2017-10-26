@@ -32,6 +32,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)DAL\SQLite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\AduRecord.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\AduUser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Help.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\RecordMetaData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
