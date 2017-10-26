@@ -44,4 +44,3 @@ namespace MAPme.DAL
         }
     }
 }
-S
