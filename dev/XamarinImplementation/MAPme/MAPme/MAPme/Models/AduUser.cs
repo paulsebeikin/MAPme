@@ -7,9 +7,11 @@ namespace MAPme.Models
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
         [NotNull, MaxLength(50)]
-        private string Username { get; set; }
+        public string Username { get; set; }
+        [NotNull]
+        public string PasswordHash { get; set; } // necessary?
         [NotNull, MaxLength(255)]
-        private string Email { get; set; }
+        public string Email { get; set; }
         [NotNull, MaxLength(50)]
         public string Adu { get; set; }
     }
