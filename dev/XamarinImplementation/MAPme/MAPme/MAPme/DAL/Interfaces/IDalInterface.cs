@@ -7,13 +7,11 @@ namespace MAPme.DAL.Interfaces
 {
     public interface IDalInterface
     {
-        string GetDatabasePath(string location);
-        SQLiteConnection GetSQLiteConnection(string databasePath);  // synchronous DB connection
-
-        void CreateTable<T>();
+        void CreateTable<T>(T table);
         void Insert<T>(T table);
-        IEnumerable<T> Query <T>(SQLiteConnection db, T table, string sql);
-        void Update<T>(SQLiteConnection db, T table, string sql);
-        void Delete<T>(SQLiteConnection db, T table, string sql);
+        IEnumerable<T> Query <T>(string sql, params object[] args);
+        void Update<T>(T table);
+        void Delete<T>(T table);
+        void DeleteByPrimaryKey<T>(int primaryKey);
     }
 }

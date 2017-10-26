@@ -1,44 +1,106 @@
 ﻿using MAPme.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using DAL.SQLite;
+using System.IO;
+using System.Linq.Expressions;
+using System.Linq;
 
 namespace MAPme.DAL
 {
-    public class DalManager : IDalInterface
+    public sealed class DalManager : IDalInterface
     {
-        public void CreateTable<T>()
+        private string _databasePath
         {
-            throw new NotImplementedException();
+            // needs some testing
+            get
+            {
+                var dbName = "mapme.db";
+                #if SILVERLIGHT
+                    var path = filename;
+                #else
+                    #if __ANDROID__
+                        string libraryPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal); ;
+                    #else
+                        #if __IOS__
+                            string documentsPath = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
+                            string libraryPath = Path.Combine (documentsPath, "..", "Library");
+                        #else
+                            // UWP
+                            string libraryPath = Windows.Storage.ApplicationData.Current.LocalFolder.Path;
+                        #endif
+                    #endif
+                        var path = Path.Combine(libraryPath, dbName);
+                 #endif
+
+                return path;
+            }
         }
 
-        public void Delete<T>(SQLiteConnection db, T table, string sql)
+        private SQLiteConnection _databaseConnection
         {
-            throw new NotImplementedException();
+            get
+            {
+                return new SQLiteConnection(_databasePath);
+            }
         }
 
-        public string GetDatabasePath(string location)
+        public void CreateTable<T>(T table)
         {
-            throw new NotImplementedException();
-        }
+            if (table == null)
+            {
+                throw new ArgumentNullException("table");
+            }
 
-        public SQLiteConnection GetSQLiteConnection(string databasePath)
-        {
-            throw new NotImplementedException();
+            _databaseConnection.CreateTable(typeof(T));
         }
 
         public void Insert<T>(T table)
         {
-            throw new NotImplementedException();
+            if (table == null)
+            {
+                throw new ArgumentNullException("table");
+            }
+
+            _databaseConnection.Insert(table, typeof(T));
         }
 
-        public IEnumerable<T> Query<T>(SQLiteConnection db, T table, string sql)
+        public void Update<T>(T table)
+        {
+            if (table == null)
+            {
+                throw new ArgumentNullException("table");
+            }
+
+            _databaseConnection.Update(table, typeof(T));
+        }
+
+        public void Delete<T>(T table)
+        {
+            if (table == null)
+            {
+                throw new ArgumentNullException("table");
+            }
+
+            _databaseConnection.Delete(table);
+        }
+
+        public void DeleteByPrimaryKey<T>(int primaryKey)
+        {
+            if (primaryKey <= 0)
+            {
+                throw new ArgumentException("Invalid primary key");
+            }
+
+            _databaseConnection.Delete(primaryKey);
+        }
+
+        public IEnumerable<T> QueryTable<T>(T table, Expression<Func<T, bool>> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public void Update<T>(SQLiteConnection db, T table, string sql)
+        public IEnumerable<T> Query<T>(string sql, params object[] args)
         {
             throw new NotImplementedException();
         }
