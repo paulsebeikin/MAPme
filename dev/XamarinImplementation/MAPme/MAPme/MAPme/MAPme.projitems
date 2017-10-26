@@ -28,6 +28,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)DAL\DalManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DAL\Interfaces\IDalInterface.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\AduApiKeys.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\AduSiteData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DAL\SQLite.cs" />
