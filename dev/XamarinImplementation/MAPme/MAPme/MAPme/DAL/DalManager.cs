@@ -95,14 +95,9 @@ namespace MAPme.DAL
             _databaseConnection.Delete(primaryKey);
         }
 
-        public IEnumerable<T> QueryTable<T>(T table, Expression<Func<T, bool>> predicate)
+        public SQLiteConnection GetSynchronousQueryConnection()
         {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<T> Query<T>(string sql, params object[] args)
-        {
-            throw new NotImplementedException();
+            return _databaseConnection;
         }
     }
 }

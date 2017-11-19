@@ -1,7 +1,5 @@
 ﻿using DAL.SQLite;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MAPme.DAL.Interfaces
 {
@@ -13,5 +11,6 @@ namespace MAPme.DAL.Interfaces
         void Update<T>(T table);
         void Delete<T>(T table);
         void DeleteByPrimaryKey<T>(int primaryKey);
+        SQLiteConnection GetSynchronousQueryConnection();
     }
 }
